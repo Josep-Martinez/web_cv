@@ -92,7 +92,7 @@ export default function ExperiencePage() {
 
               {/* Contenedor de la experiencia */}
               <div className={`flex w-full flex-col md:flex-row ${index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'}`}>
-                <div className="w-full md:w-7/12 px-6 md:px-0 text-left md:text-right">
+                <div className={`w-7/12 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
                   <div className="bg-[#1a2537] p-6 rounded-lg shadow-lg hover:bg-[#1e2c42] transition-colors duration-300">
                     <div className="flex items-center gap-4 mb-4">
                       <div className={`${index % 2 === 0 ? 'order-2' : 'order-1'}`}>
