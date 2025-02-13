@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Nixie_One, Martian_Mono } from "next/font/google";
-import Header from "../app/Header"; // Ruta correcta para importar el Header
+import Header from "../app/header"; // Ruta correcta para importar el Header
 
 const nixieOne = Nixie_One({
   weight: "400",
