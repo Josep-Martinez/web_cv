@@ -1,6 +1,8 @@
 import "./globals.css";
 import { Nixie_One, Martian_Mono } from "next/font/google";
-import Header from "../app/header"; // Ruta correcta para importar el Header
+import Header from "../app/header";
+import { LanguageProvider } from "../app/LanguageContext"; // Importa el contexto
+import LanguageButton from "../app/LanguageButton"; // Importa el botón de idioma
 
 const nixieOne = Nixie_One({
   weight: "400",
@@ -26,8 +28,11 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className={`${nixieOne.variable} ${martianMono.variable} antialiased bg-[#101827] text-white`}>
-        <Header />
-        <main className="mt-20 md:mt-16">{children}</main>
+        <LanguageProvider> {/* Ahora toda la app puede cambiar de idioma */}
+          <Header />
+          <main className="mt-20 md:mt-16">{children}</main>
+          <LanguageButton /> {/* Agregamos el botón en toda la app */}
+        </LanguageProvider>
       </body>
     </html>
   );
