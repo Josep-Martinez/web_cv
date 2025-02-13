@@ -3,19 +3,108 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #101827;
+  --foreground: #ffffff;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes typing {
+  from { width: 0; opacity: 1; }
+  to { width: 100%; opacity: 1; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Se mantiene la estructura de flex para asegurar que el texto y los iconos aparezcan juntos */
+.typing-animation,
+.typing-animation-2,
+.typing-animation-3,
+.typing-animation-4,
+.typing-animation-5,
+.typing-animation-6,
+.typing-animation-7,
+.typing-animation-8,
+.typing-animation-9 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Asegurar que la animación se aplica correctamente con delays progresivos */
+.typing-animation {
+  animation: typing 2s steps(40, end) forwards;
+  opacity: 1;
+}
+
+.typing-animation-2 {
+  animation: typing 2s steps(40, end) forwards;
+  animation-delay: 2s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.typing-animation-3 {
+  animation: typing 2s steps(40, end) forwards;
+  animation-delay: 4s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.typing-animation-4 {
+  animation: typing 2s steps(40, end) forwards;
+  animation-delay: 6s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.typing-animation-5 {
+  animation: typing 2s steps(40, end) forwards;
+  animation-delay: 8s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.typing-animation-6 {
+  animation: typing 2s steps(40, end) forwards;
+  animation-delay: 10s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.typing-animation-7 {
+  animation: typing 2s steps(40, end) forwards;
+  animation-delay: 12s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+/* Animación de "get message" */
+.typing-animation-8 {
+  animation: typing 2s steps(40, end) forwards;
+  animation-delay: 14s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+/* Animación de la respuesta de "get message" */
+.typing-animation-9 {
+  animation: typing 2s steps(40, end) forwards;
+  animation-delay: 16s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+/* Cursor parpadeante */
+.animate-blink {
+  animation: blink 1s step-end infinite;
 }
