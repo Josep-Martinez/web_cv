@@ -1,16 +1,15 @@
-// app/experience/page.js
-import { Nixie_One } from 'next/font/google';
-import { Martian_Mono } from 'next/font/google';
-import Image from 'next/image';
+"use client";
+import { Nixie_One, Martian_Mono } from "next/font/google";
+import Image from "next/image";
 
 const nixieOne = Nixie_One({
-  weight: '400',
-  subsets: ['latin'],
+  weight: "400",
+  subsets: ["latin"],
 });
 
 const martianMono = Martian_Mono({
-  weight: '400',
-  subsets: ['latin'],
+  weight: "400",
+  subsets: ["latin"],
 });
 
 const experiences = [
@@ -22,7 +21,7 @@ const experiences = [
     location: "Valencia, Comunidad Valenciana - Híbrido",
     description: "Prácticas como Data Engineer, trabajando con tecnologías MDM y herramientas cloud.",
     skills: "Informática MDM, Dell Boomi, Aplicaciones en la nube, Gestión de datos maestros",
-    logo: "/infoverity_logo.jpeg"  // Asegúrate de tener esta imagen en tu carpeta public
+    logo: "/infoverity_logo.jpeg"
   },
   {
     id: 2,
@@ -75,7 +74,11 @@ export default function ExperiencePage() {
             Experiencia
           </h1>
           <p className={`${martianMono.className} text-base text-gray-300 font-normal`}>
-            Mi trayectoria profesional en tecnología y desarrollo personal
+            Esta sección presenta una visión integral de mi{" "}
+            <span className="line-through text-blue-500">trayectoria profesional</span>, un recorrido marcado por la evolución constante y la superación de desafíos en diversos contextos. 
+            A lo largo de mi carrera, he cultivado <span className="line-through text-blue-500">habilidades</span> técnicas y estratégicas que me permiten{" "}
+            <span className="line-through text-blue-500">adaptarme</span> y generar soluciones innovadoras. 
+            Cada etapa ha sido definida por el aprendizaje continuo y el compromiso con la calidad, consolidando un perfil profesional orientado a resultados de alto impacto.
           </p>
         </div>
 
@@ -113,11 +116,11 @@ export default function ExperiencePage() {
                     <p className={`${martianMono.className} text-xs text-gray-500 mb-3`}>
                       {exp.period} | {exp.location}
                     </p>
-                    <p className={`${martianMono.className} text-sm text-gray-300 mb-4 text-justify`}>
+                    <p className={`${martianMono.className} text-sm text-gray-300 mb-4`}>
                       {exp.description}
                     </p>
                     <div className="border-t border-gray-700 pt-3">
-                      <p className={`${martianMono.className} text-xs text-blue-400 text-justify`}>
+                      <p className={`${martianMono.className} text-xs text-blue-400`}>
                         <span className="font-bold">Aptitudes:</span> {exp.skills}
                       </p>
                     </div>
