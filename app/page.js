@@ -19,7 +19,7 @@ export default function Home() {
         {/* Foto en la primera columna */}
         <div className="flex justify-center md:mt-[-6.5rem]">
           <Image
-            className="rounded-full border-4 border-white shadow-lg"
+            className="rounded-full"
             src="/foto_cv.png"
             alt="Foto de Josep Martínez Boix"
             width={250}

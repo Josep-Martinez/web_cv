@@ -14,57 +14,50 @@ const martianMono = Martian_Mono({
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-[#101827] text-white p-20">
+    <div className="min-h-screen bg-[#101827] text-white p-6 md:p-20">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-10 text-center">
-          <h1 className={`${nixieOne.className} text-7xl font-bold tracking-wider mb-10`}>
-            Contacto
-          </h1>
-        </div>
-
-        <div className="bg-[#1a2537] rounded-lg p-6 shadow-xl">
+        
+        <div className="bg-[#1a2537] rounded-lg p-6 md:p-10 shadow-xl">
           {/* Terminal Header */}
           <div className="flex items-center gap-2 border-b border-gray-700 pb-4 mb-6">
-            <Terminal className="text-green-500" />
-            <span className={`${martianMono.className} text-green-500`}>contact.exe</span>
+            <Terminal className="text-green-500 w-6 h-6 md:w-8 md:h-8" />
+            <span className={`${martianMono.className} text-green-500 text-sm md:text-base`}>
+              contact.exe
+            </span>
           </div>
 
           {/* Terminal Content */}
-          <div className={`${martianMono.className} space-y-6`}>
-            {/* whoami en una línea y su salida en otra */}
+          <div className={`${martianMono.className} space-y-6 text-sm md:text-lg`}>
             <div className="typing-animation">
-              <span className="text-green-500">$ </span>
-              <span className="text-blue-400">whoami</span>
+              <span className="text-green-500 text-sm md:text-lg">$ </span>
+              <span className="text-blue-400 text-sm md:text-lg">whoami</span>
             </div>
             <div className="typing-animation-2 text-gray-300">
               Josep Martínez Boix - Developer & Data Engineer
             </div>
 
             {/* Ubicación después de "whoami" */}
-            <div className="typing-animation-3">
-              <div className="flex items-center gap-3">
-                <MapPin className="text-gray-400" />
-                <span className="text-gray-300">Valencia, Comunidad Valenciana, España</span>
-              </div>
+            <div className="typing-animation-3 flex items-center gap-3">
+              <MapPin className="text-gray-400 w-5 h-5 md:w-6 md:h-6" />
+              <span className="text-gray-300">Valencia, Comunidad Valenciana, España</span>
             </div>
 
             {/* Contact list command */}
             <div className="typing-animation-4">
-              <span className="text-green-500">$ </span>
-              <span className="text-blue-400">contact --list-all</span>
+              <span className="text-green-500 text-sm md:text-lg">$ </span>
+              <span className="text-blue-400 text-sm md:text-lg">contact --list-all</span>
             </div>
 
             {/* Contact list items */}
             <div className="typing-animation-5 flex items-center gap-3">
-              <Mail className="text-gray-400" />
-              <a href="mailto:jmartinezboix@gmail.com" 
-                 className="text-gray-300 hover:text-blue-400 transition-colors">
+              <Mail className="text-gray-400 w-5 h-5 md:w-6 md:h-6" />
+              <a href="mailto:jmartinezboix@gmail.com" className="text-gray-300 hover:text-blue-400 transition-colors">
                 jmartinezboix@gmail.com
               </a>
             </div>
 
             <div className="typing-animation-6 flex items-center gap-3">
-              <Linkedin className="text-gray-400" />
+              <Linkedin className="text-gray-400 w-5 h-5 md:w-6 md:h-6" />
               <a href="https://www.linkedin.com/in/josepmartinezboix/" 
                  target="_blank" 
                  rel="noopener noreferrer"
@@ -74,7 +67,7 @@ export default function ContactPage() {
             </div>
 
             <div className="typing-animation-7 flex items-center gap-3">
-              <Github className="text-gray-400" />
+              <Github className="text-gray-400 w-5 h-5 md:w-6 md:h-6" />
               <a href="https://github.com/Josep-martinez" 
                  target="_blank" 
                  rel="noopener noreferrer"
@@ -85,15 +78,15 @@ export default function ContactPage() {
 
             {/* get message en una línea y su salida en otra */}
             <div className="typing-animation-8">
-              <span className="text-green-500">$ </span>
-              <span className="text-blue-400">get message</span>
+              <span className="text-green-500 text-sm md:text-lg">$ </span>
+              <span className="text-blue-400 text-sm md:text-lg">get message</span>
             </div>
             <div className="typing-animation-9 text-gray-300">
               ¡Hablemos! Estoy siempre abierto a nuevas oportunidades y colaboraciones.
             </div>
 
             <div className="animate-blink">
-              <span className="text-green-500">$ </span>
+              <span className="text-green-500 text-sm md:text-lg">$ </span>
               <span className="text-gray-400">█</span>
             </div>
           </div>
