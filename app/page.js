@@ -31,7 +31,7 @@ export default function Home() {
         {/* Fila 1: Título en la segunda columna */}
         <div className="text-right">
           <h1 className={`${nixieOne.className} text-6xl font-light tracking-wider mb-4`}>
-            JOSEPP<br />MARTINEZ BOIX
+            JOSEP<br />MARTINEZ BOIX
           </h1>
           <h2 className={`${nixieOne.className} text-xl text-gray-400`}>
             INGENIERO DE COMPUTADORES
