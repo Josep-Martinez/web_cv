@@ -18,7 +18,7 @@ const experiences = [
     title: "Data Engineer Intern",
     company: "Infoverity",
     period: "Octubre 2024 - Actualidad",
-    location: "Valencia, Comunidad Valenciana - Híbrido",
+    location: "Valencia, Comunidad Valenciana",
     description: "Prácticas como Data Engineer, trabajando con tecnologías MDM y herramientas cloud.",
     skills: "Informática MDM, Dell Boomi, Aplicaciones en la nube, Gestión de datos maestros",
     logo: "/infoverity_logo.jpeg"
@@ -67,30 +67,32 @@ const experiences = [
 
 export default function ExperiencePage() {
   return (
-    <div className="min-h-screen bg-[#101827] text-white p-20">
+    <div className="min-h-screen bg-[#101827] text-white p-6 md:p-20">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-20 text-center">
-          <h1 className={`${nixieOne.className} text-7xl font-bold tracking-wider mb-10`}>
+        <div className="mb-10 text-center">
+          <h1 className={`${nixieOne.className} text-4xl md:text-7xl font-bold tracking-wider mb-10`}>
             Experiencia
           </h1>
-          <p className={`${martianMono.className} text-base text-gray-300 font-normal`}>
+          <p className={`${martianMono.className} text-sm md:text-base text-gray-300`}>
             Esta sección presenta una visión integral de mi{" "}
             <span className="line-through text-blue-500">trayectoria profesional</span>, un recorrido marcado por la evolución constante y la superación de desafíos en diversos contextos. 
             A lo largo de mi carrera, he cultivado <span className="line-through text-blue-500">habilidades</span> técnicas y estratégicas que me permiten{" "}
-            <span className="line-through text-blue-500">adaptarme</span> y generar soluciones innovadoras. 
-            Cada etapa ha sido definida por el aprendizaje continuo y el compromiso con la calidad, consolidando un perfil profesional orientado a resultados de alto impacto.
+            <span className="line-through text-blue-500">adaptarme</span> y generar soluciones innovadoras.
           </p>
         </div>
 
         <div className="relative">
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-700"></div>
+          {/* Línea central solo en pantallas grandes */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-700 hidden md:block"></div>
 
           {experiences.map((exp, index) => (
             <div key={exp.id} className="relative mb-16">
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-700 rounded-full"></div>
+              {/* Punto de conexión en el timeline, solo en pantallas grandes */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-700 rounded-full hidden md:block"></div>
 
-              <div className={`flex w-full ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
-                <div className={`w-7/12 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
+              {/* Contenedor de la experiencia */}
+              <div className={`flex w-full flex-col md:flex-row ${index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'}`}>
+                <div className="w-full md:w-7/12 px-6 md:px-0 text-left md:text-right">
                   <div className="bg-[#1a2537] p-6 rounded-lg shadow-lg hover:bg-[#1e2c42] transition-colors duration-300">
                     <div className="flex items-center gap-4 mb-4">
                       <div className={`${index % 2 === 0 ? 'order-2' : 'order-1'}`}>
@@ -98,7 +100,8 @@ export default function ExperiencePage() {
                           <Image
                             src={exp.logo}
                             alt={`${exp.company} logo`}
-                            fill
+                            width={64}
+                            height={64}
                             className="object-contain p-2"
                           />
                         </div>
@@ -116,11 +119,11 @@ export default function ExperiencePage() {
                     <p className={`${martianMono.className} text-xs text-gray-500 mb-3`}>
                       {exp.period} | {exp.location}
                     </p>
-                    <p className={`${martianMono.className} text-sm text-gray-300 mb-4`}>
+                    <p className={`${martianMono.className} text-sm text-gray-300 mb-4 text-justify`}>
                       {exp.description}
                     </p>
                     <div className="border-t border-gray-700 pt-3">
-                      <p className={`${martianMono.className} text-xs text-blue-400`}>
+                      <p className={`${martianMono.className} text-xs text-blue-400 text-justify`}>
                         <span className="font-bold">Aptitudes:</span> {exp.skills}
                       </p>
                     </div>

@@ -32,23 +32,22 @@ const projects = [
 
 export default function ProjectsPage() {
   return (
-    <div className="min-h-screen bg-[#101827] text-white p-20">
+    <div className="min-h-screen bg-[#101827] text-white p-6 md:p-20">
       <div className="max-w-6xl mx-auto">
-        {/* Título y descripción */}
-        <div className="mb-20 text-center">
-          <h1 className={`${nixieOne.className} text-7xl font-bold tracking-wider mb-10`}>
+        <div className="mb-10 text-center">
+          <h1 className={`${nixieOne.className} text-4xl md:text-7xl font-bold tracking-wider mb-10`}>
             Proyectos
           </h1>
-          <p className={`${martianMono.className} text-base text-gray-300 font-normal`}>
+          <p className={`${martianMono.className} text-sm md:text-base text-gray-300`}>
             En esta sección encontrará una selección representativa de{" "}
-            <span className="line-through text-blue-700">proyectos individuales</span> que ilustran mi experiencia profesional y mi capacidad para abordar desafíos de forma estructurada y creativa. Cada proyecto es fruto de un esfuerzo personal y ha sido desarrollado con un enfoque en la{" "}
+            <span className="line-through text-blue-700">proyectos individuales</span> que ilustran mi experiencia profesional y mi capacidad para abordar desafíos de forma estructurada y creativa. 
+            Cada proyecto es fruto de un esfuerzo personal y ha sido desarrollado con un enfoque en la{" "}
             <span className="line-through text-blue-700">calidad</span> y la{" "}
-            <span className="line-through text-blue-700">innovación</span>, demostrando habilidades técnicas y estratégicas aplicables a diversos contextos.
+            <span className="line-through text-blue-700">innovación</span>.
           </p>
         </div>
 
-        {/* Grid de proyectos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {projects.map((project) => (
             <div key={project.id} className="relative group overflow-hidden">
               <Image
@@ -56,10 +55,10 @@ export default function ProjectsPage() {
                 alt={project.name}
                 width={400}
                 height={300}
-                className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
+                className="object-cover w-full h-auto transition-transform duration-300 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-blue-900/50 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <span className={`${martianMono.className} text-lg`}>
+                <span className={`${martianMono.className} text-sm md:text-lg`}>
                   {project.name}
                 </span>
               </div>
