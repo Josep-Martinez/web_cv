@@ -76,8 +76,8 @@ export default function ContactPage() {
             {/* Contact list items */}
             <div className="typing-animation-5 flex items-center gap-3">
               <Mail className="text-gray-400 w-5 h-5 md:w-6 md:h-6" />
-              <a href="mailto:jmartinezboix@gmail.com" className="text-gray-300 hover:text-blue-400 transition-colors">
-                jmartinezboix@gmail.com
+              <a href="mailto:infojosepmb@gmail.com" className="text-gray-300 hover:text-blue-400 transition-colors">
+                infojosepmb@gmail.com
               </a>
             </div>
 
