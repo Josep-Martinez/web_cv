@@ -13,22 +13,58 @@ const martianMono = Martian_Mono({
   subsets: ["latin"],
 });
 
+// Traducciones
+const texts = {
+  EN: {
+    name: "JOSEP\nMARTINEZ BOIX",
+    jobTitle: "Computer Engineer",
+    description: [
+      <>
+        Hello, I’m Josep Martínez Boix. My passion for{" "}
+        <span className="line-through text-blue-500">innovation</span> and continuous{" "}
+        <span className="line-through text-blue-500">learning</span> has led me to transform every challenge into an opportunity for growth, both professionally and personally.
+      </>,
+      <>
+        With a solid background and experience in computer engineer, I’ve learned that the key to success lies in combining creativity,{" "}
+        <span className="line-through text-blue-500">adaptability</span> and a proactive attitude toward change. Every project I undertake is a chance to explore new ideas and provide{" "}
+        <span className="line-through text-blue-500">solutions</span> to complex problems.
+      </>,
+      <>
+        I firmly believe that technology and creativity can merge to{" "}
+        <span className="line-through text-blue-500">transform</span> realities, and this conviction drives my career. In this space, I share not only my professional journey but also the projects and ideas that inspire me to continually reinvent myself.
+      </>,
+      <>
+        Thank you for visiting, and I invite you to explore my professional world.
+      </>,
+    ],
+  },
+  ES: {
+    name: "JOSEP\nMARTINEZ BOIX",
+    jobTitle: "Ingeniero de Computadores",
+    description: [
+      <>
+        Hola, soy Josep Martínez Boix. Mi pasión por la{" "}
+        <span className="line-through text-blue-500">innovación</span> y el{" "}
+        <span className="line-through text-blue-500">aprendizaje</span> continuo me ha llevado a transformar cada desafío en una oportunidad para crecer, tanto profesional como personalmente.
+      </>,
+      <>
+        Con una sólida formación en ingeniería informática, he aprendido que la clave del éxito radica en combinar creatividad,{" "}
+        <span className="line-through text-blue-500">adaptabilidad</span> y una actitud proactiva ante los cambios. Cada proyecto en el que me involucro es una ocasión para explorar nuevas ideas y aportar{" "}
+        <span className="line-through text-blue-500">soluciones</span> originales a problemas complejos.
+      </>,
+      <>
+        Creo firmemente que la tecnología y la creatividad pueden fusionarse para{" "}
+        <span className="line-through text-blue-500">transformar</span> realidades, y es esta convicción la que impulsa mi trayectoria. En este espacio, comparto no solo mi recorrido profesional, sino también las inquietudes y proyectos que me inspiran a seguir reinventándome día a día.
+      </>,
+      <>
+        Gracias por visitarme. Te invito a descubrir mi mundo profesional.
+      </>,
+    ],
+  },
+};
+
 export default function Home() {
   const { language } = useLanguage(); // Obtener el idioma actual
-
-  // Traducciones
-  const texts = {
-    EN: {
-      name: "JOSEP MARTÍNEZ BOIX",
-      jobTitle: "Computer Engineer",
-      description: "I am a proactive and hardworking person with a strong interest in data analysis and computer technology. I have experience in problem-solving and customer support, focusing on providing effective solutions. I am looking for opportunities to work in dynamic environments that drive my professional development.",
-    },
-    ES: {
-      name: "JOSEP MARTÍNEZ BOIX",
-      jobTitle: "Ingeniero de Computadores",
-      description: "Soy una persona proactiva y trabajadora, con gran interés en el análisis de datos y la tecnología informática. Tengo experiencia en la resolución de problemas y atención al cliente, centrándome en proporcionar soluciones efectivas. Estoy en búsqueda de oportunidades de trabajo en entornos dinámicos que impulsen mi desarrollo.",
-    },
-  };
 
   return (
     <div className="min-h-screen bg-[#101827] text-white flex items-center justify-center p-6 md:p-20">
@@ -48,7 +84,12 @@ export default function Home() {
         {/* Nombre y título */}
         <div className="text-center md:text-right">
           <h1 className={`${nixieOne.className} text-4xl md:text-6xl font-light tracking-wider mb-4`}>
-            {texts[language].name}
+            {texts[language].name.split("\n").map((line, index, arr) => (
+              <span key={index}>
+                {line}
+                {index !== arr.length - 1 && <br />}
+              </span>
+            ))}
           </h1>
           <h2 className={`${nixieOne.className} text-lg md:text-xl text-gray-400`}>
             {texts[language].jobTitle}
@@ -57,9 +98,15 @@ export default function Home() {
 
         {/* Descripción */}
         <div className="col-span-2 mt-6">
-          <p className={`${martianMono.className} text-sm md:text-base leading-relaxed text-gray-300`}>
-            {texts[language].description}
-          </p>
+          {texts[language].description.map((para, index, array) => (
+            <p
+              key={index}
+              className={`${martianMono.className} text-sm md:text-base leading-relaxed text-gray-300 ${index < array.length - 1 ? "mb-4" : ""}`}
+              style={{ textAlign: "justify" }}
+            >
+              {para}
+            </p>
+          ))}
         </div>
       </div>
     </div>
