@@ -22,7 +22,7 @@ const texts = {
     location: "Valencia, Valencian Community, Spain",
     contactList: "contact --list-all",
     messageCommand: "get message",
-    messageText: "Let's talk! I am always open to new opportunities and collaborations.",
+    messageText: "Let's talk! I am always open to new opportunities.",
   },
   ES: {
     title: "Contacto",
@@ -31,7 +31,7 @@ const texts = {
     location: "Valencia, Comunidad Valenciana, España",
     contactList: "contact --list-all",
     messageCommand: "get message",
-    messageText: "¡Hablemos! Estoy siempre abierto a nuevas oportunidades y colaboraciones.",
+    messageText: "¡Hablemos! Estoy siempre abierto a nuevas oportunidades.",
   },
 };
 
