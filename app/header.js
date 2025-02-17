@@ -24,7 +24,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full py-6 md:py-8 bg-gray-900 text-white fixed top-0 z-50 shadow-lg">
+    <header className="w-full py-2 md:py-4 bg-gray-900 text-white fixed top-0 z-50 shadow-lg">
       <div className="max-w-7xl w-full mx-auto flex items-center px-6 md:px-12 justify-center sm:justify-between">
         {/* Nombre (Solo visible en pantallas grandes) */}
         <div className="hidden sm:block text-2xl md:text-4xl font-bold tracking-wide">
