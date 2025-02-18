@@ -28,7 +28,7 @@ const texts = {
     ),
     projects: [
       { id: 1, name: "SomRiiure Website", image: "/somriure.png" },
-      { id: 2, name: "LibsTalk", image: "/lipstalk.png" },
+      { id: 2, name: "LipsTalk", image: "/lipstalk.png" },
       { id: 3, name: "Curriculum Website", image: "/pgweb.png" },
     ],
   },
@@ -45,7 +45,7 @@ const texts = {
     ),
     projects: [
       { id: 1, name: "Página Web SomRiiure", image: "/somriure.png" },
-      { id: 2, name: "LibsTalk", image: "/lipstalk.png" },
+      { id: 2, name: "LipsTalk", image: "/lipstalk.png" },
       { id: 3, name: "Página Web Curriculum", image: "/pgweb.png" },
     ],
   },
