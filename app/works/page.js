@@ -48,7 +48,7 @@ const texts = {
       {
         title: "Driver",
         company: "SACYR",
-        period: "July 2023 - September 2023 | August 2022 - September 2022",
+        period: "July 2023 - September 2023 & August 2022 - September 2022",
         location: "L'Alcúdia, Valencian Community, Spain",
         description: "Driver for elderly people at the L'Alcúdia Day Center, developing skills in management and elderly care.",
         skills: "People Management, Social Skills, Elderly Care, Positive Attitude",
@@ -107,7 +107,7 @@ const texts = {
       {
         title: "Conductor",
         company: "SACYR",
-        period: "Julio 2023 - Septiembre 2023 | Agosto 2022 - Septiembre 2022",
+        period: "Julio 2023 - Septiembre 2023 & Agosto 2022 - Septiembre 2022",
         location: "L'Alcúdia, Comunidad Valenciana, España",
         description: "Conductor de personas mayores en el Centro de Dia de L'Alcúdia, desarrollando habilidades en gestión y atención de personas mayores.",
         skills: "Gestión de personas, Habilidades sociales, Personas mayores, Actitud positiva",
