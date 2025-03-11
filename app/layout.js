@@ -33,8 +33,8 @@ export default function RootLayout({ children }) {
           <Header />
           <main className="mt-20 md:mt-16">{children}</main>
           <LanguageButton /> {/* Agregamos el botón en toda la app */}
-          <Analytics />
         </LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
