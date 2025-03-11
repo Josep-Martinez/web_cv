@@ -5,12 +5,19 @@
 :root {
   --background: #101827;
   --foreground: #ffffff;
+  --accent-blue: #3b82f6;
+  --text-gray: #9ca3af;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes typing {
@@ -109,3 +116,19 @@ body {
   animation: blink 1s step-end infinite;
 }
 
+/* Efecto sutil de brillo para los textos cifrados */
+.decoding-text {
+  transition: all 0.3s ease;
+}
+
+/* Transiciones suaves para el texto */
+.text-transition {
+  transition: all 0.8s ease;
+}
+
+/* Animación específica para palabras destacadas */
+@keyframes highlightFade {
+  0% { color: var(--foreground); }
+  50% { color: var(--accent-blue); }
+  100% { color: var(--foreground); }
+}
