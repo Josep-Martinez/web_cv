@@ -3,6 +3,7 @@ import { Nixie_One, Martian_Mono } from "next/font/google";
 import Header from "../app/header";
 import { LanguageProvider } from "../app/LanguageContext"; // Importa el contexto
 import LanguageButton from "../app/LanguageButton"; // Importa el botón de idioma
+import { Analytics } from "@vercel/analytics/react"
 
 const nixieOne = Nixie_One({
   weight: "400",
