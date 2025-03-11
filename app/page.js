@@ -18,7 +18,7 @@ const martianMono = Martian_Mono({
 const effectChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-:;(){}[]|";
 
 // Duración total de la animación - aumentado a 8 segundos para un efecto mucho más lento
-const ANIMATION_DURATION = 8000;
+const ANIMATION_DURATION = 6000;
 
 // Función para generar texto aleatorio
 const generateRandomText = (length) => {
