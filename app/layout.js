@@ -4,6 +4,7 @@ import Header from "../app/header";
 import { LanguageProvider } from "../app/LanguageContext"; // Importa el contexto
 import LanguageButton from "../app/LanguageButton"; // Importa el botón de idioma
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const nixieOne = Nixie_One({
   weight: "400",
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
           <main className="mt-20 md:mt-16">{children}</main>
           <LanguageButton /> {/* Agregamos el botón en toda la app */}
         </LanguageProvider>
+        <SpeedInsights/>
         <Analytics />
       </body>
     </html>
