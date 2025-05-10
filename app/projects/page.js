@@ -197,6 +197,12 @@ const SkillsTerminal = () => {
   const [showCursor, setShowCursor] = useState(true);
   const typingRef = useRef(null);
   const cursorRef = useRef(null);
+  const [isMounted, setIsMounted] = useState(false);
+  
+  // Usar useEffect para evitar problemas de hidratación
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   
   // Skill categories with appropriate icons
   const categories = {
@@ -234,7 +240,7 @@ const SkillsTerminal = () => {
     }
   };
   
-  // Skills organized by category
+  // Skills organized by category with the new skills added
   const skills = {
     frontend: {
       EN: [
@@ -242,14 +248,20 @@ const SkillsTerminal = () => {
         { name: 'Next.js', level: 90 },
         { name: 'Tailwind CSS', level: 80 },
         { name: 'JavaScript', level: 85 },
-        { name: 'HTML/CSS', level: 95 }
+        { name: 'HTML/CSS', level: 95 },
+        { name: 'HTML5', level: 95 },     // Añadido desde Centro SomRiure
+        { name: 'TypeScript', level: 82 }, // Añadido desde LipsTalk
+        { name: 'Expo', level: 78 }        // Añadido desde LipsTalk
       ],
       ES: [
         { name: 'React.js', level: 85 },
         { name: 'Next.js', level: 90 },
         { name: 'Tailwind CSS', level: 80 },
         { name: 'JavaScript', level: 85 },
-        { name: 'HTML/CSS', level: 95 }
+        { name: 'HTML/CSS', level: 95 },
+        { name: 'HTML5', level: 95 },      // Añadido desde Centro SomRiure
+        { name: 'TypeScript', level: 82 },  // Añadido desde LipsTalk
+        { name: 'Expo', level: 78 }         // Añadido desde LipsTalk
       ]
     },
     backend: {
@@ -257,13 +269,21 @@ const SkillsTerminal = () => {
         { name: 'Java', level: 75 },
         { name: 'C++', level: 70 },
         { name: 'SQL', level: 80 },
-        { name: 'Azure', level: 65 }
+        { name: 'Azure', level: 65 },
+        { name: 'Python', level: 60 },     // Añadido desde UPV y LipsTalk (ajustado al 60%)
+        { name: 'Node.js', level: 75 },    // Añadido desde LipsTalk
+        { name: 'FastAPI', level: 72 },    // Añadido desde LipsTalk
+        { name: 'JBoss Server', level: 65 } // Añadido desde Infoverity
       ],
       ES: [
         { name: 'Java', level: 75 },
         { name: 'C++', level: 70 },
         { name: 'SQL', level: 80 },
-        { name: 'Azure', level: 65 }
+        { name: 'Azure', level: 65 },
+        { name: 'Python', level: 60 },     // Añadido desde UPV y LipsTalk (ajustado al 60%)
+        { name: 'Node.js', level: 75 },    // Añadido desde LipsTalk
+        { name: 'FastAPI', level: 72 },    // Añadido desde LipsTalk
+        { name: 'JBoss Server', level: 65 } // Añadido desde Infoverity
       ]
     },
     integration: {
@@ -271,13 +291,15 @@ const SkillsTerminal = () => {
         { name: 'Dell Boomi', level: 90 },
         { name: 'Informatica', level: 85 },
         { name: 'API Management', level: 80 },
-        { name: 'Event Streams', level: 75 }
+        { name: 'Event Streams', level: 75 },
+        { name: 'Data Integration', level: 80 } // Añadido desde Infoverity
       ],
       ES: [
         { name: 'Dell Boomi', level: 90 },
         { name: 'Informatica', level: 85 },
         { name: 'Gestión de APIs', level: 80 },
-        { name: 'Event Streams', level: 75 }
+        { name: 'Event Streams', level: 75 },
+        { name: 'Integración de Datos', level: 80 } // Añadido desde Infoverity
       ]
     },
     data: {
@@ -341,13 +363,19 @@ const SkillsTerminal = () => {
         { name: 'Dynamics ERP', level: 80 },
         { name: 'Power Automate', level: 75 },
         { name: 'PowerApps', level: 70 },
-        { name: 'Office Suite', level: 90 }
+        { name: 'Office Suite', level: 90 },
+        { name: 'Dynamics CRM', level: 85 },   // Añadido desde Lãberit
+        { name: 'Office 365', level: 88 },     // Añadido desde UPV
+        { name: 'Dynamics', level: 83 }        // Añadido desde Lãberit
       ],
       ES: [
         { name: 'Dynamics ERP', level: 80 },
         { name: 'Power Automate', level: 75 },
         { name: 'PowerApps', level: 70 },
-        { name: 'Office Suite', level: 90 }
+        { name: 'Office Suite', level: 90 },
+        { name: 'Dynamics CRM', level: 85 },   // Añadido desde Lãberit
+        { name: 'Office 365', level: 88 },     // Añadido desde UPV
+        { name: 'Dynamics', level: 83 }        // Añadido desde Lãberit
       ]
     }
   };
@@ -390,6 +418,8 @@ const SkillsTerminal = () => {
   
   // Typing animation effect
   useEffect(() => {
+    if (!isMounted) return;
+    
     if (typingRef.current) clearTimeout(typingRef.current);
     
     setTypedText('');
@@ -418,7 +448,33 @@ const SkillsTerminal = () => {
       if (typingRef.current) clearTimeout(typingRef.current);
       if (cursorRef.current) clearInterval(cursorRef.current);
     };
-  }, [activeCategory, language]);
+  }, [activeCategory, language, isMounted]);
+  
+  // Si no está montado, devuelve un placeholder simple
+  if (!isMounted) {
+    return (
+      <div className="bg-[#0f1724] rounded-lg shadow-2xl overflow-hidden border border-gray-800">
+        <div className="bg-[#1a2537] px-4 py-2 flex items-center border-b border-gray-800">
+          <Terminal size={18} className="text-blue-400 mr-2" />
+          <span className="text-blue-400 font-mono text-sm font-bold">
+            {language === 'EN' ? 'Skills Terminal' : 'Terminal de Habilidades'} ~ {language === 'EN' ? 'Loading' : 'Cargando'}...
+          </span>
+        </div>
+        <div className="p-4 text-gray-300 font-mono text-sm h-48 overflow-y-auto">
+          <div className="text-blue-400">$ skills.loading()</div>
+        </div>
+        <div className="p-4 border-t border-gray-800">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="mb-2">
+              <div className="h-2 bg-[#1a2537] rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-blue-600 to-blue-400 animate-pulse" style={{ width: '50%' }}/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className="bg-[#0f1724] rounded-lg shadow-2xl overflow-hidden border border-gray-800">
@@ -500,9 +556,17 @@ export default function ProjectsPage() {
   const [showModal, setShowModal] = useState(false);
   const autoPlayTimerRef = useRef(null);
   const carouselRef = useRef(null);
+  const [isMounted, setIsMounted] = useState(false);
+  
+  // Usar useEffect para evitar problemas de hidratación
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Configurar el temporizador de reproducción automática
   useEffect(() => {
+    if (!isMounted) return;
+    
     // Inicia el temporizador
     autoPlayTimerRef.current = setInterval(() => {
       setCertIndex(prev => (prev === certificateImages.length - 1 ? 0 : prev + 1));
@@ -514,10 +578,12 @@ export default function ProjectsPage() {
         clearInterval(autoPlayTimerRef.current);
       }
     };
-  }, [certificateImages.length]);
+  }, [certificateImages.length, isMounted]);
 
   // Pausar el carrusel cuando se muestra el modal
   useEffect(() => {
+    if (!isMounted) return;
+    
     if (showModal) {
       clearInterval(autoPlayTimerRef.current);
     } else if (!showModal && autoPlayTimerRef.current === null) {
@@ -525,7 +591,7 @@ export default function ProjectsPage() {
         setCertIndex(prev => (prev === certificateImages.length - 1 ? 0 : prev + 1));
       }, 2000);
     }
-  }, [showModal, certificateImages.length]);
+  }, [showModal, certificateImages.length, isMounted]);
 
   // Función para mostrar el script del certificado
   const showCertificateDetails = (cert) => {
@@ -600,84 +666,91 @@ export default function ProjectsPage() {
             className="relative bg-gradient-to-br from-[#1a2537] to-[#0c1220] rounded-xl overflow-hidden shadow-2xl p-6 mb-8 mx-auto max-w-5xl"
           >
             {/* Área principal del carrusel */}
-            <div className="relative h-[420px] flex items-center justify-center">
-              {certificateImages.map((cert, index) => {
-                // Calcular posición relativa 
-                const position = index - certIndex;
-                
-                // Solo renderizar certificados cercanos para rendimiento
-                if (position < -1 || position > 1) return null;
-                
-                // Configuración de estilo según posición
-                let translateX = '0%';
-                let scale = 1;
-                let zIndex = 10;
-                let opacity = 1;
-                let shadow = 'shadow-lg';
-                
-                if (position === -1) {
-                  translateX = '-65%';
-                  scale = 0.8;
-                  zIndex = 5;
-                  opacity = 0.7;
-                } else if (position === 1) {
-                  translateX = '65%';
-                  scale = 0.8;
-                  zIndex = 5;
-                  opacity = 0.7;
-                } else if (position === 0) {
-                  scale = 1.05;
-                  zIndex = 20;
-                  shadow = 'shadow-[0_0_30px_5px_rgba(59,130,246,0.6)]';
-                }
-                
-                return (
-                  <div
-                    key={cert.id}
-                    className={`absolute left-1/2 top-1/2 transition-all duration-500 ease-in-out ${shadow} rounded-xl ${position === 0 ? 'border-2 border-blue-400' : 'border border-gray-700'} cursor-pointer hover:scale-105`}
-                    style={{
-                      transform: `translate(-50%, -50%) translateX(${translateX}) scale(${scale})`,
-                      zIndex,
-                      opacity
-                    }}
-                    onClick={() => showCertificateDetails(cert)}
-                  >
-                    {/* Tarjeta de certificado que mejora el centrado - con imagen arriba y nombre abajo */}
-                    <div className="w-72 overflow-hidden">
-                      {/* Imagen del certificado con estricto centrado */}
-                      <div className="bg-[#0f1724] h-[280px] rounded-t-xl flex items-center justify-center overflow-hidden">
-                        <div className="relative w-full h-full flex items-center justify-center">
-                          <Image
-                            src={cert.image}
-                            alt={cert.name}
-                            width={250}
-                            height={250}
-                            className="object-contain max-w-[250px] max-h-[250px]"
-                            priority={position === 0}
-                            style={{ 
-                              margin: 'auto',
-                              display: 'block'
-                            }}
-                          />
+            {isMounted ? (
+              <div className="relative h-[420px] flex items-center justify-center">
+                {certificateImages.map((cert, index) => {
+                  // Calcular posición relativa 
+                  const position = index - certIndex;
+                  
+                  // Solo renderizar certificados cercanos para rendimiento
+                  if (position < -1 || position > 1) return null;
+                  
+                  // Configuración de estilo según posición
+                  let translateX = '0%';
+                  let scale = 1;
+                  let zIndex = 10;
+                  let opacity = 1;
+                  let shadow = 'shadow-lg';
+                  
+                  if (position === -1) {
+                    translateX = '-65%';
+                    scale = 0.8;
+                    zIndex = 5;
+                    opacity = 0.7;
+                  } else if (position === 1) {
+                    translateX = '65%';
+                    scale = 0.8;
+                    zIndex = 5;
+                    opacity = 0.7;
+                  } else if (position === 0) {
+                    scale = 1.05;
+                    zIndex = 20;
+                    shadow = 'shadow-[0_0_30px_5px_rgba(59,130,246,0.6)]';
+                  }
+                  
+                  return (
+                    <div
+                      key={cert.id}
+                      className={`absolute left-1/2 top-1/2 transition-all duration-500 ease-in-out ${shadow} rounded-xl ${position === 0 ? 'border-2 border-blue-400' : 'border border-gray-700'} cursor-pointer hover:scale-105`}
+                      style={{
+                        transform: `translate(-50%, -50%) translateX(${translateX}) scale(${scale})`,
+                        zIndex,
+                        opacity
+                      }}
+                      onClick={() => showCertificateDetails(cert)}
+                    >
+                      {/* Tarjeta de certificado que mejora el centrado - con imagen arriba y nombre abajo */}
+                      <div className="w-72 overflow-hidden">
+                        {/* Imagen del certificado con estricto centrado */}
+                        <div className="bg-[#0f1724] h-[280px] rounded-t-xl flex items-center justify-center overflow-hidden">
+                          <div className="relative w-full h-full flex items-center justify-center">
+                            <Image
+                              src={cert.image}
+                              alt={cert.name}
+                              width={250}
+                              height={250}
+                              className="object-contain max-w-[250px] max-h-[250px]"
+                              priority={position === 0}
+                              style={{ 
+                                margin: 'auto',
+                                display: 'block'
+                              }}
+                            />
+                          </div>
+                        </div>
+                        
+                        {/* Nombre del certificado abajo como estaba antes */}
+                        <div 
+                          className={`${martianMono.className} flex items-center justify-center text-center text-sm min-h-[60px] p-3 bg-[#1a2537] rounded-b-xl border-t border-gray-700 ${position === 0 ? 'text-blue-400' : 'text-gray-300'}`}
+                        >
+                          <span className="line-clamp-2">{cert.name}</span>
                         </div>
                       </div>
-                      
-                      {/* Nombre del certificado abajo como estaba antes */}
-                      <div 
-                        className={`${martianMono.className} flex items-center justify-center text-center text-sm min-h-[60px] p-3 bg-[#1a2537] rounded-b-xl border-t border-gray-700 ${position === 0 ? 'text-blue-400' : 'text-gray-300'}`}
-                      >
-                        <span className="line-clamp-2">{cert.name}</span>
-                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="h-[420px] flex items-center justify-center">
+                <div className="w-72 h-72 bg-[#1a2537] rounded-xl animate-pulse"></div>
+              </div>
+            )}
             
             {/* Botones de navegación */}
             <div className="absolute inset-y-0 left-4 flex items-center">
               <button
                 onClick={() => {
+                  if (!isMounted) return;
                   setCertIndex(prev => (prev === 0 ? certificateImages.length - 1 : prev - 1));
                   if (autoPlayTimerRef.current) {
                     clearInterval(autoPlayTimerRef.current);
@@ -698,6 +771,7 @@ export default function ProjectsPage() {
             <div className="absolute inset-y-0 right-4 flex items-center">
               <button
                 onClick={() => {
+                  if (!isMounted) return;
                   setCertIndex(prev => (prev === certificateImages.length - 1 ? 0 : prev + 1));
                   if (autoPlayTimerRef.current) {
                     clearInterval(autoPlayTimerRef.current);
@@ -716,36 +790,38 @@ export default function ProjectsPage() {
             </div>
             
             {/* Indicadores en la parte inferior */}
-            <div className="flex justify-center mt-8 gap-2 max-w-2xl mx-auto flex-wrap">
-              {certificateImages.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    setCertIndex(index);
-                    if (autoPlayTimerRef.current) {
-                      clearInterval(autoPlayTimerRef.current);
-                      autoPlayTimerRef.current = setInterval(() => {
-                        setCertIndex(prev => (prev === certificateImages.length - 1 ? 0 : prev + 1));
-                      }, 2000);
-                    }
-                  }}
-                  className={`flex items-center justify-center w-8 h-8 rounded-full text-xs font-medium transition-all duration-300 ${
-                    certIndex === index
-                      ? 'bg-blue-600 text-white scale-110'
-                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
-                  }`}
-                  aria-label={`${language === "EN" ? "Certificate" : "Certificado"} ${index + 1}`}
-                >
-                  {index + 1}
-                </button>
-              ))}
-            </div>
+            {isMounted && (
+              <div className="flex justify-center mt-8 gap-2 max-w-2xl mx-auto flex-wrap">
+                {certificateImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setCertIndex(index);
+                      if (autoPlayTimerRef.current) {
+                        clearInterval(autoPlayTimerRef.current);
+                        autoPlayTimerRef.current = setInterval(() => {
+                          setCertIndex(prev => (prev === certificateImages.length - 1 ? 0 : prev + 1));
+                        }, 2000);
+                      }
+                    }}
+                    className={`flex items-center justify-center w-8 h-8 rounded-full text-xs font-medium transition-all duration-300 ${
+                      certIndex === index
+                        ? 'bg-blue-600 text-white scale-110'
+                        : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
+                    }`}
+                    aria-label={`${language === "EN" ? "Certificate" : "Certificado"} ${index + 1}`}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
 
       {/* Modal para mostrar detalles del certificado */}
-      {showModal && selectedCert && (
+      {showModal && selectedCert && isMounted && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
           <div className="bg-[#101827] border-2 border-blue-500 rounded-xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-auto">
             {/* Encabezado del modal */}
