@@ -17,8 +17,8 @@ const martianMono = Martian_Mono({
 // Caracteres para el efecto (alfanuméricos y símbolos comunes)
 const effectChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-:;(){}[]|";
 
-// Duración total de la animación - aumentado a 8 segundos para un efecto mucho más lento
-const ANIMATION_DURATION = 6000;
+// Duración total de la animación - reducida a 3 segundos para un efecto más rápido
+const ANIMATION_DURATION = 3000;
 
 // Función para generar texto aleatorio
 const generateRandomText = (length) => {
@@ -44,17 +44,17 @@ const AnimatedWord = ({ word, animationStarted, globalInterval }) => {
       if (currentIndex >= word.length) {
         stabilityCounter++;
         
-        // Estabilización muchísimo más lenta
-        if (stabilityCounter > 20) {  // Aumentado drásticamente
+        // Estabilización más rápida
+        if (stabilityCounter > 8) {  // Reducido de 20 a 8
           setDisplayText(word);
           return;
         }
         
-        // Variaciones muy reducidas para un efecto natural
+        // Variaciones más rápidas
         let tempText = "";
         for (let i = 0; i < word.length; i++) {
-          // Muy baja probabilidad de cambio para que sea más natural
-          if (Math.random() > 0.98 - (stabilityCounter * 0.03)) {  
+          // Mayor probabilidad de estabilizar rápido
+          if (Math.random() > 0.9 - (stabilityCounter * 0.1)) {  // Ajustado para estabilizarse más rápido
             tempText += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
           } else {
             tempText += word[i];
@@ -63,8 +63,8 @@ const AnimatedWord = ({ word, animationStarted, globalInterval }) => {
         
         setDisplayText(tempText);
       } else {
-        // Incrementamos muy gradualmente el índice
-        if (Math.random() > 0.75) {  // Probabilidad mucho menor de avance
+        // Incrementamos más rápidamente el índice
+        if (Math.random() > 0.5) {  // Probabilidad aumentada de avance
           currentIndex++;
         }
         
@@ -197,8 +197,8 @@ export default function Home() {
     setAnimationComplete(false);
     setAnimationStarted(false);
     
-    // Intervalo mucho más lento - cambiado a 180ms para un efecto más natural y pausado
-    const interval = 180;
+    // Intervalo más rápido - 100ms en lugar de 180ms
+    const interval = 100;
     setGlobalInterval(interval);
     
     // Función para finalizar todas las animaciones después de un tiempo fijo
@@ -222,17 +222,17 @@ export default function Home() {
         if (currentIndex >= nameWithoutBreak.length) {
           stabilityCounter++;
           
-          if (stabilityCounter > 20) {  // Mucho más lento
+          if (stabilityCounter > 8) {  // Reducido de 20 a 8
             // Reinsertamos el salto de línea
             setDisplayName(targetName);
             return;
           }
           
-          // Pequeñas variaciones - muy reducidas para efecto natural
+          // Pequeñas variaciones - aceleradas
           let tempName = "";
           for (let i = 0; i < nameWithoutBreak.length; i++) {
-            // Muy baja probabilidad de cambio
-            if (Math.random() > 0.98 - (stabilityCounter * 0.03)) {
+            // Mayor probabilidad de estabilizar
+            if (Math.random() > 0.9 - (stabilityCounter * 0.1)) {
               tempName += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
             } else {
               tempName += nameWithoutBreak[i];
@@ -247,8 +247,8 @@ export default function Home() {
           
           setDisplayName(tempName);
         } else {
-          // Incrementamos muy gradualmente el índice
-          if (Math.random() > 0.8) {  // Probabilidad muy reducida
+          // Incrementamos más rápidamente el índice
+          if (Math.random() > 0.5) {  // Aumentada de 0.8 a 0.5
             currentIndex++;
           }
           
@@ -282,16 +282,16 @@ export default function Home() {
         if (currentIndex >= targetTitle.length) {
           stabilityCounter++;
           
-          if (stabilityCounter > 15) {  // Mucho más lento
+          if (stabilityCounter > 6) {  // Reducido de 15 a 6
             setDisplayTitle(targetTitle);
             return;
           }
           
-          // Pequeñas variaciones - casi imperceptibles para más naturalidad
+          // Pequeñas variaciones - más rápidas
           let tempTitle = "";
           for (let i = 0; i < targetTitle.length; i++) {
-            // Probabilidad muy baja de cambio
-            if (Math.random() > 0.97 - (stabilityCounter * 0.04)) {
+            // Mayor probabilidad de estabilizar
+            if (Math.random() > 0.85 - (stabilityCounter * 0.1)) {
               tempTitle += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
             } else {
               tempTitle += targetTitle[i];
@@ -300,8 +300,8 @@ export default function Home() {
           
           setDisplayTitle(tempTitle);
         } else {
-          // Incrementar índice con probabilidad muy reducida
-          if (Math.random() > 0.75) {
+          // Incrementar índice con mayor probabilidad
+          if (Math.random() > 0.4) {  // Reducido de 0.75 a 0.4
             currentIndex++;
           }
           
@@ -319,19 +319,19 @@ export default function Home() {
       }, interval);
     };
     
-    // Iniciar todas las animaciones a la vez, con un pequeño retraso adicional
+    // Iniciar todas las animaciones a la vez, con menos retraso
     setTimeout(() => {
       setAnimationStarted(true);
       animateName();
       
-      // Pequeño retraso entre nombre y título para efecto más natural
+      // Pequeño retraso entre nombre y título para efecto natural pero más rápido
       setTimeout(() => {
         animateTitle();
-      }, 300);
+      }, 150); // Reducido de 300 a 150
       
-      // Forzar finalización de todas las animaciones al mismo tiempo
+      // Forzar finalización de todas las animaciones más rápido
       setTimeout(finishAnimations, ANIMATION_DURATION);
-    }, 200);
+    }, 100); // Reducido de 200 a 100
     
     return () => {
       clearInterval(nameInterval);

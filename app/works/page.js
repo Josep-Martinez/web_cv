@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useLanguage } from "../../app/LanguageContext";
 import { useState, useEffect, useRef } from "react";
 import { Terminal, Code, Braces, Database, Layout, Globe, Users, Brain, Server } from 'lucide-react';
+import React from "react";
 
 const nixieOne = Nixie_One({
   weight: "400",
@@ -15,6 +16,85 @@ const martianMono = Martian_Mono({
   subsets: ["latin"],
 });
 
+// Caracteres para el efecto (alfanuméricos y símbolos comunes)
+const effectChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-:;(){}[]|";
+
+// Duración total de la animación - 2 segundos para un efecto rápido
+const ANIMATION_DURATION = 2000;
+
+// Función para generar texto aleatorio
+const generateRandomText = (length) => {
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
+  }
+  return result;
+};
+
+// Componente para palabras con efecto de animación
+const AnimatedWord = ({ word, animationStarted, globalInterval }) => {
+  const [displayText, setDisplayText] = useState(generateRandomText(word.length));
+  
+  useEffect(() => {
+    if (!animationStarted || !globalInterval) return;
+    
+    let currentIndex = 0;
+    let stabilityCounter = 0;
+    
+    const interval = setInterval(() => {
+      // Si ya hemos completado la palabra
+      if (currentIndex >= word.length) {
+        stabilityCounter++;
+        
+        // Estabilización rápida
+        if (stabilityCounter > 5) {  // Reducido a 5 para ser muy rápido
+          setDisplayText(word);
+          return;
+        }
+        
+        // Variaciones rápidas
+        let tempText = "";
+        for (let i = 0; i < word.length; i++) {
+          // Mayor probabilidad de estabilizar rápido
+          if (Math.random() > 0.85 - (stabilityCounter * 0.15)) {
+            tempText += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
+          } else {
+            tempText += word[i];
+          }
+        }
+        
+        setDisplayText(tempText);
+      } else {
+        // Incrementamos rápidamente el índice
+        if (Math.random() > 0.3) {  // Probabilidad muy alta de avance
+          currentIndex++;
+        }
+        
+        // Construimos la palabra: caracteres correctos + caracteres aleatorios
+        let tempText = "";
+        for (let i = 0; i < word.length; i++) {
+          if (i < currentIndex) {
+            tempText += word[i];
+          } else {
+            tempText += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
+          }
+        }
+        
+        setDisplayText(tempText);
+      }
+    }, globalInterval);
+    
+    // Limpiar intervalo cuando el componente se desmonta
+    return () => clearInterval(interval);
+  }, [word, animationStarted, globalInterval]);
+  
+  return (
+    <span className="line-through text-blue-500">
+      {displayText}
+    </span>
+  );
+};
+
 // Traducciones
 const texts = {
   EN: {
@@ -22,10 +102,10 @@ const texts = {
     description: (
       <>
         This section presents a comprehensive view of my{" "}
-        <span className="line-through text-blue-500">professional journey</span>, a path marked by constant evolution and overcoming challenges in various contexts. 
+        <AnimatedWord word="professional journey" />, a path marked by constant evolution and overcoming challenges in various contexts. 
         Throughout my career, I have cultivated{" "}
-        <span className="line-through text-blue-500">technical skills</span> and strategic thinking that allow me to{" "}
-        <span className="line-through text-blue-500">adapt</span> and generate innovative solutions.
+        <AnimatedWord word="technical skills" /> and strategic thinking that allow me to{" "}
+        <AnimatedWord word="adapt" /> and generate innovative solutions.
       </>
     ),
     experiences: [
@@ -86,10 +166,10 @@ const texts = {
     description: (
       <>
         Esta sección presenta una visión integral de mi{" "}
-        <span className="line-through text-blue-500">trayectoria profesional</span>, un recorrido marcado por la evolución constante y la superación de desafíos en diversos contextos. 
+        <AnimatedWord word="trayectoria profesional" />, un recorrido marcado por la evolución constante y la superación de desafíos en diversos contextos. 
         A lo largo de mi carrera, he cultivado{" "}
-        <span className="line-through text-blue-500">habilidades</span> técnicas y estratégicas que me permiten{" "}
-        <span className="line-through text-blue-500">adaptarme</span> y generar soluciones innovadoras.
+        <AnimatedWord word="habilidades" /> técnicas y estratégicas que me permiten{" "}
+        <AnimatedWord word="adaptarme" /> y generar soluciones innovadoras.
       </>
     ),
     experiences: [
@@ -641,11 +721,40 @@ export default function ExperiencePage() {
   const autoPlayTimerRef = useRef(null);
   const carouselRef = useRef(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [animationStarted, setAnimationStarted] = useState(false);
+  const [globalInterval, setGlobalInterval] = useState(null);
   
   // Usar useEffect para evitar problemas de hidratación
   useEffect(() => {
     setIsMounted(true);
-  }, []);
+    
+    // Si está montado, iniciamos la animación con un breve retraso
+    if (isMounted) {
+      // Usamos un intervalo rápido de 80ms para la animación
+      setGlobalInterval(80);
+      
+      // Pequeño retraso antes de iniciar la animación
+      setTimeout(() => {
+        setAnimationStarted(true);
+      }, 100);
+    }
+  }, [isMounted]);
+
+  // Función para clonar elementos con props de animación
+  const renderAnimatedDescription = (description) => {
+    if (!isMounted) return null;
+    
+    // Clonamos los elementos y les pasamos las propiedades de animación
+    return React.Children.map(description.props.children, child => {
+      if (React.isValidElement(child) && child.type === AnimatedWord) {
+        return React.cloneElement(child, {
+          animationStarted: animationStarted,
+          globalInterval: globalInterval
+        });
+      }
+      return child;
+    });
+  };
 
   // Configurar el temporizador de reproducción automática para certificados
   useEffect(() => {
@@ -695,6 +804,32 @@ export default function ExperiencePage() {
     }, 2000);
   };
 
+  // Para prevenir errores de hidratación, renderizamos una versión muy simple en el servidor
+  // y la versión completa solo en el cliente después del montaje
+  if (!isMounted) {
+    return (
+      <div className="min-h-screen bg-[#101827] text-white p-6 md:p-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-10 text-center">
+            <h1 className={`${nixieOne.className} text-4xl md:text-7xl font-bold tracking-wider mb-10`}>
+              {texts[language].title}
+            </h1>
+            {/* Marcador de posición para la descripción */}
+            <div className={`${martianMono.className} text-sm md:text-base text-gray-300 h-20`}></div>
+          </div>
+          
+          {/* Marcador de posición para la experiencia, skills y certificados */}
+          <div className="mb-20">
+            <div className="relative">
+              <div className="h-40 bg-[#1a2537] rounded animate-pulse mb-4"></div>
+              <div className="h-40 bg-[#1a2537] rounded animate-pulse mb-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#101827] text-white p-6 md:p-20">
       <div className="max-w-6xl mx-auto">
@@ -704,7 +839,7 @@ export default function ExperiencePage() {
             {texts[language].title}
           </h1>
           <p className={`${martianMono.className} text-sm md:text-base text-gray-300`}>
-            {texts[language].description}
+            {renderAnimatedDescription(texts[language].description)}
           </p>
         </div>
 
@@ -779,91 +914,84 @@ export default function ExperiencePage() {
             className="relative bg-gradient-to-br from-[#1a2537] to-[#0c1220] rounded-xl overflow-hidden shadow-2xl p-6 mb-8 mx-auto max-w-5xl"
           >
             {/* Área principal del carrusel */}
-            {isMounted ? (
-              <div className="relative h-[420px] flex items-center justify-center">
-                {certificateImages.map((cert, index) => {
-                  // Calcular posición relativa 
-                  const position = index - certIndex;
-                  
-                  // Solo renderizar certificados cercanos para rendimiento
-                  if (position < -1 || position > 1) return null;
-                  
-                  // Configuración de estilo según posición
-                  let translateX = '0%';
-                  let scale = 1;
-                  let zIndex = 10;
-                  let opacity = 1;
-                  let shadow = 'shadow-lg';
-                  
-                  if (position === -1) {
-                    translateX = '-65%';
-                    scale = 0.8;
-                    zIndex = 5;
-                    opacity = 0.7;
-                  } else if (position === 1) {
-                    translateX = '65%';
-                    scale = 0.8;
-                    zIndex = 5;
-                    opacity = 0.7;
-                  } else if (position === 0) {
-                    scale = 1.05;
-                    zIndex = 20;
-                    shadow = 'shadow-[0_0_30px_5px_rgba(59,130,246,0.6)]';
-                  }
-                  
-                  return (
-                    <div
-                      key={cert.id}
-                      className={`absolute left-1/2 top-1/2 transition-all duration-500 ease-in-out ${shadow} rounded-xl ${position === 0 ? 'border-2 border-blue-400' : 'border border-gray-700'} cursor-pointer hover:scale-105`}
-                      style={{
-                        transform: `translate(-50%, -50%) translateX(${translateX}) scale(${scale})`,
-                        zIndex,
-                        opacity
-                      }}
-                      onClick={() => showCertificateDetails(cert)}
-                    >
-                      {/* Tarjeta de certificado que mejora el centrado - con imagen arriba y nombre abajo */}
-                      <div className="w-72 overflow-hidden">
-                        {/* Imagen del certificado con estricto centrado */}
-                        <div className="bg-[#0f1724] h-[280px] rounded-t-xl flex items-center justify-center overflow-hidden">
-                          <div className="relative w-full h-full flex items-center justify-center">
-                            <Image
-                              src={cert.image}
-                              alt={cert.name}
-                              width={250}
-                              height={250}
-                              className="object-contain max-w-[250px] max-h-[250px]"
-                              priority={position === 0}
-                              style={{ 
-                                margin: 'auto',
-                                display: 'block'
-                              }}
-                            />
-                          </div>
-                        </div>
-                        
-                        {/* Nombre del certificado abajo como estaba antes */}
-                        <div 
-                          className={`${martianMono.className} flex items-center justify-center text-center text-sm min-h-[60px] p-3 bg-[#1a2537] rounded-b-xl border-t border-gray-700 ${position === 0 ? 'text-blue-400' : 'text-gray-300'}`}
-                        >
-                          <span className="line-clamp-2">{cert.name}</span>
+            <div className="relative h-[420px] flex items-center justify-center">
+              {certificateImages.map((cert, index) => {
+                // Calcular posición relativa 
+                const position = index - certIndex;
+                
+                // Solo renderizar certificados cercanos para rendimiento
+                if (position < -1 || position > 1) return null;
+                
+                // Configuración de estilo según posición
+                let translateX = '0%';
+                let scale = 1;
+                let zIndex = 10;
+                let opacity = 1;
+                let shadow = 'shadow-lg';
+                
+                if (position === -1) {
+                  translateX = '-65%';
+                  scale = 0.8;
+                  zIndex = 5;
+                  opacity = 0.7;
+                } else if (position === 1) {
+                  translateX = '65%';
+                  scale = 0.8;
+                  zIndex = 5;
+                  opacity = 0.7;
+                } else if (position === 0) {
+                  scale = 1.05;
+                  zIndex = 20;
+                  shadow = 'shadow-[0_0_30px_5px_rgba(59,130,246,0.6)]';
+                }
+                
+                return (
+                  <div
+                    key={cert.id}
+                    className={`absolute left-1/2 top-1/2 transition-all duration-500 ease-in-out ${shadow} rounded-xl ${position === 0 ? 'border-2 border-blue-400' : 'border border-gray-700'} cursor-pointer hover:scale-105`}
+                    style={{
+                      transform: `translate(-50%, -50%) translateX(${translateX}) scale(${scale})`,
+                      zIndex,
+                      opacity
+                    }}
+                    onClick={() => showCertificateDetails(cert)}
+                  >
+                    {/* Tarjeta de certificado que mejora el centrado - con imagen arriba y nombre abajo */}
+                    <div className="w-72 overflow-hidden">
+                      {/* Imagen del certificado con estricto centrado */}
+                      <div className="bg-[#0f1724] h-[280px] rounded-t-xl flex items-center justify-center overflow-hidden">
+                        <div className="relative w-full h-full flex items-center justify-center">
+                          <Image
+                            src={cert.image}
+                            alt={cert.name}
+                            width={250}
+                            height={250}
+                            className="object-contain max-w-[250px] max-h-[250px]"
+                            priority={position === 0}
+                            style={{ 
+                              margin: 'auto',
+                              display: 'block'
+                            }}
+                          />
                         </div>
                       </div>
+                      
+                      {/* Nombre del certificado abajo como estaba antes */}
+                      <div 
+                        className={`${martianMono.className} flex items-center justify-center text-center text-sm min-h-[60px] p-3 bg-[#1a2537] rounded-b-xl border-t border-gray-700 ${position === 0 ? 'text-blue-400' : 'text-gray-300'}`}
+                      >
+                        <span className="line-clamp-2">{cert.name}</span>
+                      </div>
                     </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="h-[420px] flex items-center justify-center">
-                <div className="w-72 h-72 bg-[#1a2537] rounded-xl animate-pulse"></div>
-              </div>
-            )}
+                  </div>
+                );
+              })}
+            </div>
             
             {/* Botones de navegación */}
             <div className="absolute inset-y-0 left-4 flex items-center">
               <button
                 onClick={() => {
-                  if (!isMounted) return;
                   setCertIndex(prev => (prev === 0 ? certificateImages.length - 1 : prev - 1));
                   if (autoPlayTimerRef.current) {
                     clearInterval(autoPlayTimerRef.current);
@@ -884,7 +1012,6 @@ export default function ExperiencePage() {
             <div className="absolute inset-y-0 right-4 flex items-center">
               <button
                 onClick={() => {
-                  if (!isMounted) return;
                   setCertIndex(prev => (prev === certificateImages.length - 1 ? 0 : prev + 1));
                   if (autoPlayTimerRef.current) {
                     clearInterval(autoPlayTimerRef.current);
@@ -903,39 +1030,37 @@ export default function ExperiencePage() {
             </div>
             
             {/* Indicadores en la parte inferior */}
-            {isMounted && (
-              <div className="flex justify-center mt-8 gap-2 max-w-2xl mx-auto flex-wrap">
-                {certificateImages.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      setCertIndex(index);
-                      if (autoPlayTimerRef.current) {
-                        clearInterval(autoPlayTimerRef.current);
-                        autoPlayTimerRef.current = setInterval(() => {
-                          setCertIndex(prev => (prev === certificateImages.length - 1 ? 0 : prev + 1));
-                        }, 2000);
-                      }
-                    }}
-                    className={`flex items-center justify-center w-8 h-8 rounded-full text-xs font-medium transition-all duration-300 ${
-                      certIndex === index
-                        ? 'bg-blue-600 text-white scale-110'
-                        : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
-                    }`}
-                    aria-label={`${language === "EN" ? "Certificate" : "Certificado"} ${index + 1}`}
-                  >
-                    {index + 1}
-                  </button>
-                ))}
-              </div>
-            )}
+            <div className="flex justify-center mt-8 gap-2 max-w-2xl mx-auto flex-wrap">
+              {certificateImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setCertIndex(index);
+                    if (autoPlayTimerRef.current) {
+                      clearInterval(autoPlayTimerRef.current);
+                      autoPlayTimerRef.current = setInterval(() => {
+                        setCertIndex(prev => (prev === certificateImages.length - 1 ? 0 : prev + 1));
+                      }, 2000);
+                    }
+                  }}
+                  className={`flex items-center justify-center w-8 h-8 rounded-full text-xs font-medium transition-all duration-300 ${
+                    certIndex === index
+                      ? 'bg-blue-600 text-white scale-110'
+                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
+                  }`}
+                  aria-label={`${language === "EN" ? "Certificate" : "Certificado"} ${index + 1}`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
       </div>
 
       {/* Modal para mostrar detalles del certificado */}
-      {showModal && selectedCert && isMounted && (
+      {showModal && selectedCert && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
           <div className="bg-[#101827] border-2 border-blue-500 rounded-xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-auto">
             {/* Encabezado del modal */}

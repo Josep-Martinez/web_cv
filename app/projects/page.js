@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { Nixie_One, Martian_Mono } from "next/font/google";
 import { useLanguage } from "../../app/LanguageContext";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, isValidElement, cloneElement, Children } from "react";
 
 const nixieOne = Nixie_One({
   weight: "400",
@@ -14,6 +14,85 @@ const martianMono = Martian_Mono({
   subsets: ["latin"],
 });
 
+// Caracteres para el efecto (alfanuméricos y símbolos comunes)
+const effectChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-:;(){}[]|";
+
+// Duración total de la animación - 2 segundos para un efecto rápido
+const ANIMATION_DURATION = 2000;
+
+// Función para generar texto aleatorio
+const generateRandomText = (length) => {
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
+  }
+  return result;
+};
+
+// Componente para palabras con efecto de animación
+const AnimatedWord = ({ word, animationStarted, globalInterval }) => {
+  const [displayText, setDisplayText] = useState(generateRandomText(word.length));
+  
+  useEffect(() => {
+    if (!animationStarted || !globalInterval) return;
+    
+    let currentIndex = 0;
+    let stabilityCounter = 0;
+    
+    const interval = setInterval(() => {
+      // Si ya hemos completado la palabra
+      if (currentIndex >= word.length) {
+        stabilityCounter++;
+        
+        // Estabilización rápida
+        if (stabilityCounter > 5) {  // Reducido a 5 para ser muy rápido
+          setDisplayText(word);
+          return;
+        }
+        
+        // Variaciones rápidas
+        let tempText = "";
+        for (let i = 0; i < word.length; i++) {
+          // Mayor probabilidad de estabilizar rápido
+          if (Math.random() > 0.85 - (stabilityCounter * 0.15)) {
+            tempText += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
+          } else {
+            tempText += word[i];
+          }
+        }
+        
+        setDisplayText(tempText);
+      } else {
+        // Incrementamos rápidamente el índice
+        if (Math.random() > 0.3) {  // Probabilidad muy alta de avance
+          currentIndex++;
+        }
+        
+        // Construimos la palabra: caracteres correctos + caracteres aleatorios
+        let tempText = "";
+        for (let i = 0; i < word.length; i++) {
+          if (i < currentIndex) {
+            tempText += word[i];
+          } else {
+            tempText += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
+          }
+        }
+        
+        setDisplayText(tempText);
+      }
+    }, globalInterval);
+    
+    // Limpiar intervalo cuando el componente se desmonta
+    return () => clearInterval(interval);
+  }, [word, animationStarted, globalInterval]);
+  
+  return (
+    <span className="line-through text-blue-500">
+      {displayText}
+    </span>
+  );
+};
+
 // Traducciones con palabras tachadas y en azul
 const texts = {
   EN: {
@@ -21,10 +100,11 @@ const texts = {
     description: (
       <>
         In this section, you will find a representative selection of{" "}
-        <span className="line-through text-blue-500">individual projects</span> that illustrate my professional experience and my ability to tackle challenges in a structured and creative way. 
+        <AnimatedWord word="individual projects" />{" "}
+        that illustrate my professional experience and my ability to tackle challenges in a structured and creative way. 
         Each project is the result of personal effort and has been developed with a focus on{" "}
-        <span className="line-through text-blue-500">quality</span> and{" "}
-        <span className="line-through text-blue-500">innovation</span>.
+        <AnimatedWord word="quality" />{" "}and{" "}
+        <AnimatedWord word="innovation" />.
       </>
     ),
     projects: [
@@ -38,10 +118,11 @@ const texts = {
     description: (
       <>
         En esta sección encontrará una selección representativa de{" "}
-        <span className="line-through text-blue-500">proyectos individuales</span> que ilustran mi experiencia profesional y mi capacidad para abordar desafíos de forma estructurada y creativa. 
+        <AnimatedWord word="proyectos individuales" />{" "}
+        que ilustran mi experiencia profesional y mi capacidad para abordar desafíos de forma estructurada y creativa. 
         Cada proyecto es fruto de un esfuerzo personal y ha sido desarrollado con un enfoque en la{" "}
-        <span className="line-through text-blue-500">calidad</span> y la{" "}
-        <span className="line-through text-blue-500">innovación</span>.
+        <AnimatedWord word="calidad" />{" "}y la{" "}
+        <AnimatedWord word="innovación" />.
       </>
     ),
     projects: [
@@ -55,11 +136,48 @@ const texts = {
 export default function ProjectsPage() {
   const { language } = useLanguage();
   const [isMounted, setIsMounted] = useState(false);
+  const [animationStarted, setAnimationStarted] = useState(false);
+  const [globalInterval, setGlobalInterval] = useState(null);
   
   // Usar useEffect para evitar problemas de hidratación
   useEffect(() => {
     setIsMounted(true);
-  }, []);
+    
+    // Si está montado, iniciamos la animación con un breve retraso
+    if (isMounted) {
+      // Usamos un intervalo rápido de 80ms para la animación
+      setGlobalInterval(80);
+      
+      // Pequeño retraso antes de iniciar la animación
+      setTimeout(() => {
+        setAnimationStarted(true);
+      }, 100);
+    }
+  }, [isMounted]);
+
+  // Renderizar los componentes de texto con palabras animadas
+  const renderDescriptionWithAnimatedWords = (descItem) => {
+    if (!isMounted) return null;
+    
+    // Crear una versión del párrafo con palabras animadas
+    let content = descItem;
+    
+    if (isValidElement(descItem)) {
+      content = cloneElement(descItem, {
+        children: Children.map(descItem.props.children, child => {
+          if (isValidElement(child) && child.type === AnimatedWord) {
+            return cloneElement(child, {
+              animationStarted: animationStarted,
+              globalInterval: globalInterval
+            });
+          }
+          return child;
+        })
+      });
+    }
+    
+    return content;
+  };
 
   // Para prevenir errores de hidratación, renderizamos una versión muy simple en el servidor
   // y la versión completa solo en el cliente después del montaje
@@ -97,7 +215,7 @@ export default function ProjectsPage() {
             {texts[language].title}
           </h1>
           <div className={`${martianMono.className} text-sm md:text-base text-gray-300`}>
-            {texts[language].description}
+            {renderDescriptionWithAnimatedWords(texts[language].description)}
           </div>
         </div>
 
