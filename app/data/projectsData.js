@@ -3,7 +3,7 @@ export const projectsData = {
     { 
       id: 1, 
       name: "SomRiure Center", 
-      image: "/somriure.png",
+      image: "/somriure/somriure.png",
       tech: ["WordPress", "HTML", "Strato", "CSS", "PhotoShop"],
       description: "Professional website for psychology and neurodevelopment center",
       longDescription: "Professional website developed for SomRiure Center, a psychology and neurodevelopment facility accredited by the Generalitat Valenciana. The website features comprehensive information about their therapeutic services, professional team, and contact information. Built with WordPress for easy content management and SEO optimization.",
@@ -48,7 +48,7 @@ export const projectsData = {
     { 
       id: 2, 
       name: "LipsTalk", 
-      image: "/lipstalk.png",
+      image: "/lipstalk/lipstalk.png",
       tech: ["React Native", "TypeScript", "Python", "GitHub", "FastApi", "Uvicon"],
       description: "Lip reading application",
       longDescription: "Revolutionary application that uses computer vision and deep learning to interpret lip movements and convert them to text. This project showcases deep learning model implementation and real-time processing capabilities.",
