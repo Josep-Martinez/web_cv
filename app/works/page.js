@@ -100,7 +100,7 @@ const texts = {
         location: "Valencia, Comunidad Valenciana, España",
         description: "Prácticas como Data Engineer, trabajando con tecnologías MDM y herramientas cloud.",
         skills: "Informática MDM, Dell Boomi, Aplicaciones en la nube, Gestión de datos maestros",
-        logo: "/infoverity/infoverity_logo.jpeg",
+        logo: "/public/infoverity/infoverity_logo.jpeg",
       },
       {
         title: "Developer",
