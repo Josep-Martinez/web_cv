@@ -2,7 +2,8 @@
 import Image from "next/image";
 import { Nixie_One, Martian_Mono } from "next/font/google";
 import { useLanguage } from "../app/LanguageContext";
-import React, { useState, useEffect, isValidElement, cloneElement, Children } from "react";
+import React, { useState, useEffect } from "react";
+import AnimatedWord from "./components/AnimatedWord"; // Importar el componente externo
 
 const nixieOne = Nixie_One({
   weight: "400",
@@ -14,84 +15,8 @@ const martianMono = Martian_Mono({
   subsets: ["latin"],
 });
 
-// Caracteres para el efecto (alfanuméricos y símbolos comunes)
+// Caracteres para el efecto del nombre y título
 const effectChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-:;(){}[]|";
-
-// Duración total de la animación - reducida a 3 segundos para un efecto más rápido
-const ANIMATION_DURATION = 3000;
-
-// Función para generar texto aleatorio
-const generateRandomText = (length) => {
-  let result = '';
-  for (let i = 0; i < length; i++) {
-    result += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
-  }
-  return result;
-};
-
-// Componente para palabras con efecto de animación
-const AnimatedWord = ({ word, animationStarted, globalInterval }) => {
-  const [displayText, setDisplayText] = useState(generateRandomText(word.length));
-  
-  useEffect(() => {
-    if (!animationStarted || !globalInterval) return;
-    
-    let currentIndex = 0;
-    let stabilityCounter = 0;
-    
-    const interval = setInterval(() => {
-      // Si ya hemos completado la palabra
-      if (currentIndex >= word.length) {
-        stabilityCounter++;
-        
-        // Estabilización más rápida
-        if (stabilityCounter > 8) {  // Reducido de 20 a 8
-          setDisplayText(word);
-          return;
-        }
-        
-        // Variaciones más rápidas
-        let tempText = "";
-        for (let i = 0; i < word.length; i++) {
-          // Mayor probabilidad de estabilizar rápido
-          if (Math.random() > 0.9 - (stabilityCounter * 0.1)) {  // Ajustado para estabilizarse más rápido
-            tempText += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
-          } else {
-            tempText += word[i];
-          }
-        }
-        
-        setDisplayText(tempText);
-      } else {
-        // Incrementamos más rápidamente el índice
-        if (Math.random() > 0.5) {  // Probabilidad aumentada de avance
-          currentIndex++;
-        }
-        
-        // Construimos la palabra: caracteres correctos + caracteres aleatorios
-        let tempText = "";
-        for (let i = 0; i < word.length; i++) {
-          if (i < currentIndex) {
-            tempText += word[i];
-          } else {
-            tempText += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
-          }
-        }
-        
-        setDisplayText(tempText);
-      }
-    }, globalInterval);
-    
-    // Limpiar intervalo cuando el componente se desmonta
-    return () => clearInterval(interval);
-  }, [word, animationStarted, globalInterval]);
-  
-  return (
-    <span className="line-through text-blue-500">
-      {displayText}
-    </span>
-  );
-};
 
 // Traducciones
 const texts = {
@@ -149,21 +74,34 @@ export default function Home() {
   const { language } = useLanguage();
   const [displayName, setDisplayName] = useState("");
   const [displayTitle, setDisplayTitle] = useState("");
+  const [isMounted, setIsMounted] = useState(false);
   const [animationStarted, setAnimationStarted] = useState(false);
-  const [animationComplete, setAnimationComplete] = useState(false);
   const [globalInterval, setGlobalInterval] = useState(null);
+  
+  // Usar useEffect para evitar problemas de hidratación
+  useEffect(() => {
+    setIsMounted(true);
+    
+    if (isMounted) {
+      setGlobalInterval(80);
+      setTimeout(() => {
+        setAnimationStarted(true);
+      }, 100);
+    }
+  }, [isMounted]);
   
   // Renderizar los componentes de texto con palabras animadas
   const renderDescriptionWithAnimatedWords = (descItems) => {
+    if (!isMounted) return null;
+    
     return descItems.map((para, index, array) => {
-      // Crear una versión del párrafo con palabras animadas
       let content = para;
       
-      if (isValidElement(para)) {
-        content = cloneElement(para, {
-          children: Children.map(para.props.children, child => {
-            if (isValidElement(child) && child.type === AnimatedWord) {
-              return cloneElement(child, {
+      if (React.isValidElement(para)) {
+        content = React.cloneElement(para, {
+          children: React.Children.map(para.props.children, child => {
+            if (React.isValidElement(child) && child.type === AnimatedWord) {
+              return React.cloneElement(child, {
                 animationStarted: animationStarted,
                 globalInterval: globalInterval
               });
@@ -188,25 +126,17 @@ export default function Home() {
   };
 
   useEffect(() => {
+    if (!isMounted) return;
+    
     const targetName = texts[language].name;
     const targetTitle = texts[language].jobTitle;
     
-    // Inicializar estados
+    // Resetear estados cuando cambia el idioma
     setDisplayName("");
     setDisplayTitle("");
-    setAnimationComplete(false);
-    setAnimationStarted(false);
     
-    // Intervalo más rápido - 100ms en lugar de 180ms
+    // Intervalo más rápido
     const interval = 100;
-    setGlobalInterval(interval);
-    
-    // Función para finalizar todas las animaciones después de un tiempo fijo
-    const finishAnimations = () => {
-      setDisplayName(targetName);
-      setDisplayTitle(targetTitle);
-      setAnimationComplete(true);
-    };
     
     let nameInterval;
     let titleInterval;
@@ -218,20 +148,16 @@ export default function Home() {
       let stabilityCounter = 0;
       
       nameInterval = setInterval(() => {
-        // Si ya hemos completado el nombre
         if (currentIndex >= nameWithoutBreak.length) {
           stabilityCounter++;
           
-          if (stabilityCounter > 8) {  // Reducido de 20 a 8
-            // Reinsertamos el salto de línea
+          if (stabilityCounter > 8) {
             setDisplayName(targetName);
             return;
           }
           
-          // Pequeñas variaciones - aceleradas
           let tempName = "";
           for (let i = 0; i < nameWithoutBreak.length; i++) {
-            // Mayor probabilidad de estabilizar
             if (Math.random() > 0.9 - (stabilityCounter * 0.1)) {
               tempName += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
             } else {
@@ -239,7 +165,6 @@ export default function Home() {
             }
           }
           
-          // Reinsertamos el salto de línea si es necesario
           if (targetName.includes("\n")) {
             const breakPos = targetName.indexOf("\n");
             tempName = tempName.substring(0, breakPos) + "\n" + tempName.substring(breakPos);
@@ -247,12 +172,10 @@ export default function Home() {
           
           setDisplayName(tempName);
         } else {
-          // Incrementamos más rápidamente el índice
-          if (Math.random() > 0.5) {  // Aumentada de 0.8 a 0.5
+          if (Math.random() > 0.5) {
             currentIndex++;
           }
           
-          // Construimos el nombre: caracteres correctos + caracteres aleatorios
           let tempName = "";
           for (let i = 0; i < nameWithoutBreak.length; i++) {
             if (i < currentIndex) {
@@ -262,7 +185,6 @@ export default function Home() {
             }
           }
           
-          // Reinsertamos el salto de línea si es necesario
           if (targetName.includes("\n")) {
             const breakPos = targetName.indexOf("\n");
             tempName = tempName.substring(0, breakPos) + "\n" + tempName.substring(breakPos);
@@ -282,15 +204,13 @@ export default function Home() {
         if (currentIndex >= targetTitle.length) {
           stabilityCounter++;
           
-          if (stabilityCounter > 6) {  // Reducido de 15 a 6
+          if (stabilityCounter > 6) {
             setDisplayTitle(targetTitle);
             return;
           }
           
-          // Pequeñas variaciones - más rápidas
           let tempTitle = "";
           for (let i = 0; i < targetTitle.length; i++) {
-            // Mayor probabilidad de estabilizar
             if (Math.random() > 0.85 - (stabilityCounter * 0.1)) {
               tempTitle += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
             } else {
@@ -300,8 +220,7 @@ export default function Home() {
           
           setDisplayTitle(tempTitle);
         } else {
-          // Incrementar índice con mayor probabilidad
-          if (Math.random() > 0.4) {  // Reducido de 0.75 a 0.4
+          if (Math.random() > 0.4) {
             currentIndex++;
           }
           
@@ -319,25 +238,51 @@ export default function Home() {
       }, interval);
     };
     
-    // Iniciar todas las animaciones a la vez, con menos retraso
+    // Iniciar animaciones
     setTimeout(() => {
-      setAnimationStarted(true);
       animateName();
       
-      // Pequeño retraso entre nombre y título para efecto natural pero más rápido
       setTimeout(() => {
         animateTitle();
-      }, 150); // Reducido de 300 a 150
-      
-      // Forzar finalización de todas las animaciones más rápido
-      setTimeout(finishAnimations, ANIMATION_DURATION);
-    }, 100); // Reducido de 200 a 100
+      }, 150);
+    }, 100);
     
     return () => {
       clearInterval(nameInterval);
       clearInterval(titleInterval);
     };
-  }, [language]);
+  }, [language, isMounted]);
+
+  // Para prevenir errores de hidratación
+  if (!isMounted) {
+    return (
+      <div className="min-h-screen bg-[#101827] text-white flex items-center justify-center p-6 md:p-20">
+        <div className="max-w-6xl w-full flex flex-col md:grid md:grid-cols-[250px,1fr] gap-6">
+          <div className="flex justify-center md:mt-[-6.5rem]">
+            <Image
+              className="rounded-full shadow-lg"
+              src="/foto_cv.png"
+              alt="Foto de Josep Martínez Boix"
+              width={250}
+              height={250}
+              priority
+            />
+          </div>
+          <div className="text-center md:text-right">
+            <h1 className={`${nixieOne.className} text-4xl md:text-6xl font-light tracking-wider mb-4 text-white`}>
+              {texts[language].name}
+            </h1>
+            <h2 className={`${nixieOne.className} text-lg md:text-xl text-gray-400`}>
+              {texts[language].jobTitle}
+            </h2>
+          </div>
+          <div className="col-span-2 mt-6">
+            <div className={`${martianMono.className} text-sm md:text-base text-gray-300 h-20`}></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#101827] text-white flex items-center justify-center p-6 md:p-20">
@@ -369,7 +314,7 @@ export default function Home() {
           </h2>
         </div>
 
-        {/* Descripción - aparece inmediatamente con palabras destacadas animadas */}
+        {/* Descripción */}
         <div className="col-span-2 mt-6">
           {renderDescriptionWithAnimatedWords(texts[language].description)}
         </div>
