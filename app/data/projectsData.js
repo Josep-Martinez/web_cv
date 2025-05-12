@@ -3,7 +3,7 @@ export const projectsData = {
     { 
       id: 1, 
       name: "SomRiure Center", 
-      image: "/somriure/somriure.png",
+      image: "/somriure.png",
       tech: ["WordPress", "HTML", "Strato", "CSS", "PhotoShop"],
       description: "Professional website for psychology and neurodevelopment center",
       longDescription: "Professional website developed for SomRiure Center, a psychology and neurodevelopment facility accredited by the Generalitat Valenciana. The website features comprehensive information about their therapeutic services, professional team, and contact information. Built with WordPress for easy content management and SEO optimization.",
@@ -48,7 +48,7 @@ export const projectsData = {
     { 
       id: 2, 
       name: "LipsTalk", 
-      image: "/lipstalk/lipstalk.png",
+      image: "/lipstalk.png",
       tech: ["React Native", "TypeScript", "Python", "GitHub", "FastApi", "Uvicon"],
       description: "Lip reading application",
       longDescription: "Revolutionary application that uses computer vision and deep learning to interpret lip movements and convert them to text. This project showcases deep learning model implementation and real-time processing capabilities.",
@@ -92,7 +92,7 @@ export const projectsData = {
     { 
       id: 1, 
       name: "Centro SomRiure", 
-      image: "/somriure/somriure.png",
+      image: "/somriure.png",
       tech: ["WordPress", "HTML", "Strato", "CSS", "PhotoShop"],
       description: "Sitio web profesional para centro de psicología y neurodesarrollo",
       longDescription: "Sitio web profesional desarrollado para el Centro SomRiure, una instalación de psicología y neurodesarrollo acreditada por la Generalitat Valenciana. La web presenta información completa sobre sus servicios terapéuticos, equipo profesional e información de contacto. Desarrollada con WordPress para facilitar la gestión de contenidos y optimización SEO.",
@@ -137,7 +137,7 @@ export const projectsData = {
     { 
       id: 2, 
       name: "LipsTalk", 
-      image: "/lipstalk/lipstalk.png",
+      image: "/lipstalk.png",
       tech: ["React Native", "TypeScript", "Python", "GitHub","FastApi", "Uvicon"],
       description: "Aplicación de lectura labial",
       longDescription: "Aplicación revolucionaria que utiliza visión por computadora y aprendizaje profundo para interpretar movimientos labiales y convertirlos en texto. Este proyecto muestra implementación de modelos de deep learing y capacidades de procesamiento en tiempo real.",

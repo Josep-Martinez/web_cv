@@ -100,7 +100,7 @@ const texts = {
         location: "Valencia, Comunidad Valenciana, España",
         description: "Prácticas como Data Engineer, trabajando con tecnologías MDM y herramientas cloud.",
         skills: "Informática MDM, Dell Boomi, Aplicaciones en la nube, Gestión de datos maestros",
-        logo: "/public/infoverity/infoverity_logo.jpeg",
+        logo: "/infoverity_logo.jpeg",
       },
       {
         title: "Developer",
@@ -109,7 +109,7 @@ const texts = {
         location: "Valencia, Comunidad Valenciana, España",
         description: "Desarrollo en Microsoft Dynamics ERP y Power Platform, con enfoque en investigación y desarrollo de soluciones empresariales.",
         skills: "Programación, Microsoft Dynamics ERP, Microsoft Power Automate, PowerApps, Dynamics NAV, I+D",
-        logo: "/laberit/laberit_logo.jpeg",
+        logo: "/laberit_logo.jpeg",
       },
       {
         title: "Conductor",
@@ -118,7 +118,7 @@ const texts = {
         location: "L'Alcúdia, Comunidad Valenciana, España",
         description: "Conductor de personas mayores en el Centro de Dia de L'Alcúdia, desarrollando habilidades en gestión y atención de personas mayores.",
         skills: "Gestión de personas, Habilidades sociales, Personas mayores, Actitud positiva",
-        logo: "/sacyr/sacyr_logo.jpeg",
+        logo: "/sacyr_logo.jpeg",
       },
       {
         title: "Diseñador de páginas web",
@@ -127,7 +127,7 @@ const texts = {
         location: "L'Alcúdia, Comunidad Valenciana, España",
         description: "Diseño y desarrollo de la página web corporativa utilizando WordPress y tecnologías web modernas.",
         skills: "WordPress, HTML, CSS, Adobe Photoshop, Diseño web, Programación",
-        logo: "/somriure/somriure.png",
+        logo: "/somriure.png",
       },
       {
         title: "Árbitro de fútbol",
@@ -136,7 +136,7 @@ const texts = {
         location: "Alberic, Comunidad Valenciana, España",
         description: "Arbitraje de partidos de fútbol, desarrollando habilidades de liderazgo, comunicación y gestión de conflictos.",
         skills: "Hablar en público, Resolución de conflictos, Facilidad de adaptación, Actitud positiva",
-        logo: "/ffcv/ffcv_logo.jpeg",
+        logo: "/ffcv_logo.jpeg",
       },
     ],
     skills: "Habilidades",
