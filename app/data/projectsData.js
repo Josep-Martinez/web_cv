@@ -61,33 +61,20 @@ export const projectsData = {
         "Text-to-Speech Functionality", 
         "Simple and Accessible Interface"
       ],
-      status: "Final Degree Project",
+      status: "Completed",
       liveUrl: null,
-      githubUrl: "https://github.com/Josep-Martinez/lipstalk",
-      videos: [],
-      screenshots: [
-        // LipsTalk (Main Screen)
-        "/lipstalk/index_1.png",
-        "/lipstalk/index_2.png",
-        "/lipstalk/index_3.png",
-        "/lipstalk/index_4.png",
-        
-        // Grabaciones (Recordings)
-        "/lipstalk/recording_1.png",
-        "/lipstalk/recording_2.png",
-        "/lipstalk/recording_3.png",
-        "/lipstalk/recording_4.png",
-        
-        // Videos
-        "/lipstalk/videos_1.png",
-        "/lipstalk/videos_2.png",
-        
-        // Info
-        "/lipstalk/about_1.png",
-        "/lipstalk/about_2.png",
-        "/lipstalk/about_3.png",
-        "/lipstalk/about_4.png"
-      ]
+      githubUrl: "https://github.com/Josep-Martinez/lipstalk-app",
+      videos: [
+                {
+          url: "/lipstalk/prueba_1.mp4",
+          title: "Samsung Galaxy A53 Usage Test"
+        },
+        {
+          url: "/lipstalk/prueba_2.mp4",
+          title: "Redmi Pad Usage Test"
+        },
+      ],
+      screenshots: []
     },
     { 
       id: 3, 
@@ -170,33 +157,20 @@ export const projectsData = {
         "Funcionalidad de Texto a Voz", 
         "Interfaz Simple y Accesible"
       ],
-      status: "Trabajo Fin de Grado",
+      status: "Completado",
       liveUrl: null,
-      githubUrl: "https://github.com/Josep-Martinez/lipstalk",
-      videos: [],
-      screenshots: [
-        // LipsTalk (Pantalla Principal)
-        "/lipstalk/index_1.png",
-        "/lipstalk/index_2.png",
-        "/lipstalk/index_3.png",
-        "/lipstalk/index_4.png",
-        
-        // Grabaciones
-        "/lipstalk/recording_1.png",
-        "/lipstalk/recording_2.png",
-        "/lipstalk/recording_3.png",
-        "/lipstalk/recording_4.png",
-        
-        // Videos
-        "/lipstalk/videos_1.png",
-        "/lipstalk/videos_2.png",
-        
-        // Info
-        "/lipstalk/about_1.png",
-        "/lipstalk/about_2.png",
-        "/lipstalk/about_3.png",
-        "/lipstalk/about_4.png"
-      ]
+      githubUrl: "https://github.com/Josep-Martinez/lipstalk-app",
+      videos: [
+        {
+          url: "/lipstalk/prueba_1.mp4",
+          title: "Prueba de Uso Samsung Galaxy A53"
+        },
+        {
+          url: "/lipstalk/prueba_2.mp4",
+          title: "Prueba de Uso Redmi Pad"
+        },
+      ],
+      screenshots: []
     },
     { 
       id: 3, 

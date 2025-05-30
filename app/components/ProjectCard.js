@@ -107,8 +107,8 @@ const ProjectCard = ({ project, onClick, index }) => {
         {/* Status indicator */}
         <div className="absolute top-4 right-4">
           <div className={`w-2 h-2 rounded-full ${
-            project.status === 'Live' || project.status === 'En Producción' ? 'bg-green-400' : 
-            project.status === 'Completed' || project.status === 'Completado' ? 'bg-blue-400' :
+            project.status === 'Live' || project.status === 'En Producción' ? 'bg-blue-400': 
+            project.status === 'Completed' || project.status === 'Completado' ? 'bg-green-400':
             'bg-yellow-400'
           } animate-pulse`}></div>
         </div>
