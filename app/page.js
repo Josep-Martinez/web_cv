@@ -46,7 +46,7 @@ const texts = {
   },
   ES: {
     name: "JOSEP\nMARTINEZ BOIX",
-    jobTitle: "Ingeniero de Computadores",
+    jobTitle: "Ingeniero Informático",
     description: [
       <>
         Hola, soy Josep Martínez Boix. Mi pasión por la{" "}
