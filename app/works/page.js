@@ -33,7 +33,7 @@ const texts = {
     ),
     experiences: [
       {
-        title: "Data Engineer Intern",
+        title: "Junior Consultant",
         company: "Infoverity",
         period: "October 2024 - Present",
         location: "Valencia, Valencian Community, Spain",
@@ -94,7 +94,7 @@ const texts = {
     ),
     experiences: [
       {
-        title: "Data Engineer Intern",
+        title: "Junior Consultant",
         company: "Infoverity",
         period: "Octubre 2024 - Actualidad",
         location: "Valencia, Comunidad Valenciana, España",
