@@ -191,15 +191,6 @@ const LanguageContext = createContext({
 
 Los datos del portfolio se gestionan de forma centralizada en `data/projectsData.js`, facilitando las actualizaciones y mantenimiento del contenido.
 
-## 🤝 Contribuciones
-
-Si encuentras algún bug o tienes sugerencias de mejora:
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
 
 ## 📞 Contacto
 
