@@ -116,7 +116,7 @@ const ProjectModal = ({ project, isOpen, onClose, language }) => {
             <h2 className={`${nixieOne.className} text-3xl text-white mb-2`}>{project.name}</h2>
             <div className={`flex items-center gap-2 ${martianMono.className} text-sm`}>
               <div className={`w-2 h-2 rounded-full ${
-                project.status === 'Live' || project.status === 'En Producción' ?  'bg-blue-400': 
+                project.status === 'In Production' || project.status === 'En Producción' ?  'bg-blue-400': 
                 project.status === 'Completed' || project.status === 'Completado' ? 'bg-green-400' :
                 'bg-yellow-400'
               }`}></div>
