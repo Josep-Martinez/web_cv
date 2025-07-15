@@ -83,7 +83,9 @@ export default function ProjectsPage() {
   };
   
   const handleProjectClick = (project) => {
-    setSelectedProject(project);
+    // Buscar el proyecto en el idioma actual
+    const currentLanguageProject = projectsData[language].find(p => p.id === project.id);
+    setSelectedProject(currentLanguageProject);
     setModalOpen(true);
   };
   
@@ -148,7 +150,6 @@ export default function ProjectsPage() {
         project={selectedProject}
         isOpen={modalOpen}
         onClose={handleCloseModal}
-        language={language}
       />
     </div>
   );

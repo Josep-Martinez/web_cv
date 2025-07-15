@@ -1,8 +1,10 @@
+// app/layout.js
 import "./globals.css";
 import { Nixie_One, Martian_Mono } from "next/font/google";
 import Header from "../app/header";
-import { LanguageProvider } from "../app/LanguageContext"; // Importa el contexto
-import LanguageButton from "../app/LanguageButton"; // Importa el botón de idioma
+import { LanguageProvider } from "../app/LanguageContext";
+import LanguageButton from "../app/LanguageButton";
+import { LanguageTransitionProvider } from "../app/components/LanguageTransitionProvider";
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
@@ -30,11 +32,13 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className={`${nixieOne.variable} ${martianMono.variable} antialiased bg-[#101827] text-white`}>
-        <LanguageProvider> {/* Ahora toda la app puede cambiar de idioma */}
-          <Header />
-          <main className="mt-20 md:mt-16">{children}</main>
-          <LanguageButton /> {/* Agregamos el botón en toda la app */}
-        </LanguageProvider>
+        <LanguageTransitionProvider>
+          <LanguageProvider>
+            <Header />
+            <main className="mt-20 md:mt-16">{children}</main>
+            <LanguageButton />
+          </LanguageProvider>
+        </LanguageTransitionProvider>
         <SpeedInsights/>
         <Analytics />
       </body>

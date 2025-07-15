@@ -346,7 +346,7 @@ const SkillsTerminal = ({ language }) => {
         <span className="text-blue-400 font-mono mr-2">$</span>
         <div className="flex-1 bg-[#1a2537] rounded px-3 py-2 font-mono text-sm text-gray-400 flex items-center">
           <span>
-            skills.explore(<span className="text-blue-400">'{activeCategory}'</span>)
+            skills.explore(<span className="text-blue-400">&apos;{activeCategory}&apos;</span>)
           </span>
           <span className="border-r-2 border-blue-400 ml-1 h-5 animate-pulse"></span>
         </div>
