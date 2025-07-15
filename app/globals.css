@@ -132,3 +132,42 @@ body {
   50% { color: var(--accent-blue); }
   100% { color: var(--foreground); }
 }
+
+/* --- Fading helpers para los iconos --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Clase base: deja el icono invisible hasta que empiece la animación */
+.icon-delay {
+  opacity: 0;
+  animation: fadeIn 0s forwards;   /* 0 s => aparece instantáneo cuando llega su turno */
+}
+
+/* Retrasos sincronizados con typing-animation-X -------------------- */
+/* Ajusta los tiempos a los que ya uses en tus typing-animation-X */
+.icon-delay-3 { animation-delay: 1.8s; }  /* mismo delay que typing-animation-3 */
+.icon-delay-5 { animation-delay: 2.8s; }  /* idem typing-animation-5 */
+.icon-delay-6 { animation-delay: 3.4s; }
+.icon-delay-7 { animation-delay: 4.0s; }
+
+/* -------------------------------------------------
+   Icono fijo + texto que se escribe
+   ------------------------------------------------- */
+
+/* En el contenedor de la línea */
+.typing-row {
+  position: relative;          /* punto de referencia para el icono */
+  overflow: visible !important;/* que el recorte no afecte al icono  */
+}
+
+/* Icono absoluto: siempre visible desde el primer fotograma */
+.typing-icon {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  translate: 0 -50%;
+  /* evita que “salte” con la animación */
+  pointer-events: none;
+}
