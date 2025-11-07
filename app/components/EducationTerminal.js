@@ -9,12 +9,12 @@ const data = {
     header: "Education Terminal",
     cmd: "cat academic_background.txt",
     footer: "2 academic degrees loaded",
-    currentBadge: "[CURRENT]",
+    currentBadge: "",
     currentTitle: "Master’s in FinTech & Blockchain",
     currentInstitution: "ENEB – European Business School of Barcelona",
     currentPeriod: "Present",
     currentStatus: "In Progress",
-    completedBadge: "[COMPLETED]",
+    completedBadge: "",
     completedTitle: "Computer Engineering Degree",
     completedInstitution: "UPV – Universitat Politècnica de València",
     completedPeriod: "Completed",
@@ -25,12 +25,12 @@ const data = {
     header: "Terminal de Formación",
     cmd: "cat academic_background.txt",
     footer: "2 titulaciones cargadas",
-    currentBadge: "[EN CURSO]",
+    currentBadge: "", 
     currentTitle: "Máster en Fintech & Blockchain",
     currentInstitution: "ENEB – Escuela de Negocios Europea de Barcelona",
     currentPeriod: "Presente",
     currentStatus: "En curso",
-    completedBadge: "[COMPLETED]",
+    completedBadge: "",
     completedTitle: "Grado en Ingeniería Informática",
     completedInstitution: "UPV – Universitat Politècnica de València",
     completedPeriod: "Finalizado",
@@ -74,15 +74,23 @@ export default function EducationTerminal({ language = "EN" }) {
           <div className="flex items-start">
             <span className="text-indigo-400 mr-2 leading-5">►</span>
             <div className="flex-1">
-              <div className="text-slate-200 text-sm md:text-base mb-0.5 font-semibold">
-                <span className="text-amber-300">{t.currentBadge}</span>{" "}
-                {t.currentTitle}
+              {/* 👇 Subimos un poco el título y ocultamos el badge si está vacío */}
+              <div className="text-slate-200 text-sm md:text-base mb-0.5 font-semibold -mt-0.5 md:-mt-1">
+                {t.currentBadge ? (
+                  <>
+                    <span className="text-amber-300">{t.currentBadge}</span>{" "}
+                    {t.currentTitle}
+                  </>
+                ) : (
+                  t.currentTitle
+                )}
               </div>
               <div className="text-slate-400 text-xs space-y-0.5 ml-3">
                 <div><span className="text-blue-300">institution:</span> “{t.currentInstitution}”</div>
                 <div><span className="text-blue-300">period:</span> “{t.currentPeriod}”</div>
                 <div className="flex items-center gap-2">
                   <div><span className="text-blue-300">status:</span> <span className="text-amber-300">“{t.currentStatus}”</span></div>
+                  <span className="inline-block w-1.5 h-1.5 bg-amber-300 rounded-full animate-pulse" />
                 </div>
               </div>
             </div>
@@ -97,7 +105,8 @@ export default function EducationTerminal({ language = "EN" }) {
           <div className="flex items-start">
             <span className="text-indigo-400 mr-2 leading-5">►</span>
             <div className="flex-1">
-              <div className="text-slate-200 text-sm md:text-base mb-0.5 font-semibold">
+              {/* 👇 también lo alineamos un poco más arriba para consistencia */}
+              <div className="text-slate-200 text-sm md:text-base mb-0.5 font-semibold -mt-0.5 md:-mt-1">
                 <span className="text-emerald-300">{t.completedBadge}</span>{" "}
                 {t.completedTitle}
               </div>
