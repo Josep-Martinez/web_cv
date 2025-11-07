@@ -1,225 +1,147 @@
+// app/chat/page.js
 "use client";
-import { useLanguage } from "../../app/LanguageContext";
-import { useState, useEffect } from "react";
-import AnimatedWord from "../components/AnimatedWord";
-import ExperienceItem from "../components/ExperienceItem";
-import SkillsTerminal from "../components/SkillsTerminal";
-import CertificatesCarousel from "../components/CertificatesCarousel";
-import EducationTerminal from "../components/EducationTerminal";
-import React from "react";
-import { nixieOne, martianMono } from "../fonts"; // <- fuentes centralizadas
 
-/* ================================
-   Traducciones
-   ================================ */
+import React, { useRef, useState, useEffect } from "react";
+import { Send, Sparkles } from "lucide-react";
+import { useLanguage } from "../LanguageContext";
+import { nixieOne, martianMono } from "../fonts"; // si tus fuentes están en app/fonts.js cambia a: "../fonts"
+
 const texts = {
   EN: {
-    title: "Career Path",
-    description: (animationStarted, globalInterval) => (
-      <>
-        This section presents a comprehensive view of my{" "}
-        <AnimatedWord word="professional journey" animationStarted={animationStarted} globalInterval={globalInterval} />, a path marked by constant evolution and overcoming challenges in various contexts.
-        Throughout my career, I have cultivated{" "}
-        <AnimatedWord word="technical skills" animationStarted={animationStarted} globalInterval={globalInterval} /> and strategic thinking that allow me to{" "}
-        <AnimatedWord word="adapt" animationStarted={animationStarted} globalInterval={globalInterval} /> and generate innovative solutions.
-      </>
-    ),
-    education: "Education",
-    experiences: [
-      {
-        title: "Junior Consultant",
-        company: "Infoverity",
-        period: "October 2024 - Present",
-        location: "Valencia, Valencian Community, Spain",
-        description: "Data Engineer, working with MDM technologies and cloud tools.",
-        skills: "Informatica MDM, Dell Boomi, Cloud Applications, Master Data Management",
-        logo: "/infoverity_logo.jpeg",
-      },
-      {
-        title: "Developer",
-        company: "Lãberit",
-        period: "February 2022 - July 2022",
-        location: "Valencia, Valencian Community, Spain",
-        description: "Development in Microsoft Dynamics ERP and Power Platform, focused on research and business solutions.",
-        skills: "Programming, Microsoft Dynamics ERP, Microsoft Power Automate, PowerApps, Dynamics NAV, R&D",
-        logo: "/laberit_logo.jpeg",
-      },
-      {
-        title: "Driver",
-        company: "SACYR",
-        period: "July 2023 - September 2023 & August 2022 - September 2022",
-        location: "L'Alcúdia, Valencian Community, Spain",
-        description: "Driver for elderly people at the L'Alcúdia Day Center, developing skills in management and elderly care.",
-        skills: "People Management, Social Skills, Elderly Care, Positive Attitude",
-        logo: "/sacyr_logo.jpeg",
-      },
-      {
-        title: "Web Designer",
-        company: "Centro SomRiure",
-        period: "July 2021 - August 2021",
-        location: "L'Alcúdia, Valencian Community, Spain",
-        description: "Design and development of the corporate website using WordPress and modern web technologies.",
-        skills: "WordPress, HTML, CSS, Adobe Photoshop, Web Design, Programming",
-        logo: "/somriure.png",
-      },
-      {
-        title: "Football Referee",
-        company: "FFCV - Federació Futbol Comunitat Valenciana",
-        period: "September 2020 - July 2024",
-        location: "Alberic, Valencian Community, Spain",
-        description: "Refereeing football matches, developing leadership, communication, and conflict management skills.",
-        skills: "Public Speaking, Conflict Resolution, Adaptability, Positive Attitude",
-        logo: "/ffcv_logo.jpeg",
-      },
-    ],
-    skills: "Skills",
-    certificates: "Certificates",
+    title: "Chat (Beta)",
+    subtitle: "Ask anything about my work, projects or background.",
+    placeholder: "Type a message…",
+    send: "Send",
+    hello:
+      "Hi! I’m your personal assistant for Josep’s portfolio. How can I help?",
   },
   ES: {
-    title: "Trayectoria",
-    description: (animationStarted, globalInterval) => (
-      <>
-        Esta sección presenta una visión integral de mi{" "}
-        <AnimatedWord word="trayectoria profesional" animationStarted={animationStarted} globalInterval={globalInterval} />, un recorrido marcado por la evolución constante y la superación de desafíos en diversos contextos.
-        A lo largo de mi carrera, he cultivado{" "}
-        <AnimatedWord word="habilidades" animationStarted={animationStarted} globalInterval={globalInterval} /> técnicas y estratégicas que me permiten{" "}
-        <AnimatedWord word="adaptarme" animationStarted={animationStarted} globalInterval={globalInterval} /> y generar soluciones innovadoras.
-      </>
-    ),
-    education: "Formación",
-    experiences: [
-      {
-        title: "Junior Consultant",
-        company: "Infoverity",
-        period: "Octubre 2024 - Actualidad",
-        location: "Valencia, Comunidad Valenciana, España",
-        description: "Data Engineer, trabajando con tecnologías MDM y herramientas cloud.",
-        skills: "Informática MDM, Dell Boomi, Aplicaciones en la nube, Gestión de datos maestros",
-        logo: "/infoverity_logo.jpeg",
-      },
-      {
-        title: "Developer",
-        company: "Lãberit",
-        period: "Febrero 2022 - Julio 2022",
-        location: "Valencia, Comunidad Valenciana, España",
-        description: "Desarrollo en Microsoft Dynamics ERP y Power Platform, con enfoque en investigación y soluciones empresariales.",
-        skills: "Programación, Microsoft Dynamics ERP, Microsoft Power Automate, PowerApps, Dynamics NAV, I+D",
-        logo: "/laberit_logo.jpeg",
-      },
-      {
-        title: "Conductor",
-        company: "SACYR",
-        period: "Julio 2023 - Septiembre 2023 & Agosto 2022 - Septiembre 2022",
-        location: "L'Alcúdia, Comunidad Valenciana, España",
-        description: "Conductor de personas mayores en el Centro de Dia de L'Alcúdia, desarrollando habilidades en gestión y atención.",
-        skills: "Gestión de personas, Habilidades sociales, Personas mayores, Actitud positiva",
-        logo: "/sacyr_logo.jpeg",
-      },
-      {
-        title: "Diseñador de páginas web",
-        company: "Centro SomRiure",
-        period: "Julio 2021 - Agosto 2021",
-        location: "L'Alcúdia, Comunidad Valenciana, España",
-        description: "Diseño y desarrollo de la web corporativa con WordPress y tecnologías modernas.",
-        skills: "WordPress, HTML, CSS, Adobe Photoshop, Diseño web, Programación",
-        logo: "/somriure.png",
-      },
-      {
-        title: "Árbitro de fútbol",
-        company: "FFCV - Federació Futbol Comunitat Valenciana",
-        period: "Septiembre 2020 - Julio 2024",
-        location: "Alberic, Comunidad Valenciana, España",
-        description: "Arbitraje de partidos de fútbol, desarrollando liderazgo, comunicación y gestión de conflictos.",
-        skills: "Hablar en público, Resolución de conflictos, Facilidad de adaptación, Actitud positiva",
-        logo: "/ffcv_logo.jpeg",
-      },
-    ],
-    skills: "Habilidades",
-    certificates: "Certificados",
+    title: "Chat (Beta)",
+    subtitle: "Pregunta sobre mi trabajo, proyectos o trayectoria.",
+    placeholder: "Escribe un mensaje…",
+    send: "Enviar",
+    hello:
+      "¡Hola! Soy el asistente del portfolio de Josep. ¿En qué puedo ayudarte?",
   },
 };
 
-export default function ExperiencePage() {
+// id seguro en navegadores sin crypto.randomUUID
+const uid = () =>
+  typeof crypto !== "undefined" && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `id-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+function MessageBubble({ role, content }) {
+  const isUser = role === "user";
+  return (
+    <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
+      <div
+        className={`max-w-[80%] md:max-w-[70%] rounded-2xl px-3 py-2 md:px-4 md:py-3 border ${
+          isUser
+            ? "bg-blue-600/20 border-blue-500/40"
+            : "bg-[#0b1220] border-slate-700/70"
+        }`}
+      >
+        <p className="whitespace-pre-wrap text-slate-200 text-sm md:text-base leading-relaxed">
+          {content}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default function ChatPage() {
   const { language } = useLanguage();
-  const [isMounted, setIsMounted] = useState(false);
-  const [animationStarted, setAnimationStarted] = useState(false);
-  const [globalInterval, setGlobalInterval] = useState(null);
+  const t = texts[language] || texts.EN;
+
+  const [messages, setMessages] = useState([
+    { id: "m-1", role: "assistant", content: t.hello },
+  ]);
+  const [input, setInput] = useState("");
+  const endRef = useRef(null);
 
   useEffect(() => {
-    setIsMounted(true);
-    if (isMounted) {
-      setGlobalInterval(80);
-      const t = setTimeout(() => setAnimationStarted(true), 100);
-      return () => clearTimeout(t);
-    }
-  }, [isMounted]);
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-  if (!isMounted) {
-    return (
-      <div className="min-h-screen bg-[#101827] text-white p-6 md:p-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-10 text-center">
-            <h1 className={`${nixieOne.className} text-4xl md:text-7xl font-bold tracking-wider mb-10`}>
-              {texts[language].title}
-            </h1>
-            <div className={`${martianMono.className} text-sm md:text-base text-gray-300 h-20`} />
-          </div>
-          <div className="mb-20">
-            <div className="relative">
-              <div className="h-40 bg-[#1a2537] rounded animate-pulse mb-4"></div>
-              <div className="h-40 bg-[#1a2537] rounded animate-pulse mb-4"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const onSend = (e) => {
+    e?.preventDefault?.();
+    const content = input.trim();
+    if (!content) return;
+
+    setMessages((prev) => [
+      ...prev,
+      { id: uid(), role: "user", content },
+      {
+        id: uid(),
+        role: "assistant",
+        content:
+          language === "EN"
+            ? "Thanks! (Demo UI) — In a future version I’ll answer using your public info and projects."
+            : "¡Gracias! (Demo UI) — En una versión futura responderé usando tu info pública y proyectos.",
+      },
+    ]);
+    setInput("");
+  };
 
   return (
-    <div className="min-h-screen bg-[#101827] text-white p-6 md:p-20">
-      <div className="max-w-6xl mx-auto">
-        {/* Título y descripción */}
-        <div className="mb-10 text-center">
-          <h1 className={`${nixieOne.className} text-4xl md:text-7xl font-bold tracking-wider mb-10`}>
-            {texts[language].title}
-          </h1>
-          <p className={`${martianMono.className} text-sm md:text-base text-gray-300`}>
-            {texts[language].description(animationStarted, globalInterval)}
-          </p>
-        </div>
-
-        {/* Experiencia */}
-        <div className="relative mb-20">
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-700 hidden md:block"></div>
-          {texts[language].experiences.map((exp, index) => (
-            <ExperienceItem key={index} experience={exp} index={index} language={language} />
-          ))}
-        </div>
-
-        {/* Formación */}
-        <div className="mb-16">
-          <h2 className={`${nixieOne.className} text-3xl md:text-5xl font-bold tracking-wider mb-6 text-center`}>
-            {texts[language].education}
-          </h2>
-          <EducationTerminal language={language} />
-        </div>
-
-        {/* Skills */}
-        <div className="mb-16">
-          <h2 className={`${nixieOne.className} text-3xl md:text-5xl font-bold tracking-wider mb-6 text-center`}>
-            {texts[language].skills}
-          </h2>
-          <SkillsTerminal language={language} />
-        </div>
-
-        {/* Certificados */}
-        <div className="mb-16">
-          <h2 className={`${nixieOne.className} text-3xl md:text-5xl font-bold tracking-wider mb-6 text-center`}>
-            {texts[language].certificates}
-          </h2>
-          <CertificatesCarousel language={language} />
+    <div className="min-h-screen bg-[#101827] text-white flex flex-col">
+      {/* Topbar (centrada, sin botón Back) */}
+      <div className="sticky top-0 z-10 border-b border-slate-800 bg-[#0f172a]/80 backdrop-blur">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-center">
+          <div className="text-center">
+            <h1
+              className={`${nixieOne.className} text-2xl md:text-4xl font-bold tracking-wider`}
+            >
+              {t.title}
+            </h1>
+            <p
+              className={`${martianMono.className} text-[12px] md:text-sm text-slate-300 mt-1`}
+            >
+              <span className="inline-flex items-center gap-1">
+                <Sparkles size={14} className="text-blue-400" />
+                {t.subtitle}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
+
+      {/* Chat body */}
+      <main className="flex-1">
+        <div className="max-w-3xl mx-auto px-4 py-6">
+          <div className="bg-[#0f172a] border border-slate-800 rounded-2xl h-[65vh] md:h-[70vh] flex flex-col">
+            {/* Mensajes */}
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4">
+              {messages.map((m) => (
+                <MessageBubble key={m.id} role={m.role} content={m.content} />
+              ))}
+              <div ref={endRef} />
+            </div>
+
+            {/* Composer */}
+            <form onSubmit={onSend} className="border-t border-slate-800 p-3 md:p-4">
+              <div className="flex items-center gap-2">
+                <input
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder={t.placeholder}
+                  className={`flex-1 bg-[#0b1220] border border-slate-700/70 rounded-xl px-3 py-2 outline-none ${martianMono.className} text-sm md:text-base text-slate-200 placeholder:text-slate-500 focus:border-blue-500`}
+                />
+                <button
+                  type="submit"
+                  className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 transition-colors"
+                >
+                  <Send size={16} />
+                  <span className={`${martianMono.className} text-sm`}>
+                    {t.send}
+                  </span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }

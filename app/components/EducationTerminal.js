@@ -83,7 +83,6 @@ export default function EducationTerminal({ language = "EN" }) {
                 <div><span className="text-blue-300">period:</span> “{t.currentPeriod}”</div>
                 <div className="flex items-center gap-2">
                   <div><span className="text-blue-300">status:</span> <span className="text-amber-300">“{t.currentStatus}”</span></div>
-                  <span className="inline-block w-1.5 h-1.5 bg-amber-300 rounded-full animate-pulse" />
                 </div>
               </div>
             </div>
