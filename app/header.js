@@ -13,12 +13,14 @@ export default function Header() {
       about: "About Me",
       experience: "Career Path",
       projects: "Projects",
+      chat: "Chat",
       contact: "Contact",
     },
     ES: {
       about: "Sobre mí",
       experience: "Trayectoria",
       projects: "Proyectos",
+      chat: "Chat",
       contact: "Contacto",
     },
   };

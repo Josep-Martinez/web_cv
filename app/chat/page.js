@@ -1,5 +1,4 @@
 "use client";
-import { nixieOne, martianMono } from "../fonts";
 import { useLanguage } from "../../app/LanguageContext";
 import { useState, useEffect } from "react";
 import AnimatedWord from "../components/AnimatedWord";
@@ -8,6 +7,7 @@ import SkillsTerminal from "../components/SkillsTerminal";
 import CertificatesCarousel from "../components/CertificatesCarousel";
 import EducationTerminal from "../components/EducationTerminal";
 import React from "react";
+import { nixieOne, martianMono } from "../fonts"; // <- fuentes centralizadas
 
 /* ================================
    Traducciones
@@ -18,25 +18,10 @@ const texts = {
     description: (animationStarted, globalInterval) => (
       <>
         This section presents a comprehensive view of my{" "}
-        <AnimatedWord
-          word="professional journey"
-          animationStarted={animationStarted}
-          globalInterval={globalInterval}
-        />
-        , a path marked by constant evolution and overcoming challenges in
-        various contexts. Throughout my career, I have cultivated{" "}
-        <AnimatedWord
-          word="technical skills"
-          animationStarted={animationStarted}
-          globalInterval={globalInterval}
-        />{" "}
-        and strategic thinking that allow me to{" "}
-        <AnimatedWord
-          word="adapt"
-          animationStarted={animationStarted}
-          globalInterval={globalInterval}
-        />{" "}
-        and generate innovative solutions.
+        <AnimatedWord word="professional journey" animationStarted={animationStarted} globalInterval={globalInterval} />, a path marked by constant evolution and overcoming challenges in various contexts.
+        Throughout my career, I have cultivated{" "}
+        <AnimatedWord word="technical skills" animationStarted={animationStarted} globalInterval={globalInterval} /> and strategic thinking that allow me to{" "}
+        <AnimatedWord word="adapt" animationStarted={animationStarted} globalInterval={globalInterval} /> and generate innovative solutions.
       </>
     ),
     education: "Education",
@@ -46,10 +31,8 @@ const texts = {
         company: "Infoverity",
         period: "October 2024 - Present",
         location: "Valencia, Valencian Community, Spain",
-        description:
-          "Data Engineer, working with MDM technologies and cloud tools.",
-        skills:
-          "Informatica MDM, Dell Boomi, Cloud Applications, Master Data Management",
+        description: "Data Engineer, working with MDM technologies and cloud tools.",
+        skills: "Informatica MDM, Dell Boomi, Cloud Applications, Master Data Management",
         logo: "/infoverity_logo.jpeg",
       },
       {
@@ -57,22 +40,17 @@ const texts = {
         company: "Lãberit",
         period: "February 2022 - July 2022",
         location: "Valencia, Valencian Community, Spain",
-        description:
-          "Development in Microsoft Dynamics ERP and Power Platform, focused on research and business solutions.",
-        skills:
-          "Programming, Microsoft Dynamics ERP, Microsoft Power Automate, PowerApps, Dynamics NAV, R&D",
+        description: "Development in Microsoft Dynamics ERP and Power Platform, focused on research and business solutions.",
+        skills: "Programming, Microsoft Dynamics ERP, Microsoft Power Automate, PowerApps, Dynamics NAV, R&D",
         logo: "/laberit_logo.jpeg",
       },
       {
         title: "Driver",
         company: "SACYR",
-        period:
-          "July 2023 - September 2023 & August 2022 - September 2022",
+        period: "July 2023 - September 2023 & August 2022 - September 2022",
         location: "L'Alcúdia, Valencian Community, Spain",
-        description:
-          "Driver for elderly people at the L'Alcúdia Day Center, developing skills in management and elderly care.",
-        skills:
-          "People Management, Social Skills, Elderly Care, Positive Attitude",
+        description: "Driver for elderly people at the L'Alcúdia Day Center, developing skills in management and elderly care.",
+        skills: "People Management, Social Skills, Elderly Care, Positive Attitude",
         logo: "/sacyr_logo.jpeg",
       },
       {
@@ -80,22 +58,17 @@ const texts = {
         company: "Centro SomRiure",
         period: "July 2021 - August 2021",
         location: "L'Alcúdia, Valencian Community, Spain",
-        description:
-          "Design and development of the corporate website using WordPress and modern web technologies.",
-        skills:
-          "WordPress, HTML, CSS, Adobe Photoshop, Web Design, Programming",
+        description: "Design and development of the corporate website using WordPress and modern web technologies.",
+        skills: "WordPress, HTML, CSS, Adobe Photoshop, Web Design, Programming",
         logo: "/somriure.png",
       },
       {
         title: "Football Referee",
-        company:
-          "FFCV - Federació Futbol Comunitat Valenciana",
+        company: "FFCV - Federació Futbol Comunitat Valenciana",
         period: "September 2020 - July 2024",
         location: "Alberic, Valencian Community, Spain",
-        description:
-          "Refereeing football matches, developing leadership, communication, and conflict management skills.",
-        skills:
-          "Public Speaking, Conflict Resolution, Adaptability, Positive Attitude",
+        description: "Refereeing football matches, developing leadership, communication, and conflict management skills.",
+        skills: "Public Speaking, Conflict Resolution, Adaptability, Positive Attitude",
         logo: "/ffcv_logo.jpeg",
       },
     ],
@@ -107,26 +80,10 @@ const texts = {
     description: (animationStarted, globalInterval) => (
       <>
         Esta sección presenta una visión integral de mi{" "}
-        <AnimatedWord
-          word="trayectoria profesional"
-          animationStarted={animationStarted}
-          globalInterval={globalInterval}
-        />
-        , un recorrido marcado por la evolución constante y la superación de
-        desafíos en diversos contextos. A lo largo de mi carrera, he
-        cultivado{" "}
-        <AnimatedWord
-          word="habilidades"
-          animationStarted={animationStarted}
-          globalInterval={globalInterval}
-        />{" "}
-        técnicas y estratégicas que me permiten{" "}
-        <AnimatedWord
-          word="adaptarme"
-          animationStarted={animationStarted}
-          globalInterval={globalInterval}
-        />{" "}
-        y generar soluciones innovadoras.
+        <AnimatedWord word="trayectoria profesional" animationStarted={animationStarted} globalInterval={globalInterval} />, un recorrido marcado por la evolución constante y la superación de desafíos en diversos contextos.
+        A lo largo de mi carrera, he cultivado{" "}
+        <AnimatedWord word="habilidades" animationStarted={animationStarted} globalInterval={globalInterval} /> técnicas y estratégicas que me permiten{" "}
+        <AnimatedWord word="adaptarme" animationStarted={animationStarted} globalInterval={globalInterval} /> y generar soluciones innovadoras.
       </>
     ),
     education: "Formación",
@@ -136,10 +93,8 @@ const texts = {
         company: "Infoverity",
         period: "Octubre 2024 - Actualidad",
         location: "Valencia, Comunidad Valenciana, España",
-        description:
-          "Data Engineer, trabajando con tecnologías MDM y herramientas cloud.",
-        skills:
-          "Informática MDM, Dell Boomi, Aplicaciones en la nube, Gestión de datos maestros",
+        description: "Data Engineer, trabajando con tecnologías MDM y herramientas cloud.",
+        skills: "Informática MDM, Dell Boomi, Aplicaciones en la nube, Gestión de datos maestros",
         logo: "/infoverity_logo.jpeg",
       },
       {
@@ -147,22 +102,17 @@ const texts = {
         company: "Lãberit",
         period: "Febrero 2022 - Julio 2022",
         location: "Valencia, Comunidad Valenciana, España",
-        description:
-          "Desarrollo en Microsoft Dynamics ERP y Power Platform, con enfoque en investigación y soluciones empresariales.",
-        skills:
-          "Programación, Microsoft Dynamics ERP, Microsoft Power Automate, PowerApps, Dynamics NAV, I+D",
+        description: "Desarrollo en Microsoft Dynamics ERP y Power Platform, con enfoque en investigación y soluciones empresariales.",
+        skills: "Programación, Microsoft Dynamics ERP, Microsoft Power Automate, PowerApps, Dynamics NAV, I+D",
         logo: "/laberit_logo.jpeg",
       },
       {
         title: "Conductor",
         company: "SACYR",
-        period:
-          "Julio 2023 - Septiembre 2023 & Agosto 2022 - Septiembre 2022",
+        period: "Julio 2023 - Septiembre 2023 & Agosto 2022 - Septiembre 2022",
         location: "L'Alcúdia, Comunidad Valenciana, España",
-        description:
-          "Conductor de personas mayores en el Centro de Dia de L'Alcúdia, desarrollando habilidades en gestión y atención.",
-        skills:
-          "Gestión de personas, Habilidades sociales, Personas mayores, Actitud positiva",
+        description: "Conductor de personas mayores en el Centro de Dia de L'Alcúdia, desarrollando habilidades en gestión y atención.",
+        skills: "Gestión de personas, Habilidades sociales, Personas mayores, Actitud positiva",
         logo: "/sacyr_logo.jpeg",
       },
       {
@@ -170,22 +120,17 @@ const texts = {
         company: "Centro SomRiure",
         period: "Julio 2021 - Agosto 2021",
         location: "L'Alcúdia, Comunidad Valenciana, España",
-        description:
-          "Diseño y desarrollo de la web corporativa con WordPress y tecnologías modernas.",
-        skills:
-          "WordPress, HTML, CSS, Adobe Photoshop, Diseño web, Programación",
+        description: "Diseño y desarrollo de la web corporativa con WordPress y tecnologías modernas.",
+        skills: "WordPress, HTML, CSS, Adobe Photoshop, Diseño web, Programación",
         logo: "/somriure.png",
       },
       {
         title: "Árbitro de fútbol",
-        company:
-          "FFCV - Federació Futbol Comunitat Valenciana",
+        company: "FFCV - Federació Futbol Comunitat Valenciana",
         period: "Septiembre 2020 - Julio 2024",
         location: "Alberic, Comunidad Valenciana, España",
-        description:
-          "Arbitraje de partidos de fútbol, desarrollando liderazgo, comunicación y gestión de conflictos.",
-        skills:
-          "Hablar en público, Resolución de conflictos, Facilidad de adaptación, Actitud positiva",
+        description: "Arbitraje de partidos de fútbol, desarrollando liderazgo, comunicación y gestión de conflictos.",
+        skills: "Hablar en público, Resolución de conflictos, Facilidad de adaptación, Actitud positiva",
         logo: "/ffcv_logo.jpeg",
       },
     ],
@@ -204,7 +149,8 @@ export default function ExperiencePage() {
     setIsMounted(true);
     if (isMounted) {
       setGlobalInterval(80);
-      setTimeout(() => setAnimationStarted(true), 100);
+      const t = setTimeout(() => setAnimationStarted(true), 100);
+      return () => clearTimeout(t);
     }
   }, [isMounted]);
 
@@ -242,16 +188,11 @@ export default function ExperiencePage() {
           </p>
         </div>
 
-        {/* Línea de tiempo de experiencia */}
+        {/* Experiencia */}
         <div className="relative mb-20">
           <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-700 hidden md:block"></div>
           {texts[language].experiences.map((exp, index) => (
-            <ExperienceItem
-              key={index}
-              experience={exp}
-              index={index}
-              language={language}
-            />
+            <ExperienceItem key={index} experience={exp} index={index} language={language} />
           ))}
         </div>
 
