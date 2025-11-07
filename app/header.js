@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useLanguage } from "./LanguageContext";
 
 // 🔵 Toggle manual: cambia a true para mostrar el enlace "Chat" en el header
-const SHOW_CHAT_LINK = true;
+const SHOW_CHAT_LINK = false;
 
 export default function Header() {
   const pathname = usePathname();

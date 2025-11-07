@@ -127,7 +127,7 @@ const certificateImages = [
     image: "/certificates/informatica_logo.png", 
     type: "informatica",
     issued: "October 2024",
-    skills: ["iPaaS", "Application Connectivity"]
+    skills: ["Cross-System Connectivity", "Application Connectivity"]
   },
   { 
     id: 15, 
@@ -135,7 +135,23 @@ const certificateImages = [
     image: "/certificates/informatica_logo.png", 
     type: "informatica",
     issued: "2024",
-    skills: ["Developer Tools", "API Integration"]
+    skills: ["Developer Tools", "API & Process Orchestration"]
+  },
+  { 
+    id: 16, 
+    name: "CDGC Introduction for Implementation Professionals", 
+    image: "/certificates/informatica_logo.png", 
+    type: "informatica",
+    issued: "20245",
+    skills: ["Data Quality & Compliance Awareness", "Cross-Platform Integration & Technical Understanding"]
+  },
+  { 
+    id: 17, 
+    name: "CDGC Implementation Training Path", 
+    image: "/certificates/informatica_logo.png", 
+    type: "informatica",
+    issued: "2025",
+    skills: ["Data Cataloging & Metadata Management", "Data Governance & Stewardship"]
   },
 ];
 
