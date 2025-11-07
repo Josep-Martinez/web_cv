@@ -93,18 +93,23 @@ export default function ChatPage() {
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const endRef = useRef(null);
   const inputRef = useRef(null);
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]);
+    // Solo hacer scroll si el usuario ya ha interactuado
+    if (hasInteracted) {
+      endRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, isTyping, hasInteracted]);
 
   const onSend = async (e) => {
     e?.preventDefault?.();
     const content = input.trim();
     if (!content || isTyping) return;
 
+    setHasInteracted(true);
     const userMessage = { id: uid(), role: "user", content };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
@@ -128,19 +133,11 @@ export default function ChatPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0f1e] via-[#101827] to-[#0f172a] text-white flex flex-col">
       {/* Header con gradiente */}
-      <div className="sticky top-0 z-10 border-b border-slate-800/50 bg-[#0f172a]/80 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <button
-            onClick={() => router.push("/")}
-            className={`${martianMono.className} flex items-center gap-2 text-slate-400 hover:text-blue-400 transition-colors text-sm`}
-          >
-            <ArrowLeft size={18} />
-            {t.back}
-          </button>
-          
-          <div className="text-center flex-1">
+      <div className="sticky top-0 z-10 border-b border-slate-800/50 bg-[#0f172a]/90 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <div className="text-center">
             <h1
-              className={`${nixieOne.className} text-xl md:text-3xl font-bold tracking-wider bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent`}
+              className={`${nixieOne.className} text-2xl md:text-3xl font-bold tracking-wider bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent`}
             >
               {t.title}
             </h1>
@@ -153,15 +150,13 @@ export default function ChatPage() {
               </span>
             </p>
           </div>
-          
-          <div className="w-20"></div>
         </div>
       </div>
 
       {/* Chat container */}
-      <main className="flex-1 overflow-hidden">
-        <div className="max-w-4xl mx-auto px-4 py-6 h-full">
-          <div className="bg-gradient-to-br from-slate-900/40 via-slate-900/30 to-slate-800/40 border border-slate-800/60 rounded-3xl h-[calc(100vh-180px)] md:h-[calc(100vh-160px)] flex flex-col backdrop-blur-sm shadow-2xl">
+      <main className="flex-1 overflow-hidden flex items-center">
+        <div className="max-w-4xl mx-auto px-4 py-4 md:py-6 w-full">
+          <div className="bg-gradient-to-br from-slate-900/50 via-slate-900/40 to-slate-800/50 border border-slate-700/70 rounded-3xl h-[calc(100vh-200px)] md:h-[calc(100vh-180px)] flex flex-col backdrop-blur-sm shadow-2xl shadow-black/20">
             {/* Messages area */}
             <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-5">
               {messages.map((m) => (
