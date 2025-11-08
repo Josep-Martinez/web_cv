@@ -142,7 +142,7 @@ const certificateImages = [
     name: "CDGC Introduction for Implementation Professionals", 
     image: "/certificates/informatica_logo.png", 
     type: "informatica",
-    issued: "20245",
+    issued: "2025",
     skills: ["Data Quality & Compliance Awareness", "Cross-Platform Integration & Technical Understanding"]
   },
   { 
