@@ -78,7 +78,7 @@ export const projectsData = {
           title: "Workouts Screen",
         },
         {
-          url: "/alzan/metrics.mp4",
+          url: "/alzan/metrics.MP4",
           title: "Statistics Screen",
         },
       ],
@@ -244,7 +244,7 @@ export const projectsData = {
           title: "Pantalla de Entrenamientos",
         },
         {
-          url: "/alzan/metrics.mp4",
+          url: "/alzan/metrics.MP4",
           title: "Pantalla de Estadísticas",
         },
       ],
