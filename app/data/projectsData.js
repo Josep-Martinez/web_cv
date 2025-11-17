@@ -1,33 +1,8 @@
 export const projectsData = {
   EN: [
     {
+      
       id: 1,
-      name: "Alzan",
-      image: "/alzan/alzan.png",
-      tech: ["AI", "React Native", "TypeScript", "Expo"],
-      description:
-        "AI-powered fitness tracking with personalized workouts and smart nutrition plans.",
-      longDescription:
-        "Alzan is an AI-powered fitness app that tracks body metrics, generates personalized workouts, and creates intelligent nutrition plans. With interactive charts and smart analysis, Alzan transforms your fitness journey by providing data-driven insights and automated recommendations tailored to your goals.",
-      features: [
-        "AI-Powered Workout Generation",
-        "Intelligent Nutrition Planning",
-        "Smart Metrics Analysis",
-        "Personalized Nutrition Plans",
-        "Interactive Body Tracking",
-        "Workout History and Progress Tracking",
-        "Apple Health-Style Charts",
-        "Multi-Sport Activity Tracking",
-        "Personalized Coaching",
-      ],
-      status: "En Producción",
-      liveUrl: null,
-      githubUrl: "https://github.com/Josep-Martinez/alzan",
-      videos: [],
-      screenshots: [],
-    },
-    {
-      id: 2,
       name: "LipsTalk",
       image: "/lipstalk/lipstalk.png",
       tech: [
@@ -62,6 +37,49 @@ export const projectsData = {
         {
           url: "/lipstalk/prueba_2.mp4",
           title: "Redmi Pad Usage Test",
+        },
+      ],
+      screenshots: [],
+    },
+    {
+      id: 2,
+      name: "Alzan",
+      image: "/alzan/alzan.png",
+      tech: ["AI", "React Native", "TypeScript", "Expo"],
+      description:
+        "AI-powered fitness tracking with personalized workouts and smart nutrition plans.",
+      longDescription:
+        "Alzan is an AI-powered fitness app that tracks body metrics, generates personalized workouts, and creates intelligent nutrition plans. With interactive charts and smart analysis, Alzan transforms your fitness journey by providing data-driven insights and automated recommendations tailored to your goals.",
+      features: [
+        "AI-Powered Workout Generation",
+        "Intelligent Nutrition Planning",
+        "Smart Metrics Analysis",
+        "Personalized Nutrition Plans",
+        "Interactive Body Tracking",
+        "Workout History and Progress Tracking",
+        "Apple Health-Style Charts",
+        "Multi-Sport Activity Tracking",
+        "Personalized Coaching",
+      ],
+      status: "In Production",
+      liveUrl: null,
+      githubUrl: "https://github.com/Josep-Martinez/alzan",
+      videos: [
+        {
+          url: "/alzan/principal.mp4",
+          title: "Principal Screen",
+        },
+        {
+          url: "/alzan/nutrition.mp4",
+          title: "Nutrition Screen",
+        },
+        {
+          url: "/alzan/sport.mp4",
+          title: "Workouts Screen",
+        },
+        {
+          url: "/alzan/metrics.mp4",
+          title: "Statistics Screen",
         },
       ],
       screenshots: [],
@@ -151,32 +169,6 @@ export const projectsData = {
   ES: [
     {
       id: 1,
-      name: "Alzan",
-      image: "/alzan/alzan.png",
-      tech: ["IA", "React Native", "TypeScript", "Expo"],
-      description:
-        "Seguimiento fitness con IA, entrenamientos personalizados y planes nutricionales inteligentes.",
-      longDescription:
-        "Alzan es una app de fitness con IA que rastrea métricas corporales, genera entrenamientos personalizados y crea planes nutricionales inteligentes. Con gráficas interactivas y análisis inteligente, Alzan transforma tu viaje fitness proporcionando insights basados en datos y recomendaciones automatizadas adaptadas a tus objetivos.",
-      features: [
-        "Generación de Entrenamientos con IA",
-        "Planificación Nutricional Inteligente",
-        "Análisis Inteligente de Métricas",
-        "Planes de Nutrición Personalizados",
-        "Seguimiento Corporal Interactivo",
-        "Historial de Entrenamientos y Seguimiento de Progreso",
-        "Gráficas Estilo Apple Health",
-        "Seguimiento de Actividades Multideporte",
-        "Asesoramiento Personalizado",
-      ],
-      status: "En Producción",
-      liveUrl: null,
-      githubUrl: "https://github.com/Josep-Martinez/alzan",
-      videos: [],
-      screenshots: [],
-    },
-    {
-      id: 2,
       name: "LipsTalk",
       image: "/lipstalk/lipstalk.png",
       tech: [
@@ -211,6 +203,49 @@ export const projectsData = {
         {
           url: "/lipstalk/prueba_2.mp4",
           title: "Prueba de Uso Redmi Pad",
+        },
+      ],
+      screenshots: [],
+    },
+    {
+      id: 2,
+      name: "Alzan",
+      image: "/alzan/alzan.png",
+      tech: ["IA", "React Native", "TypeScript", "Expo"],
+      description:
+        "Seguimiento fitness con IA, entrenamientos personalizados y planes nutricionales inteligentes.",
+      longDescription:
+        "Alzan es una app de fitness con IA que rastrea métricas corporales, genera entrenamientos personalizados y crea planes nutricionales inteligentes. Con gráficas interactivas y análisis inteligente, Alzan transforma tu viaje fitness proporcionando insights basados en datos y recomendaciones automatizadas adaptadas a tus objetivos.",
+      features: [
+        "Generación de Entrenamientos con IA",
+        "Planificación Nutricional Inteligente",
+        "Análisis Inteligente de Métricas",
+        "Planes de Nutrición Personalizados",
+        "Seguimiento Corporal Interactivo",
+        "Historial de Entrenamientos y Seguimiento de Progreso",
+        "Gráficas Estilo Apple Health",
+        "Seguimiento de Actividades Multideporte",
+        "Asesoramiento Personalizado",
+      ],
+      status: "En Producción",
+      liveUrl: null,
+      githubUrl: "https://github.com/Josep-Martinez/alzan",
+      videos: [
+        {
+          url: "/alzan/principal.mp4",
+          title: "Pantalla Principal",
+        },
+        {
+          url: "/alzan/nutrition.mp4",
+          title: "Pantalla de Nutrición",
+        },
+        {
+          url: "/alzan/sport.mp4",
+          title: "Pantalla de Entrenamientos",
+        },
+        {
+          url: "/alzan/metrics.mp4",
+          title: "Pantalla de Estadísticas",
         },
       ],
       screenshots: [],
