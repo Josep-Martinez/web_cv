@@ -23,7 +23,7 @@ const ExperienceItem = ({ experience, index, language }) => {
           <div className="bg-[#1a2537] p-6 rounded-lg shadow-lg hover:bg-[#1e2c42] transition-colors duration-300">
             <div className="flex items-center gap-4 mb-4">
               <div className={`${index % 2 === 0 ? 'order-2' : 'order-1'}`}>
-                <div className="relative w-16 h-16 bg-white rounded-full overflow-hidden">
+                <div className="relative w-16 h-16 bg-white rounded-full overflow-hidden flex items-center justify-center">
                   <Image
                     src={experience.logo}
                     alt={`${experience.company} logo`}

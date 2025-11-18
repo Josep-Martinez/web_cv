@@ -50,7 +50,7 @@ const texts = {
           "Data Engineer, working with MDM technologies and cloud tools.",
         skills:
           "Informatica MDM, Dell Boomi, Cloud Applications, Master Data Management",
-        logo: "/infoverity_logo.jpeg",
+        logo: "/infoverity_logo.png",
       },
       {
         title: "Developer",
