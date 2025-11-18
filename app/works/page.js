@@ -151,7 +151,7 @@ const texts = {
           "Desarrollo en Microsoft Dynamics ERP y Power Platform, con enfoque en investigación y soluciones empresariales.",
         skills:
           "Programación, Microsoft Dynamics ERP, Microsoft Power Automate, PowerApps, Dynamics NAV, I+D",
-        logo: "/laberit/laberit_logo.jpeg",
+        logo: "/laberit_logo.jpeg",
       },
       {
         title: "Conductor",
