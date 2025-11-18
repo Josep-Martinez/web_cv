@@ -61,7 +61,7 @@ export const projectsData = {
         "Multi-Sport Activity Tracking",
         "Personalized Coaching",
       ],
-      status: "In Production",
+      status: "Live",
       liveUrl: null,
       githubUrl: "https://github.com/Josep-Martinez/alzan",
       videos: [

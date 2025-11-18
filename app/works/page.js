@@ -50,7 +50,7 @@ const texts = {
           "Data Engineer, working with MDM technologies and cloud tools.",
         skills:
           "Informatica MDM, Dell Boomi, Cloud Applications, Master Data Management",
-        logo: "/infoverity_logo.png",
+        logo: "/infoverity/infoverity_logo.png",
       },
       {
         title: "Developer",
@@ -73,7 +73,7 @@ const texts = {
           "Driver for elderly people at the L'Alcúdia Day Center, developing skills in management and elderly care.",
         skills:
           "People Management, Social Skills, Elderly Care, Positive Attitude",
-        logo: "/sacyr_logo.jpeg",
+        logo: "/sacyr/sacyr_logo.jpeg",
       },
       {
         title: "Web Designer",
@@ -84,7 +84,7 @@ const texts = {
           "Design and development of the corporate website using WordPress and modern web technologies.",
         skills:
           "WordPress, HTML, CSS, Adobe Photoshop, Web Design, Programming",
-        logo: "/somriure.png",
+        logo: "/somriure/somriure.png",
       },
       {
         title: "Football Referee",
@@ -96,7 +96,7 @@ const texts = {
           "Refereeing football matches, developing leadership, communication, and conflict management skills.",
         skills:
           "Public Speaking, Conflict Resolution, Adaptability, Positive Attitude",
-        logo: "/ffcv_logo.jpeg",
+        logo: "/ffcv/ffcv_logo.jpeg",
       },
     ],
     skills: "Skills",
@@ -140,7 +140,7 @@ const texts = {
           "Data Engineer, trabajando con tecnologías MDM y herramientas cloud.",
         skills:
           "Informática MDM, Dell Boomi, Aplicaciones en la nube, Gestión de datos maestros",
-        logo: "/infoverity_logo.jpeg",
+        logo: "/infoverity/infoverity_logo.jpeg",
       },
       {
         title: "Developer",
@@ -151,7 +151,7 @@ const texts = {
           "Desarrollo en Microsoft Dynamics ERP y Power Platform, con enfoque en investigación y soluciones empresariales.",
         skills:
           "Programación, Microsoft Dynamics ERP, Microsoft Power Automate, PowerApps, Dynamics NAV, I+D",
-        logo: "/laberit_logo.jpeg",
+        logo: "/laberit/laberit_logo.jpeg",
       },
       {
         title: "Conductor",
@@ -163,7 +163,7 @@ const texts = {
           "Conductor de personas mayores en el Centro de Dia de L'Alcúdia, desarrollando habilidades en gestión y atención.",
         skills:
           "Gestión de personas, Habilidades sociales, Personas mayores, Actitud positiva",
-        logo: "/sacyr_logo.jpeg",
+        logo: "/sacyr/sacyr_logo.jpeg",
       },
       {
         title: "Diseñador de páginas web",
@@ -174,7 +174,7 @@ const texts = {
           "Diseño y desarrollo de la web corporativa con WordPress y tecnologías modernas.",
         skills:
           "WordPress, HTML, CSS, Adobe Photoshop, Diseño web, Programación",
-        logo: "/somriure.png",
+        logo: "/somriure/somriure.png",
       },
       {
         title: "Árbitro de fútbol",
@@ -186,7 +186,7 @@ const texts = {
           "Arbitraje de partidos de fútbol, desarrollando liderazgo, comunicación y gestión de conflictos.",
         skills:
           "Hablar en público, Resolución de conflictos, Facilidad de adaptación, Actitud positiva",
-        logo: "/ffcv_logo.jpeg",
+        logo: "/ffcv/ffcv_logo.jpeg",
       },
     ],
     skills: "Habilidades",

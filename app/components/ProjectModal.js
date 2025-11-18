@@ -101,6 +101,26 @@ const ProjectModal = ({ project: baseProject, isOpen, onClose }) => {
 
   if (!isOpen || !project) return null;
 
+  const statusColorClass =
+    project.status === "In Production" || project.status === "En Producción"
+      ? "bg-orange-400"
+      : project.status === "Completed" || project.status === "Completado"
+      ? "bg-green-400"
+      : project.status === "Live"
+      ? "bg-orange-400"
+      : "bg-yellow-400";
+
+  const shouldPulse = statusColorClass === "bg-orange-400";
+  const statusDotClasses = [
+    "w-2",
+    "h-2",
+    "rounded-full",
+    statusColorClass,
+    shouldPulse ? "animate-pulse" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
@@ -149,20 +169,7 @@ const ProjectModal = ({ project: baseProject, isOpen, onClose }) => {
             <div
               className={`flex items-center gap-2 ${martianMono.className} text-sm`}
             >
-              <div
-                className={`w-2 h-2 rounded-full ${
-                  project.status === "In Production" ||
-                  project.status === "En Producción"
-                    ? "bg-blue-400"
-                    : project.status === "Completed" ||
-                      project.status === "Completado"
-                    ? "bg-green-400"
-                    : project.status === "Live" ||
-                      project.status === "En Producción"
-                    ? "bg-blue-400"
-                    : "bg-yellow-400"
-                }`}
-              ></div>
+              <div className={statusDotClasses}></div>
               <span className="text-gray-300">{project.status}</span>
             </div>
           </div>
