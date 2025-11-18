@@ -1,13 +1,13 @@
 "use client";
+
+import React, { useState, useEffect } from "react";
 import { nixieOne, martianMono } from "../fonts";
 import { useLanguage } from "../../app/LanguageContext";
-import { useState, useEffect } from "react";
 import AnimatedWord from "../components/AnimatedWord";
 import ExperienceItem from "../components/ExperienceItem";
 import SkillsTerminal from "../components/SkillsTerminal";
 import CertificatesCarousel from "../components/CertificatesCarousel";
 import EducationTerminal from "../components/EducationTerminal";
-import React from "react";
 
 /* ================================
    Traducciones
@@ -121,11 +121,11 @@ const texts = {
           globalInterval={globalInterval}
         />{" "}
         técnicas y estratégicas que me permiten{" "}
-        <AnimatedWord
-          word="adaptarme"
-          animationStarted={animationStarted}
-          globalInterval={globalInterval}
-        />{" "}
+          <AnimatedWord
+            word="adaptarme"
+            animationStarted={animationStarted}
+            globalInterval={globalInterval}
+          />{" "}
         y generar soluciones innovadoras.
       </>
     ),
@@ -140,7 +140,7 @@ const texts = {
           "Data Engineer, trabajando con tecnologías MDM y herramientas cloud.",
         skills:
           "Informática MDM, Dell Boomi, Aplicaciones en la nube, Gestión de datos maestros",
-        logo: "/infoverity/infoverity_logo.jpeg",
+        logo: "/infoverity/infoverity_logo.png",
       },
       {
         title: "Developer",
@@ -151,7 +151,7 @@ const texts = {
           "Desarrollo en Microsoft Dynamics ERP y Power Platform, con enfoque en investigación y soluciones empresariales.",
         skills:
           "Programación, Microsoft Dynamics ERP, Microsoft Power Automate, PowerApps, Dynamics NAV, I+D",
-        logo: "/laberit_logo.jpeg",
+        logo: "/laberit/laberit_logo.jpeg",
       },
       {
         title: "Conductor",
@@ -200,12 +200,17 @@ export default function ExperiencePage() {
   const [animationStarted, setAnimationStarted] = useState(false);
   const [globalInterval, setGlobalInterval] = useState(null);
 
+  // Montaje
   useEffect(() => {
     setIsMounted(true);
-    if (isMounted) {
-      setGlobalInterval(80);
-      setTimeout(() => setAnimationStarted(true), 100);
-    }
+  }, []);
+
+  // Arranque de animaciones
+  useEffect(() => {
+    if (!isMounted) return;
+    setGlobalInterval(80);
+    const timeout = setTimeout(() => setAnimationStarted(true), 100);
+    return () => clearTimeout(timeout);
   }, [isMounted]);
 
   if (!isMounted) {
@@ -213,15 +218,19 @@ export default function ExperiencePage() {
       <div className="min-h-screen bg-[#101827] text-white p-6 md:p-20">
         <div className="max-w-6xl mx-auto">
           <div className="mb-10 text-center">
-            <h1 className={`${nixieOne.className} text-4xl md:text-7xl font-bold tracking-wider mb-10`}>
+            <h1
+              className={`${nixieOne.className} text-4xl md:text-7xl font-bold tracking-wider mb-10`}
+            >
               {texts[language].title}
             </h1>
-            <div className={`${martianMono.className} text-sm md:text-base text-gray-300 h-20`} />
+            <div
+              className={`${martianMono.className} text-sm md:text-base text-gray-300 h-20`}
+            />
           </div>
           <div className="mb-20">
             <div className="relative">
-              <div className="h-40 bg-[#1a2537] rounded animate-pulse mb-4"></div>
-              <div className="h-40 bg-[#1a2537] rounded animate-pulse mb-4"></div>
+              <div className="h-40 bg-[#1a2537] rounded animate-pulse mb-4" />
+              <div className="h-40 bg-[#1a2537] rounded animate-pulse mb-4" />
             </div>
           </div>
         </div>
@@ -234,17 +243,21 @@ export default function ExperiencePage() {
       <div className="max-w-6xl mx-auto">
         {/* Título y descripción */}
         <div className="mb-10 text-center">
-          <h1 className={`${nixieOne.className} text-4xl md:text-7xl font-bold tracking-wider mb-10`}>
+          <h1
+            className={`${nixieOne.className} text-4xl md:text-7xl font-bold tracking-wider mb-10`}
+          >
             {texts[language].title}
           </h1>
-          <p className={`${martianMono.className} text-sm md:text-base text-gray-300`}>
+          <p
+            className={`${martianMono.className} text-sm md:text-base text-gray-300`}
+          >
             {texts[language].description(animationStarted, globalInterval)}
           </p>
         </div>
 
         {/* Línea de tiempo de experiencia */}
         <div className="relative mb-20">
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-700 hidden md:block"></div>
+          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-blue-600 via-blue-500 to-blue-600 hidden md:block"></div>
           {texts[language].experiences.map((exp, index) => (
             <ExperienceItem
               key={index}
@@ -257,7 +270,9 @@ export default function ExperiencePage() {
 
         {/* Formación */}
         <div className="mb-16">
-          <h2 className={`${nixieOne.className} text-3xl md:text-5xl font-bold tracking-wider mb-6 text-center`}>
+          <h2
+            className={`${nixieOne.className} text-3xl md:text-5xl font-bold tracking-wider mb-6 text-center`}
+          >
             {texts[language].education}
           </h2>
           <EducationTerminal language={language} />
@@ -265,7 +280,9 @@ export default function ExperiencePage() {
 
         {/* Skills */}
         <div className="mb-16">
-          <h2 className={`${nixieOne.className} text-3xl md:text-5xl font-bold tracking-wider mb-6 text-center`}>
+          <h2
+            className={`${nixieOne.className} text-3xl md:text-5xl font-bold tracking-wider mb-6 text-center`}
+          >
             {texts[language].skills}
           </h2>
           <SkillsTerminal language={language} />
@@ -273,7 +290,9 @@ export default function ExperiencePage() {
 
         {/* Certificados */}
         <div className="mb-16">
-          <h2 className={`${nixieOne.className} text-3xl md:text-5xl font-bold tracking-wider mb-6 text-center`}>
+          <h2
+            className={`${nixieOne.className} text-3xl md:text-5xl font-bold tracking-wider mb-6 text-center`}
+          >
             {texts[language].certificates}
           </h2>
           <CertificatesCarousel language={language} />
