@@ -1,19 +1,9 @@
+// app/page.js
 "use client";
 import Image from "next/image";
-import { Nixie_One, Martian_Mono } from "next/font/google";
 import { useLanguage } from "../app/LanguageContext";
 import React, { useState, useEffect } from "react";
-import AnimatedWord from "./components/AnimatedWord"; // Importar el componente externo
-
-const nixieOne = Nixie_One({
-  weight: "400",
-  subsets: ["latin"],
-});
-
-const martianMono = Martian_Mono({
-  weight: "400",
-  subsets: ["latin"],
-});
+import AnimatedWord from "./components/AnimatedWord";
 
 // Caracteres para el efecto del nombre y título
 const effectChars =
@@ -24,7 +14,7 @@ const texts = {
   EN: {
     name: "JOSEP\nMARTINEZ BOIX",
     jobTitle: "Computer Engineer",
-    masterTitle: "Master’s in FinTech & Blockchain", // ⬅️ NUEVO
+    masterTitle: "Master’s in FinTech & Blockchain",
     description: [
       <>
         Hello, I&apos;m Josep Martínez Boix. My passion for{" "}
@@ -48,12 +38,11 @@ const texts = {
       </>,
       <>Thank you for visiting, and I invite you to explore my professional world.</>,
     ],
-    highlightedWords: ["innovation", "learning", "adaptability", "solutions", "transform"],
   },
   ES: {
     name: "JOSEP\nMARTINEZ BOIX",
     jobTitle: "Ingeniero Informático",
-    masterTitle: "Máster en Fintech & Blockchain", // ⬅️ NUEVO
+    masterTitle: "Máster en Fintech & Blockchain",
     description: [
       <>
         Hola, soy Josep Martínez Boix. Mi pasión por la{" "}
@@ -79,7 +68,6 @@ const texts = {
       </>,
       <>Gracias por visitarme. Te invito a descubrir mi mundo profesional.</>,
     ],
-    highlightedWords: ["innovación", "aprendizaje", "adaptabilidad", "soluciones", "transformar"],
   },
 };
 
@@ -87,30 +75,26 @@ export default function Home() {
   const { language } = useLanguage();
   const [displayName, setDisplayName] = useState("");
   const [displayTitle, setDisplayTitle] = useState("");
-  const [displayMaster, setDisplayMaster] = useState(""); // ⬅️ NUEVO
+  const [displayMaster, setDisplayMaster] = useState("");
   const [isMounted, setIsMounted] = useState(false);
   const [animationStarted, setAnimationStarted] = useState(false);
   const [globalInterval, setGlobalInterval] = useState(null);
 
-  // Usar useEffect para evitar problemas de hidratación
   useEffect(() => {
     setIsMounted(true);
-
     if (isMounted) {
-      setGlobalInterval(80);
+      setGlobalInterval(120);
       setTimeout(() => {
         setAnimationStarted(true);
       }, 100);
     }
   }, [isMounted]);
 
-  // Renderizar los componentes de texto con palabras animadas
   const renderDescriptionWithAnimatedWords = (descItems) => {
     if (!isMounted) return null;
 
-    return descItems.map((para, index, array) => {
+    return descItems.map((para, index) => {
       let content = para;
-
       if (React.isValidElement(para)) {
         content = React.cloneElement(para, {
           children: React.Children.map(para.props.children, (child) => {
@@ -124,16 +108,11 @@ export default function Home() {
           }),
         });
       }
-
       return (
         <p
           key={index}
-          className={`${martianMono.className} text-sm md:text-base leading-relaxed text-gray-300 ${
-            index < array.length - 1 ? "mb-4" : ""
-          } opacity-100 transition-opacity duration-300`}
-          style={{
-            textAlign: "justify",
-          }}
+          className={`font-sans text-slate-light text-base md:text-lg leading-relaxed mb-6 last:mb-0 opacity-0 animate-[fadeIn_0.8s_ease-out_forwards]`}
+          style={{ animationDelay: `${0.5 + index * 0.1}s` }}
         >
           {content}
         </p>
@@ -141,256 +120,106 @@ export default function Home() {
     });
   };
 
+  // Matrix-style decoding effect
   useEffect(() => {
     if (!isMounted) return;
 
     const targetName = texts[language].name;
     const targetTitle = texts[language].jobTitle;
-    const targetMaster = texts[language].masterTitle; // ⬅️ NUEVO
+    const targetMaster = texts[language].masterTitle;
 
-    // Resetear estados cuando cambia el idioma
     setDisplayName("");
     setDisplayTitle("");
-    setDisplayMaster(""); // ⬅️ NUEVO
+    setDisplayMaster("");
 
-    const interval = 100;
-
-    let nameInterval;
-    let titleInterval;
-    let masterInterval; // ⬅️ NUEVO
-
-    // Función para animar el nombre
-    const animateName = () => {
-      const nameWithoutBreak = targetName.replace("\n", "");
-      let currentIndex = 0;
-      let stabilityCounter = 0;
-
-      nameInterval = setInterval(() => {
-        if (currentIndex >= nameWithoutBreak.length) {
-          stabilityCounter++;
-
-          if (stabilityCounter > 8) {
-            setDisplayName(targetName);
-            return;
-          }
-
-          let tempName = "";
-          for (let i = 0; i < nameWithoutBreak.length; i++) {
-            if (Math.random() > 0.9 - stabilityCounter * 0.1) {
-              tempName += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
-            } else {
-              tempName += nameWithoutBreak[i];
-            }
-          }
-
-          if (targetName.includes("\n")) {
-            const breakPos = targetName.indexOf("\n");
-            tempName = tempName.substring(0, breakPos) + "\n" + tempName.substring(breakPos);
-          }
-
-          setDisplayName(tempName);
-        } else {
-          if (Math.random() > 0.5) {
-            currentIndex++;
-          }
-
-          let tempName = "";
-          for (let i = 0; i < nameWithoutBreak.length; i++) {
-            if (i < currentIndex) {
-              tempName += nameWithoutBreak[i];
-            } else {
-              tempName += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
-            }
-          }
-
-          if (targetName.includes("\n")) {
-            const breakPos = targetName.indexOf("\n");
-            tempName = tempName.substring(0, breakPos) + "\n" + tempName.substring(breakPos);
-          }
-
-          setDisplayName(tempName);
-        }
-      }, interval);
-    };
-
-    // Función para animar el título
-    const animateTitle = () => {
-      let currentIndex = 0;
-      let stabilityCounter = 0;
-
-      titleInterval = setInterval(() => {
-        if (currentIndex >= targetTitle.length) {
-          stabilityCounter++;
-
-          if (stabilityCounter > 6) {
-            setDisplayTitle(targetTitle);
-            return;
-          }
-
-          let tempTitle = "";
-          for (let i = 0; i < targetTitle.length; i++) {
-            if (Math.random() > 0.85 - stabilityCounter * 0.1) {
-              tempTitle += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
-            } else {
-              tempTitle += targetTitle[i];
-            }
-          }
-
-          setDisplayTitle(tempTitle);
-        } else {
-          if (Math.random() > 0.4) {
-            currentIndex++;
-          }
-
-          let tempTitle = "";
-          for (let i = 0; i < targetTitle.length; i++) {
-            if (i < currentIndex) {
-              tempTitle += targetTitle[i];
-            } else {
-              tempTitle += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
-            }
-          }
-
-          setDisplayTitle(tempTitle);
-        }
-      }, interval);
-    };
-
-    // ⬅️ NUEVO: animación para el Máster, igual que el título
-    const animateMaster = () => {
-      let currentIndex = 0;
-      let stabilityCounter = 0;
-
-      masterInterval = setInterval(() => {
-        if (currentIndex >= targetMaster.length) {
-          stabilityCounter++;
-
-          if (stabilityCounter > 6) {
-            setDisplayMaster(targetMaster);
-            return;
-          }
-
-          let temp = "";
-          for (let i = 0; i < targetMaster.length; i++) {
-            if (Math.random() > 0.85 - stabilityCounter * 0.1) {
-              temp += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
-            } else {
-              temp += targetMaster[i];
-            }
-          }
-          setDisplayMaster(temp);
-        } else {
-          if (Math.random() > 0.4) currentIndex++;
-
-          let temp = "";
-          for (let i = 0; i < targetMaster.length; i++) {
-            if (i < currentIndex) temp += targetMaster[i];
-            else temp += effectChars.charAt(Math.floor(Math.random() * effectChars.length));
-          }
-          setDisplayMaster(temp);
-        }
-      }, interval);
-    };
-
-    // Iniciar animaciones
-    setTimeout(() => {
-      animateName();
-
+    const animateText = (target, setter, delay = 0) => {
       setTimeout(() => {
-        animateTitle();
+        let iterations = 0;
+        const interval = setInterval(() => {
+          setter(
+            target
+              .split("")
+              .map((letter, index) => {
+                if (index < iterations) {
+                  return target[index];
+                }
+                return effectChars[Math.floor(Math.random() * effectChars.length)];
+              })
+              .join("")
+          );
 
-        // animamos el master un pelín después del título
-        setTimeout(() => {
-          animateMaster();
-        }, 150);
-      }, 150);
-    }, 100);
+          if (iterations >= target.length) {
+            clearInterval(interval);
+          }
 
-    return () => {
-      clearInterval(nameInterval);
-      clearInterval(titleInterval);
-      clearInterval(masterInterval);
+          iterations += 1 / 3; // Slower decoding for smoother effect
+        }, 30);
+      }, delay);
     };
+
+    // Start animations sequentially
+    animateText(targetName, setDisplayName, 0);
+    animateText(targetTitle, setDisplayTitle, 1000);
+    animateText(targetMaster, setDisplayMaster, 2000);
+
   }, [language, isMounted]);
 
-  // Para prevenir errores de hidratación
-  if (!isMounted) {
-    return (
-      <div className="min-h-screen bg-[#101827] text-white flex items-center justify-center p-6 md:p-20">
-        <div className="max-w-6xl w-full flex flex-col md:grid md:grid-cols-[250px,1fr] gap-6">
-          <div className="flex justify-center md:mt-[-6.5rem]">
-            <Image
-              className="rounded-full shadow-lg"
-              src="/foto_cv.png"
-              alt="Foto de Josep Martínez Boix"
-              width={250}
-              height={250}
-              priority
-            />
-          </div>
-          <div className="text-center md:text-right">
-            <h1 className={`${nixieOne.className} text-4xl md:text-6xl font-light tracking-wider mb-4 text-white`}>
-              {texts[language].name}
-            </h1>
-            <h2 className={`${nixieOne.className} text-lg md:text-xl text-gray-400`}>
-              {texts[language].jobTitle}
-            </h2>
-            {/* ⬇️ Máster en el fallback también */}
-            <h3 className={`${nixieOne.className} text-sm md:text-base text-gray-400 mt-1`}>
-              {texts[language].masterTitle}
-            </h3>
-          </div>
-          <div className="col-span-2 mt-6">
-            <div className={`${martianMono.className} text-sm md:text-base text-gray-300 h-20`}></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  if (!isMounted) return null;
 
   return (
-    <div className="min-h-screen bg-[#101827] text-white flex items-center justify-center p-6 md:p-20">
-      <div className="max-w-6xl w-full flex flex-col md:grid md:grid-cols-[250px,1fr] gap-6">
-        {/* Foto en la primera columna */}
-        <div className="flex justify-center md:mt-[-6.5rem]">
-          <Image
-            className="rounded-full shadow-lg"
-            src="/foto_cv.png"
-            alt="Foto de Josep Martínez Boix"
-            width={250}
-            height={250}
-            priority
-          />
+    <div className="min-h-screen flex items-center justify-center p-6 md:p-20 pt-28 md:pt-32 overflow-hidden relative">
+      {/* Background Elements */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-electric/5 rounded-full blur-[100px] -z-10"></div>
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-navy-700/20 rounded-full blur-[80px] -z-10"></div>
+
+      <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-start lg:items-center">
+
+        {/* Left Column: Image & Title (Mobile: Top, Desktop: Left) */}
+        <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left space-y-8 z-10">
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-electric to-blue-600 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-navy-800 shadow-2xl">
+              <Image
+                src="/foto_cv.png"
+                alt="Josep Martínez Boix"
+                fill
+                className="object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                priority
+              />
+            </div>
+          </div>
+
+          <div className="space-y-4 w-full">
+            {/* Fixed height container to prevent layout shift */}
+            <div className="min-h-[100px] lg:min-h-[140px] flex flex-col justify-center">
+              <h1 className="font-heading text-4xl md:text-6xl font-bold text-gray-100 leading-tight tracking-tight">
+                {displayName.split("\n").map((line, index) => (
+                  <span key={index} className="block">
+                    {line}
+                  </span>
+                ))}
+              </h1>
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="font-mono text-xl md:text-2xl text-electric min-h-[32px]">
+                {displayTitle}
+              </h2>
+              <h3 className="font-mono text-sm md:text-base text-slate-light min-h-[24px]">
+                {displayMaster}
+              </h3>
+            </div>
+          </div>
         </div>
 
-        {/* Nombre y títulos */}
-        <div className="text-center md:text-right">
-          <h1
-            className={`${nixieOne.className} text-4xl md:text-6xl font-light tracking-wider mb-4 text-white transition-all duration-500`}
-          >
-            {displayName.split("\n").map((line, index, arr) => (
-              <span key={index}>
-                {line}
-                {index !== arr.length - 1 && <br />}
-              </span>
-            ))}
-          </h1>
-
-          {/* Título principal */}
-          <h2 className={`${nixieOne.className} text-lg md:text-xl text-gray-400 transition-all duration-500`}>
-            {displayTitle}
-          </h2>
-
-          {/* ⬇️ Nuevo: Máster justo debajo, mismo estilo un poco más pequeño */}
-          <h3 className={`${nixieOne.className} text-sm md:text-base text-gray-400 mt-1 transition-all duration-500`}>
-            {displayMaster}
-          </h3>
+        {/* Right Column: Description */}
+        <div className="lg:col-span-7 z-10">
+          <div className="glass-panel p-8 md:p-12 rounded-2xl relative overflow-hidden border border-white/5">
+            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-electric to-transparent opacity-50"></div>
+            {renderDescriptionWithAnimatedWords(texts[language].description)}
+          </div>
         </div>
 
-        {/* Descripción */}
-        <div className="col-span-2 mt-6">
-          {renderDescriptionWithAnimatedWords(texts[language].description)}
-        </div>
       </div>
     </div>
   );

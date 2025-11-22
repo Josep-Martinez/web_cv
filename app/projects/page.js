@@ -1,21 +1,10 @@
 "use client";
-import { Nixie_One, Martian_Mono } from "next/font/google";
 import { useLanguage } from "../../app/LanguageContext";
 import React, { useState, useEffect } from "react";
 import ProjectCard from "./../components/ProjectCard";
 import ProjectModal from "./../components/ProjectModal";
 import AnimatedWord from "./../components/AnimatedWord";
 import { projectsData } from "./../data/projectsData";
-
-const nixieOne = Nixie_One({
-  weight: "400",
-  subsets: ["latin"],
-});
-
-const martianMono = Martian_Mono({
-  weight: "400",
-  subsets: ["latin"],
-});
 
 // Traducciones para la página principal
 const texts = {
@@ -25,7 +14,7 @@ const texts = {
       <>
         In this section, you will find a representative selection of{" "}
         <AnimatedWord word="individual projects" />{" "}
-        that illustrate my professional experience and my ability to tackle challenges in a structured and creative way. 
+        that illustrate my professional experience and my ability to tackle challenges in a structured and creative way.
         Each project is the result of personal effort and has been developed with a focus on{" "}
         <AnimatedWord word="quality" />{" "}and{" "}
         <AnimatedWord word="innovation" />.
@@ -38,7 +27,7 @@ const texts = {
       <>
         En esta sección encontrará una selección representativa de{" "}
         <AnimatedWord word="proyectos individuales" />{" "}
-        que ilustran mi experiencia profesional y mi capacidad para abordar desafíos de forma estructurada y creativa. 
+        que ilustran mi experiencia profesional y mi capacidad para abordar desafíos de forma estructurada y creativa.
         Cada proyecto es fruto de un esfuerzo personal y ha sido desarrollado con un enfoque en la{" "}
         <AnimatedWord word="calidad" />{" "}y la{" "}
         <AnimatedWord word="innovación" />.
@@ -54,10 +43,10 @@ export default function ProjectsPage() {
   const [globalInterval, setGlobalInterval] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  
+
   useEffect(() => {
     setIsMounted(true);
-    
+
     if (isMounted) {
       setGlobalInterval(80);
       setTimeout(() => {
@@ -68,7 +57,7 @@ export default function ProjectsPage() {
 
   const renderDescriptionWithAnimatedWords = (descItem) => {
     if (!isMounted) return null;
-    
+
     return React.cloneElement(descItem, {
       children: React.Children.map(descItem.props.children, child => {
         if (React.isValidElement(child) && child.type === AnimatedWord) {
@@ -81,14 +70,14 @@ export default function ProjectsPage() {
       })
     });
   };
-  
+
   const handleProjectClick = (project) => {
     // Buscar el proyecto en el idioma actual
     const currentLanguageProject = projectsData[language].find(p => p.id === project.id);
     setSelectedProject(currentLanguageProject);
     setModalOpen(true);
   };
-  
+
   const handleCloseModal = () => {
     setModalOpen(false);
     setTimeout(() => setSelectedProject(null), 300);
@@ -96,19 +85,19 @@ export default function ProjectsPage() {
 
   if (!isMounted) {
     return (
-      <div className="min-h-screen bg-[#101827] text-white p-6 md:p-20">
+      <div className="min-h-screen pt-28 md:pt-32 p-6 md:p-20">
         <div className="max-w-6xl mx-auto">
           <div className="mb-10 text-center">
-            <h1 className={`${nixieOne.className} text-4xl md:text-7xl font-bold tracking-wider mb-10`}>
+            <h1 className="font-heading text-4xl md:text-7xl font-bold tracking-wider mb-10 text-gray-100">
               {texts[language].title}
             </h1>
-            <div className={`${martianMono.className} text-sm md:text-base text-gray-300 h-20`}></div>
+            <div className="font-sans text-sm md:text-base text-slate-light h-20"></div>
           </div>
-          
+
           <div className="mb-16">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {[1, 2, 3].map((placeholder) => (
-                <div key={placeholder} className="aspect-video bg-[#1a2537] rounded animate-pulse"></div>
+                <div key={placeholder} className="aspect-video bg-navy-800 rounded animate-pulse"></div>
               ))}
             </div>
           </div>
@@ -118,14 +107,14 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#101827] text-white p-6 md:p-20">
+    <div className="min-h-screen pt-28 md:pt-32 p-6 md:p-20">
       <div className="max-w-6xl mx-auto">
         {/* Sección de título y descripción */}
-        <div className="mb-10 text-center">
-          <h1 className={`${nixieOne.className} text-4xl md:text-7xl font-bold tracking-wider mb-10`}>
+        <div className="mb-16 text-center">
+          <h1 className="font-heading text-4xl md:text-7xl font-bold tracking-wider mb-8 text-gray-100">
             {texts[language].title}
           </h1>
-          <div className={`${martianMono.className} text-sm md:text-base text-gray-300`}>
+          <div className="font-sans text-base md:text-lg text-slate-light max-w-3xl mx-auto leading-relaxed">
             {renderDescriptionWithAnimatedWords(texts[language].description)}
           </div>
         </div>
@@ -144,7 +133,7 @@ export default function ProjectsPage() {
           </div>
         </div>
       </div>
-      
+
       {/* Modal */}
       <ProjectModal
         project={selectedProject}

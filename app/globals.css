@@ -3,31 +3,68 @@
 @tailwind utilities;
 
 :root {
-  --background: #101827;
-  --foreground: #ffffff;
-  --accent-blue: #3b82f6;
-  --text-gray: #9ca3af;
+  --background: #0a192f;
+  --foreground: #e6f1ff;
+  --accent-blue: #64ffda;
+  --text-gray: #8892b0;
+  --navy-shadow: rgba(2, 12, 27, 0.7);
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: rgba(17, 34, 64, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.glass-nav {
+  background: rgba(10, 25, 47, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes typing {
-  from { width: 0; opacity: 1; }
-  to { width: 100%; opacity: 1; }
+  from {
+    width: 0;
+    opacity: 1;
+  }
+
+  to {
+    width: 100%;
+    opacity: 1;
+  }
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 /* Se mantiene la estructura de flex para asegurar que el texto y los iconos aparezcan juntos */
@@ -128,29 +165,56 @@ body {
 
 /* Animación específica para palabras destacadas */
 @keyframes highlightFade {
-  0% { color: var(--foreground); }
-  50% { color: var(--accent-blue); }
-  100% { color: var(--foreground); }
+  0% {
+    color: var(--foreground);
+  }
+
+  50% {
+    color: var(--accent-blue);
+  }
+
+  100% {
+    color: var(--foreground);
+  }
 }
 
 /* --- Fading helpers para los iconos --- */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 /* Clase base: deja el icono invisible hasta que empiece la animación */
 .icon-delay {
   opacity: 0;
-  animation: fadeIn 0s forwards;   /* 0 s => aparece instantáneo cuando llega su turno */
+  animation: fadeIn 0s forwards;
+  /* 0 s => aparece instantáneo cuando llega su turno */
 }
 
 /* Retrasos sincronizados con typing-animation-X -------------------- */
 /* Ajusta los tiempos a los que ya uses en tus typing-animation-X */
-.icon-delay-3 { animation-delay: 1.8s; }  /* mismo delay que typing-animation-3 */
-.icon-delay-5 { animation-delay: 2.8s; }  /* idem typing-animation-5 */
-.icon-delay-6 { animation-delay: 3.4s; }
-.icon-delay-7 { animation-delay: 4.0s; }
+.icon-delay-3 {
+  animation-delay: 1.8s;
+}
+
+/* mismo delay que typing-animation-3 */
+.icon-delay-5 {
+  animation-delay: 2.8s;
+}
+
+/* idem typing-animation-5 */
+.icon-delay-6 {
+  animation-delay: 3.4s;
+}
+
+.icon-delay-7 {
+  animation-delay: 4.0s;
+}
 
 /* -------------------------------------------------
    Icono fijo + texto que se escribe
@@ -158,8 +222,10 @@ body {
 
 /* En el contenedor de la línea */
 .typing-row {
-  position: relative;          /* punto de referencia para el icono */
-  overflow: visible !important;/* que el recorte no afecte al icono  */
+  position: relative;
+  /* punto de referencia para el icono */
+  overflow: visible !important;
+  /* que el recorte no afecte al icono  */
 }
 
 /* Icono absoluto: siempre visible desde el primer fotograma */
@@ -170,4 +236,18 @@ body {
   translate: 0 -50%;
   /* evita que “salte” con la animación */
   pointer-events: none;
+}
+
+@keyframes shine {
+  from {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+
+  to {
+    transform: translateX(200%) skewX(-12deg);
+  }
+}
+
+.animate-shine {
+  animation: shine 3s infinite linear;
 }

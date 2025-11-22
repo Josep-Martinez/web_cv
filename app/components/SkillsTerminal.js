@@ -1,12 +1,6 @@
 // app/components/SkillsTerminal.js
 import React, { useState, useEffect, useRef } from 'react';
 import { Terminal, Code, Braces, Database, Layout, Globe, Users, Brain, Server } from 'lucide-react';
-import { Martian_Mono } from "next/font/google";
-
-const martianMono = Martian_Mono({
-  weight: "400",
-  subsets: ["latin"],
-});
 
 const SkillsTerminal = ({ language }) => {
   const [activeCategory, setActiveCategory] = useState('frontend');
@@ -15,47 +9,47 @@ const SkillsTerminal = ({ language }) => {
   const typingRef = useRef(null);
   const cursorRef = useRef(null);
   const [isMounted, setIsMounted] = useState(false);
-  
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
-  
+
   // Skill categories with appropriate icons
   const categories = {
-    frontend: { 
+    frontend: {
       icon: <Layout size={20} />,
-      label: { EN: 'Frontend', ES: 'Frontend' } 
+      label: { EN: 'Frontend', ES: 'Frontend' }
     },
-    backend: { 
+    backend: {
       icon: <Server size={20} />,
-      label: { EN: 'Backend', ES: 'Backend' } 
+      label: { EN: 'Backend', ES: 'Backend' }
     },
-    integration: { 
+    integration: {
       icon: <Braces size={20} />,
-      label: { EN: 'Integration', ES: 'Integración' } 
+      label: { EN: 'Integration', ES: 'Integración' }
     },
-    data: { 
+    data: {
       icon: <Database size={20} />,
-      label: { EN: 'Data', ES: 'Datos' } 
+      label: { EN: 'Data', ES: 'Datos' }
     },
-    tools: { 
+    tools: {
       icon: <Code size={20} />,
-      label: { EN: 'Tools', ES: 'Herramientas' } 
+      label: { EN: 'Tools', ES: 'Herramientas' }
     },
-    web: { 
+    web: {
       icon: <Globe size={20} />,
-      label: { EN: 'Web', ES: 'Web' } 
+      label: { EN: 'Web', ES: 'Web' }
     },
-    soft: { 
+    soft: {
       icon: <Users size={20} />,
-      label: { EN: 'Soft Skills', ES: 'Habilidades Sociales' } 
+      label: { EN: 'Soft Skills', ES: 'Habilidades Sociales' }
     },
-    microsoft: { 
+    microsoft: {
       icon: <Brain size={20} />,
-      label: { EN: 'Microsoft', ES: 'Microsoft' } 
+      label: { EN: 'Microsoft', ES: 'Microsoft' }
     }
   };
-  
+
   // Skills organized by category
   const skills = {
     frontend: {
@@ -195,7 +189,7 @@ const SkillsTerminal = ({ language }) => {
       ]
     }
   };
-  
+
   // Text to be typed for each category
   const typingTexts = {
     frontend: {
@@ -231,18 +225,18 @@ const SkillsTerminal = ({ language }) => {
       ES: "Cargando habilidades en tecnologías Microsoft...\nImplementando soluciones empresariales utilizando el stack tecnológico de Microsoft."
     }
   };
-  
+
   // Typing animation effect
   useEffect(() => {
     if (!isMounted) return;
-    
+
     if (typingRef.current) clearTimeout(typingRef.current);
-    
+
     setTypedText('');
     let currentText = '';
     const textToType = typingTexts[activeCategory][language];
     let charIndex = 0;
-    
+
     const typeChar = () => {
       if (charIndex < textToType.length) {
         currentText += textToType.charAt(charIndex);
@@ -251,68 +245,68 @@ const SkillsTerminal = ({ language }) => {
         typingRef.current = setTimeout(typeChar, Math.random() * 30 + 20);
       }
     };
-    
+
     typeChar();
-    
+
     // Cursor blinking effect
     if (cursorRef.current) clearInterval(cursorRef.current);
     cursorRef.current = setInterval(() => {
       setShowCursor(prev => !prev);
     }, 500);
-    
+
     return () => {
       if (typingRef.current) clearTimeout(typingRef.current);
       if (cursorRef.current) clearInterval(cursorRef.current);
     };
   }, [activeCategory, language, isMounted]);
-  
+
   if (!isMounted) {
     return (
-      <div className="bg-[#0f1724] rounded-lg shadow-2xl overflow-hidden border border-gray-800">
-        <div className="bg-[#1a2537] px-4 py-2 flex items-center border-b border-gray-800">
-          <Terminal size={18} className="text-blue-400 mr-2" />
-          <span className="text-blue-400 font-mono text-sm font-bold">
+      <div className="glass-panel rounded-lg shadow-2xl overflow-hidden border border-slate-dark/50">
+        <div className="bg-navy-800/80 px-4 py-2 flex items-center border-b border-slate-dark/50">
+          <Terminal size={18} className="text-electric mr-2" />
+          <span className="text-electric font-mono text-sm font-bold">
             {language === 'EN' ? 'Skills Terminal' : 'Terminal de Habilidades'} ~ {language === 'EN' ? 'Loading' : 'Cargando'}...
           </span>
         </div>
-        <div className="p-4 text-gray-300 font-mono text-sm h-48 overflow-y-auto">
-          <div className="text-blue-400">$ skills.loading()</div>
+        <div className="p-4 text-slate-light font-mono text-sm h-48 overflow-y-auto">
+          <div className="text-electric">$ skills.loading()</div>
         </div>
       </div>
     );
   }
-  
+
   return (
-    <div className="bg-[#0f1724] rounded-lg shadow-2xl overflow-hidden border border-gray-800">
+    <div className="glass-panel rounded-lg shadow-2xl overflow-hidden border border-slate-dark/50">
       {/* Terminal Header */}
-      <div className="bg-[#1a2537] px-4 py-2 flex items-center border-b border-gray-800">
-        <Terminal size={18} className="text-blue-400 mr-2" />
-        <span className="text-blue-400 font-mono text-sm font-bold">
+      <div className="bg-navy-800/80 px-4 py-2 flex items-center border-b border-slate-dark/50">
+        <Terminal size={18} className="text-electric mr-2" />
+        <span className="text-electric font-mono text-sm font-bold">
           {language === 'EN' ? 'Skills Terminal' : 'Terminal de Habilidades'} ~ {categories[activeCategory].label[language]}
         </span>
       </div>
-      
+
       {/* Terminal Output */}
-      <div className="p-4 text-gray-300 font-mono text-sm h-48 overflow-y-auto">
-        <div className="text-blue-400">$ skills.{activeCategory}.load()</div>
+      <div className="p-4 text-slate-light font-mono text-sm h-48 overflow-y-auto">
+        <div className="text-electric">$ skills.{activeCategory}.load()</div>
         <div className="mt-2 whitespace-pre-line">
           {typedText}
-          {showCursor && <span className="border-r-2 border-blue-400 ml-1 animate-pulse">&nbsp;</span>}
+          {showCursor && <span className="border-r-2 border-electric ml-1 animate-pulse">&nbsp;</span>}
         </div>
       </div>
-      
+
       {/* Skills Progress Bars */}
-      <div className="p-4 border-t border-gray-800">
+      <div className="p-4 border-t border-slate-dark/50">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {skills[activeCategory][language].map((skill, index) => (
             <div key={index} className="mb-2">
               <div className="flex justify-between mb-1">
-                <span className="text-xs font-mono text-gray-400">{skill.name}</span>
-                <span className="text-xs font-mono text-blue-400">{skill.level}%</span>
+                <span className="text-xs font-mono text-slate-light">{skill.name}</span>
+                <span className="text-xs font-mono text-electric">{skill.level}%</span>
               </div>
-              <div className="h-2 bg-[#1a2537] rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-gradient-to-r from-blue-600 to-blue-400 transition-all duration-1000 ease-out" 
+              <div className="h-2 bg-navy-900 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-blue-600 to-electric transition-all duration-1000 ease-out"
                   style={{ width: `${skill.level}%` }}
                 />
               </div>
@@ -320,19 +314,18 @@ const SkillsTerminal = ({ language }) => {
           ))}
         </div>
       </div>
-      
+
       {/* Category Navigation */}
-      <div className="bg-[#1a2537] border-t border-gray-800 p-2">
+      <div className="bg-navy-800/50 border-t border-slate-dark/50 p-2">
         <div className="flex flex-wrap justify-center gap-2">
           {Object.entries(categories).map(([key, category]) => (
             <button
               key={key}
               onClick={() => setActiveCategory(key)}
-              className={`flex items-center space-x-1 px-3 py-1 rounded text-xs font-mono transition-colors ${
-                activeCategory === key 
-                  ? 'bg-blue-600 text-white' 
-                  : 'text-gray-400 hover:bg-[#0f1724] hover:text-gray-200'
-              }`}
+              className={`flex items-center space-x-1 px-3 py-1 rounded text-xs font-mono transition-colors ${activeCategory === key
+                  ? 'bg-electric/20 text-electric border border-electric/50'
+                  : 'text-slate-light hover:bg-navy-700 hover:text-white'
+                }`}
             >
               <span>{category.icon}</span>
               <span>{category.label[language]}</span>
@@ -340,15 +333,15 @@ const SkillsTerminal = ({ language }) => {
           ))}
         </div>
       </div>
-      
+
       {/* Command Line */}
-      <div className="bg-[#0c1220] border-t border-gray-800 p-3 flex items-center">
-        <span className="text-blue-400 font-mono mr-2">$</span>
-        <div className="flex-1 bg-[#1a2537] rounded px-3 py-2 font-mono text-sm text-gray-400 flex items-center">
+      <div className="bg-navy-900/80 border-t border-slate-dark/50 p-3 flex items-center">
+        <span className="text-electric font-mono mr-2">$</span>
+        <div className="flex-1 bg-navy-800 rounded px-3 py-2 font-mono text-sm text-slate-light flex items-center">
           <span>
-            skills.explore(<span className="text-blue-400">&apos;{activeCategory}&apos;</span>)
+            skills.explore(<span className="text-electric">&apos;{activeCategory}&apos;</span>)
           </span>
-          <span className="border-r-2 border-blue-400 ml-1 h-5 animate-pulse"></span>
+          <span className="border-r-2 border-electric ml-1 h-5 animate-pulse"></span>
         </div>
       </div>
     </div>

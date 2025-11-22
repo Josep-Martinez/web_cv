@@ -1,12 +1,8 @@
 // app/contact/page.js
 "use client";
 import React, { useEffect, useState } from "react";
-import { Nixie_One, Martian_Mono } from "next/font/google";
 import { Terminal, Github, Linkedin, Mail, MapPin } from "lucide-react";
 import { useLanguage } from "../../app/LanguageContext";
-
-const nixieOne = Nixie_One({ weight: "400", subsets: ["latin"] });
-const martianMono = Martian_Mono({ weight: "400", subsets: ["latin"] });
 
 // Traducciones
 const texts = {
@@ -41,7 +37,7 @@ function SegmentedTypeWriter({
   speed = 24,
   onDone,
   onFirstChar,
-  cursorColorClass = "border-blue-400",
+  cursorColorClass = "border-electric",
 }) {
   const [typedLen, setTypedLen] = useState(0);
   const totalLen = segments.reduce((acc, s) => acc + s.text.length, 0);
@@ -102,25 +98,25 @@ function IconTypeRow({
       onDone={onDone}
       onFirstChar={() => setShowIcon(true)}
       segments={[{ text, className: "" }]}
-      cursorColorClass="border-blue-400"
+      cursorColorClass="border-electric"
     />
   );
 
   return (
-    <div className="flex items-start gap-2 pl-8">
+    <div className="flex items-start gap-4">
       <Icon
-        className={`text-gray-400 w-5 h-5 md:w-6 md:h-6 shrink-0 mt-[2px] 
+        className={`text-slate-light w-5 h-5 md:w-6 md:h-6 shrink-0 mt-[2px] 
                     transition-opacity transition-transform duration-500 ease-out will-change-transform
                     ${showIcon ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
       />
       <div className="min-w-0">
-        <div className="text-gray-300 break-words break-all whitespace-normal md:break-words">
+        <div className="text-slate-light break-words break-all whitespace-normal md:break-words">
           {href ? (
             <a
               href={href}
               target={href.startsWith("http") ? "_blank" : undefined}
               rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-              className="hover:text-blue-400 transition-colors"
+              className="hover:text-electric transition-colors"
             >
               {textNode}
             </a>
@@ -146,25 +142,28 @@ export default function ContactPage() {
   }, [language]);
 
   return (
-    <div className="min-h-screen bg-[#101827] text-white p-6 md:p-20">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-[#1a2537] rounded-lg p-6 md:p-10 shadow-xl overflow-visible">
+    <div className="min-h-screen pt-28 md:pt-32 p-6 md:p-20 flex items-center justify-center">
+      <div className="max-w-4xl w-full mx-auto">
+        <div className="glass-panel rounded-xl p-6 md:p-10 shadow-2xl overflow-visible border border-slate-dark/50 relative">
+          {/* Decorative elements */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-electric to-transparent opacity-50"></div>
+
           {/* Header tipo terminal */}
-          <div className="flex items-center gap-2 border-b border-gray-700 pb-4 mb-6">
-            <Terminal className="text-green-500 w-6 h-6 md:w-8 md:h-8" />
-            <span className={`${martianMono.className} text-green-500 text-sm md:text-base`}>
+          <div className="flex items-center gap-2 border-b border-slate-dark/50 pb-4 mb-6">
+            <Terminal className="text-electric w-6 h-6 md:w-8 md:h-8" />
+            <span className="font-mono text-electric text-sm md:text-base font-bold">
               contact.exe
             </span>
           </div>
 
           {/* Contenido secuencial */}
-          <div className={`${martianMono.className} space-y-6 text-sm md:text-lg`}>
+          <div className="font-mono space-y-6 text-sm md:text-lg">
 
             {/* 0) "$ " + whoami */}
             <div>
               {step > 0 ? (
                 <>
-                  <span className="text-green-500 text-sm md:text-lg">$ </span>
+                  <span className="text-electric text-sm md:text-lg font-bold">$ </span>
                   <span className="text-blue-400 text-sm md:text-lg">{t.whoami}</span>
                 </>
               ) : (
@@ -172,16 +171,16 @@ export default function ContactPage() {
                   start={step === 0}
                   onDone={next}
                   segments={[
-                    { text: "$ ", className: "text-green-500 text-sm md:text-lg" },
+                    { text: "$ ", className: "text-electric text-sm md:text-lg font-bold" },
                     { text: t.whoami, className: "text-blue-400 text-sm md:text-lg" },
                   ]}
-                  cursorColorClass="border-blue-400"
+                  cursorColorClass="border-electric"
                 />
               )}
             </div>
 
             {/* 1) identidad */}
-            <div className="text-gray-300">
+            <div className="text-slate-light">
               {step > 1 ? (
                 t.identity
               ) : (
@@ -190,7 +189,7 @@ export default function ContactPage() {
                     start
                     onDone={next}
                     segments={[{ text: t.identity, className: "" }]}
-                    cursorColorClass="border-blue-400"
+                    cursorColorClass="border-electric"
                   />
                 )
               )}
@@ -198,10 +197,10 @@ export default function ContactPage() {
 
             {/* 2) ubicación */}
             {step > 2 ? (
-              <div className="flex items-start gap-2 pl-8">
-                <MapPin className="text-gray-400 w-5 h-5 md:w-6 md:h-6 shrink-0 mt-[2px]" />
+              <div className="flex items-start gap-4">
+                <MapPin className="text-slate-light w-5 h-5 md:w-6 md:h-6 shrink-0 mt-[2px]" />
                 <div className="min-w-0">
-                  <div className="text-gray-300 break-words break-all whitespace-normal md:break-words">
+                  <div className="text-slate-light break-words break-all whitespace-normal md:break-words">
                     {t.location}
                   </div>
                 </div>
@@ -221,7 +220,7 @@ export default function ContactPage() {
             <div>
               {step > 3 ? (
                 <>
-                  <span className="text-green-500 text-sm md:text-lg">$ </span>
+                  <span className="text-electric text-sm md:text-lg font-bold">$ </span>
                   <span className="text-blue-400 text-sm md:text-lg">{t.contactList}</span>
                 </>
               ) : (
@@ -230,10 +229,10 @@ export default function ContactPage() {
                     start
                     onDone={next}
                     segments={[
-                      { text: "$ ", className: "text-green-500 text-sm md:text-lg" },
+                      { text: "$ ", className: "text-electric text-sm md:text-lg font-bold" },
                       { text: t.contactList, className: "text-blue-400 text-sm md:text-lg" },
                     ]}
-                    cursorColorClass="border-blue-400"
+                    cursorColorClass="border-electric"
                   />
                 )
               )}
@@ -241,13 +240,13 @@ export default function ContactPage() {
 
             {/* 4) email */}
             {step > 4 ? (
-              <div className="flex items-start gap-2 pl-8">
-                <Mail className="text-gray-400 w-5 h-5 md:w-6 md:h-6 shrink-0 mt-[2px]" />
+              <div className="flex items-start gap-4">
+                <Mail className="text-slate-light w-5 h-5 md:w-6 md:h-6 shrink-0 mt-[2px]" />
                 <div className="min-w-0">
-                  <div className="text-gray-300 break-words break-all whitespace-normal md:break-words">
+                  <div className="text-slate-light break-words break-all whitespace-normal md:break-words">
                     <a
                       href={`mailto:${t.email}`}
-                      className="hover:text-blue-400 transition-colors break-all"
+                      className="hover:text-electric transition-colors break-all"
                     >
                       {t.email}
                     </a>
@@ -268,15 +267,15 @@ export default function ContactPage() {
 
             {/* 5) LinkedIn */}
             {step > 5 ? (
-              <div className="flex items-start gap-2 pl-8">
-                <Linkedin className="text-gray-400 w-5 h-5 md:w-6 md:h-6 shrink-0 mt-[2px]" />
+              <div className="flex items-start gap-4">
+                <Linkedin className="text-slate-light w-5 h-5 md:w-6 md:h-6 shrink-0 mt-[2px]" />
                 <div className="min-w-0">
-                  <div className="text-gray-300 break-words break-all whitespace-normal md:break-words">
+                  <div className="text-slate-light break-words break-all whitespace-normal md:break-words">
                     <a
                       href="https://www.linkedin.com/in/josepmartinezboix/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-blue-400 transition-colors break-all"
+                      className="hover:text-electric transition-colors break-all"
                     >
                       {t.linkedin}
                     </a>
@@ -297,15 +296,15 @@ export default function ContactPage() {
 
             {/* 6) GitHub */}
             {step > 6 ? (
-              <div className="flex items-start gap-2 pl-8">
-                <Github className="text-gray-400 w-5 h-5 md:w-6 md:h-6 shrink-0 mt-[2px]" />
+              <div className="flex items-start gap-4">
+                <Github className="text-slate-light w-5 h-5 md:w-6 md:h-6 shrink-0 mt-[2px]" />
                 <div className="min-w-0">
-                  <div className="text-gray-300 break-words break-all whitespace-normal md:break-words">
+                  <div className="text-slate-light break-words break-all whitespace-normal md:break-words">
                     <a
                       href="https://github.com/Josep-martinez"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-blue-400 transition-colors break-all"
+                      className="hover:text-electric transition-colors break-all"
                     >
                       {t.github}
                     </a>
@@ -328,7 +327,7 @@ export default function ContactPage() {
             <div>
               {step > 7 ? (
                 <>
-                  <span className="text-green-500 text-sm md:text-lg">$ </span>
+                  <span className="text-electric text-sm md:text-lg font-bold">$ </span>
                   <span className="text-blue-400 text-sm md:text-lg">{t.messageCommand}</span>
                 </>
               ) : (
@@ -337,17 +336,17 @@ export default function ContactPage() {
                     start
                     onDone={next}
                     segments={[
-                      { text: "$ ", className: "text-green-500 text-sm md:text-lg" },
+                      { text: "$ ", className: "text-electric text-sm md:text-lg font-bold" },
                       { text: t.messageCommand, className: "text-blue-400 text-sm md:text-lg" },
                     ]}
-                    cursorColorClass="border-blue-400"
+                    cursorColorClass="border-electric"
                   />
                 )
               )}
             </div>
 
             {/* 8) mensaje final */}
-            <div className="text-gray-300">
+            <div className="text-slate-light">
               {step > 8 ? (
                 t.messageText
               ) : (
@@ -356,7 +355,7 @@ export default function ContactPage() {
                     start
                     onDone={next}
                     segments={[{ text: t.messageText, className: "" }]}
-                    cursorColorClass="border-blue-400"
+                    cursorColorClass="border-electric"
                   />
                 )
               )}
@@ -365,8 +364,8 @@ export default function ContactPage() {
             {/* cursor final */}
             {step > 8 && (
               <div className="flex items-center">
-                <span className="text-green-500 text-sm md:text-lg">$ </span>
-                <span className="text-gray-400 ml-2 animate-pulse">█</span>
+                <span className="text-electric text-sm md:text-lg font-bold">$ </span>
+                <span className="text-slate-light ml-2 animate-pulse">█</span>
               </div>
             )}
           </div>

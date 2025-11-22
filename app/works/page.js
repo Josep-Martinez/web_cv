@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { nixieOne, martianMono } from "../fonts";
 import { useLanguage } from "../../app/LanguageContext";
 import AnimatedWord from "../components/AnimatedWord";
 import ExperienceItem from "../components/ExperienceItem";
@@ -121,11 +120,11 @@ const texts = {
           globalInterval={globalInterval}
         />{" "}
         técnicas y estratégicas que me permiten{" "}
-          <AnimatedWord
-            word="adaptarme"
-            animationStarted={animationStarted}
-            globalInterval={globalInterval}
-          />{" "}
+        <AnimatedWord
+          word="adaptarme"
+          animationStarted={animationStarted}
+          globalInterval={globalInterval}
+        />{" "}
         y generar soluciones innovadoras.
       </>
     ),
@@ -215,23 +214,17 @@ export default function ExperiencePage() {
 
   if (!isMounted) {
     return (
-      <div className="min-h-screen bg-[#101827] text-white p-6 md:p-20">
+      <div className="min-h-screen pt-28 md:pt-32 p-6 md:p-20">
         <div className="max-w-6xl mx-auto">
           <div className="mb-10 text-center">
             <h1
-              className={`${nixieOne.className} text-4xl md:text-7xl font-bold tracking-wider mb-10`}
+              className="font-heading text-4xl md:text-7xl font-bold tracking-wider mb-10 text-gray-100"
             >
               {texts[language].title}
             </h1>
             <div
-              className={`${martianMono.className} text-sm md:text-base text-gray-300 h-20`}
+              className="font-sans text-sm md:text-base text-slate-light h-20"
             />
-          </div>
-          <div className="mb-20">
-            <div className="relative">
-              <div className="h-40 bg-[#1a2537] rounded animate-pulse mb-4" />
-              <div className="h-40 bg-[#1a2537] rounded animate-pulse mb-4" />
-            </div>
           </div>
         </div>
       </div>
@@ -239,25 +232,25 @@ export default function ExperiencePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#101827] text-white p-6 md:p-20">
+    <div className="min-h-screen pt-28 md:pt-32 p-6 md:p-20">
       <div className="max-w-6xl mx-auto">
         {/* Título y descripción */}
-        <div className="mb-10 text-center">
+        <div className="mb-16 text-center">
           <h1
-            className={`${nixieOne.className} text-4xl md:text-7xl font-bold tracking-wider mb-10`}
+            className="font-heading text-4xl md:text-7xl font-bold tracking-wider mb-8 text-gray-100"
           >
             {texts[language].title}
           </h1>
           <p
-            className={`${martianMono.className} text-sm md:text-base text-gray-300`}
+            className="font-sans text-base md:text-lg text-slate-light max-w-3xl mx-auto leading-relaxed"
           >
             {texts[language].description(animationStarted, globalInterval)}
           </p>
         </div>
 
         {/* Línea de tiempo de experiencia */}
-        <div className="relative mb-20">
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-blue-600 via-blue-500 to-blue-600 hidden md:block"></div>
+        <div className="relative mb-24">
+          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-electric/20 via-electric/50 to-electric/20 hidden md:block"></div>
           {texts[language].experiences.map((exp, index) => (
             <ExperienceItem
               key={index}
@@ -269,9 +262,9 @@ export default function ExperiencePage() {
         </div>
 
         {/* Formación */}
-        <div className="mb-16">
+        <div className="mb-24">
           <h2
-            className={`${nixieOne.className} text-3xl md:text-5xl font-bold tracking-wider mb-6 text-center`}
+            className="font-heading text-3xl md:text-5xl font-bold tracking-wider mb-12 text-center text-gray-100"
           >
             {texts[language].education}
           </h2>
@@ -279,9 +272,9 @@ export default function ExperiencePage() {
         </div>
 
         {/* Skills */}
-        <div className="mb-16">
+        <div className="mb-24">
           <h2
-            className={`${nixieOne.className} text-3xl md:text-5xl font-bold tracking-wider mb-6 text-center`}
+            className="font-heading text-3xl md:text-5xl font-bold tracking-wider mb-12 text-center text-gray-100"
           >
             {texts[language].skills}
           </h2>
@@ -289,9 +282,9 @@ export default function ExperiencePage() {
         </div>
 
         {/* Certificados */}
-        <div className="mb-16">
+        <div className="mb-24">
           <h2
-            className={`${nixieOne.className} text-3xl md:text-5xl font-bold tracking-wider mb-6 text-center`}
+            className="font-heading text-3xl md:text-5xl font-bold tracking-wider mb-12 text-center text-gray-100"
           >
             {texts[language].certificates}
           </h2>

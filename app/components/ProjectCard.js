@@ -1,54 +1,43 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { Nixie_One, Martian_Mono } from 'next/font/google';
-
-const nixieOne = Nixie_One({
-  weight: "400",
-  subsets: ["latin"],
-});
-
-const martianMono = Martian_Mono({
-  weight: "400",
-  subsets: ["latin"],
-});
 
 const ProjectCard = ({ project, onClick, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef(null);
-  
+
   useEffect(() => {
     const card = cardRef.current;
     if (!card) return;
-    
+
     const handleMouseMove = (e) => {
       if (!isHovered) return;
-      
+
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      
+
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
-      
+
       const rotateX = (y - centerY) / 10;
       const rotateY = (centerX - x) / 10;
-      
+
       card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
     };
-    
+
     const handleMouseLeave = () => {
       card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
     };
-    
+
     card.addEventListener('mousemove', handleMouseMove);
     card.addEventListener('mouseleave', handleMouseLeave);
-    
+
     return () => {
       card.removeEventListener('mousemove', handleMouseMove);
       card.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, [isHovered]);
-  
+
   return (
     <div
       ref={cardRef}
@@ -61,13 +50,13 @@ const ProjectCard = ({ project, onClick, index }) => {
       onClick={() => onClick(project)}
     >
       {/* Efecto de brillo */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 via-blue-400/30 to-blue-600/0 opacity-0 group-hover:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-all duration-1000 pointer-events-none"></div>
-      
+      <div className="absolute inset-0 bg-gradient-to-r from-electric/0 via-electric/20 to-electric/0 opacity-0 group-hover:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-all duration-1000 pointer-events-none z-10"></div>
+
       {/* Borde animado */}
-      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300"></div>
-      
-      <div className="relative bg-[#1a2537] rounded-lg overflow-hidden border border-gray-800 group-hover:border-blue-500/50 transition-all duration-300">
-        <div className="relative h-48 overflow-hidden bg-[#0f1623]">
+      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-electric to-blue-500 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300"></div>
+
+      <div className="relative glass-panel rounded-lg overflow-hidden border border-slate-dark/50 group-hover:border-electric/50 transition-all duration-300 h-full flex flex-col">
+        <div className="relative h-48 overflow-hidden bg-navy-900">
           <Image
             src={project.image}
             alt={project.name}
@@ -75,42 +64,41 @@ const ProjectCard = ({ project, onClick, index }) => {
             height={300}
             className="object-contain w-full h-full transition-transform duration-700 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1a2537] to-transparent opacity-60"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent opacity-60"></div>
         </div>
-        
-        <div className="p-6 min-h-[200px] flex flex-col">
-          <h3 className={`${nixieOne.className} text-xl mb-2 text-white group-hover:text-blue-400 transition-colors duration-300`}>
+
+        <div className="p-6 flex flex-col flex-grow">
+          <h3 className="font-heading text-xl mb-2 text-gray-100 group-hover:text-electric transition-colors duration-300 font-bold">
             {project.name}
           </h3>
-          <p className={`${martianMono.className} text-sm text-gray-400 mb-4 flex-grow`}>
+          <p className="font-sans text-sm text-slate-light mb-4 flex-grow line-clamp-3">
             {project.description}
           </p>
-          
+
           {/* Tech stack badges */}
           <div className="flex flex-wrap gap-2 mt-auto">
             {project.tech.slice(0, 3).map((tech, i) => (
               <span
                 key={i}
-                className="px-2 py-1 text-xs bg-blue-500/10 text-blue-400 rounded-full border border-blue-500/20"
+                className="px-2 py-1 text-xs font-mono bg-electric/10 text-electric rounded-full border border-electric/20"
               >
                 {tech}
               </span>
             ))}
             {project.tech.length > 3 && (
-              <span className="px-2 py-1 text-xs bg-gray-500/10 text-gray-400 rounded-full border border-gray-500/20">
+              <span className="px-2 py-1 text-xs font-mono bg-slate-dark/30 text-slate-light rounded-full border border-slate-dark/50">
                 +{project.tech.length - 3}
               </span>
             )}
           </div>
         </div>
-        
+
         {/* Status indicator */}
-        <div className="absolute top-4 right-4">
-          <div className={`w-2 h-2 rounded-full ${
-            project.status === 'Live' || project.status === 'En Producción' ? 'bg-orange-400': 
-            project.status === 'Completed' || project.status === 'Completado' ? 'bg-green-400':
-            'bg-yellow-400'
-          } animate-pulse`}></div>
+        <div className="absolute top-4 right-4 z-10">
+          <div className={`w-2 h-2 rounded-full ${project.status === 'Live' || project.status === 'En Producción' ? 'bg-electric shadow-[0_0_8px_rgba(100,255,218,0.6)]' :
+              project.status === 'Completed' || project.status === 'Completado' ? 'bg-green-400' :
+                'bg-yellow-400'
+            } animate-pulse`}></div>
         </div>
       </div>
     </div>

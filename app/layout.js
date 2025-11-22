@@ -1,17 +1,22 @@
 // app/layout.js
 import "./globals.css";
-import { Nixie_One, Martian_Mono } from "next/font/google";
+import { Outfit, Inter, Martian_Mono } from "next/font/google";
 import Header from "../app/header";
 import { LanguageProvider } from "../app/LanguageContext";
 import LanguageButton from "../app/LanguageButton";
 import { LanguageTransitionProvider } from "../app/components/LanguageTransitionProvider";
+import StarBackground from "../app/components/StarBackground";
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
-const nixieOne = Nixie_One({
-  weight: "400",
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-nixie-one",
+  variable: "--font-outfit",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
 });
 
 const martianMono = Martian_Mono({
@@ -31,7 +36,8 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className={`${nixieOne.variable} ${martianMono.variable} antialiased bg-[#101827] text-white`}>
+      <body className={`${outfit.variable} ${inter.variable} ${martianMono.variable} antialiased bg-navy-900 text-slate-light selection:bg-electric selection:text-navy-900`}>
+        <StarBackground />
         <LanguageTransitionProvider>
           <LanguageProvider>
             <Header />
@@ -39,7 +45,7 @@ export default function RootLayout({ children }) {
             <LanguageButton />
           </LanguageProvider>
         </LanguageTransitionProvider>
-        <SpeedInsights/>
+        <SpeedInsights />
         <Analytics />
       </body>
     </html>

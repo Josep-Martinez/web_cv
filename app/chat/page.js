@@ -2,9 +2,8 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { Send, Sparkles, User, Bot, ArrowLeft } from "lucide-react";
+import { Send, Sparkles, User, Bot } from "lucide-react";
 import { useLanguage } from "../LanguageContext";
-import { nixieOne, martianMono } from "../fonts";
 import { useRouter } from "next/navigation";
 
 const texts = {
@@ -37,44 +36,41 @@ const uid = () =>
 
 function MessageBubble({ role, content, isTyping }) {
   const isUser = role === "user";
-  
+
   return (
     <div
-      className={`flex gap-3 items-start animate-fadeIn ${
-        isUser ? "flex-row-reverse" : "flex-row"
-      }`}
+      className={`flex gap-3 items-start animate-fadeIn ${isUser ? "flex-row-reverse" : "flex-row"
+        }`}
     >
       {/* Avatar */}
       <div
-        className={`flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${
-          isUser
-            ? "bg-blue-600/20 border-blue-500/50"
-            : "bg-gradient-to-br from-purple-600/20 to-blue-600/20 border-purple-500/50"
-        }`}
+        className={`flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${isUser
+            ? "bg-electric/10 border-electric/50"
+            : "bg-navy-800 border-slate-dark/50"
+          }`}
       >
         {isUser ? (
-          <User size={16} className="text-blue-400" />
+          <User size={16} className="text-electric" />
         ) : (
-          <Bot size={16} className="text-purple-400" />
+          <Bot size={16} className="text-slate-light" />
         )}
       </div>
 
       {/* Message bubble */}
       <div
-        className={`max-w-[75%] md:max-w-[65%] rounded-2xl px-4 py-3 border backdrop-blur-sm transition-all duration-300 hover:scale-[1.01] ${
-          isUser
-            ? "bg-blue-600/10 border-blue-500/30 hover:bg-blue-600/15 hover:border-blue-500/50"
-            : "bg-gradient-to-br from-slate-900/50 to-slate-800/50 border-slate-700/50 hover:from-slate-900/70 hover:to-slate-800/70"
-        }`}
+        className={`max-w-[75%] md:max-w-[65%] rounded-2xl px-4 py-3 border backdrop-blur-sm transition-all duration-300 hover:scale-[1.01] ${isUser
+            ? "bg-electric/10 border-electric/30 hover:bg-electric/15 hover:border-electric/50"
+            : "glass-panel border-slate-dark/50"
+          }`}
       >
         {isTyping ? (
           <div className="flex gap-1 py-1">
-            <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-            <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-            <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></span>
+            <span className="w-2 h-2 bg-electric rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+            <span className="w-2 h-2 bg-electric rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+            <span className="w-2 h-2 bg-electric rounded-full animate-bounce"></span>
           </div>
         ) : (
-          <p className="whitespace-pre-wrap text-slate-200 text-sm md:text-base leading-relaxed">
+          <p className="whitespace-pre-wrap text-slate-light text-sm md:text-base leading-relaxed font-sans">
             {content}
           </p>
         )}
@@ -131,21 +127,21 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0a0f1e] via-[#101827] to-[#0f172a] text-white flex flex-col">
+    <div className="min-h-screen pt-20 text-white flex flex-col">
       {/* Header con gradiente */}
-      <div className="sticky top-0 z-10 border-b border-slate-800/50 bg-[#0f172a]/90 backdrop-blur-xl">
+      <div className="sticky top-20 z-10 border-b border-slate-dark/30 bg-navy-900/90 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="text-center">
             <h1
-              className={`${nixieOne.className} text-2xl md:text-3xl font-bold tracking-wider bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent`}
+              className="font-heading text-2xl md:text-3xl font-bold tracking-wider text-electric"
             >
               {t.title}
             </h1>
             <p
-              className={`${martianMono.className} text-[11px] md:text-xs text-slate-400 mt-1`}
+              className="font-mono text-[11px] md:text-xs text-slate-light mt-1"
             >
               <span className="inline-flex items-center gap-1">
-                <Sparkles size={12} className="text-purple-400 animate-pulse" />
+                <Sparkles size={12} className="text-electric animate-pulse" />
                 {t.subtitle}
               </span>
             </p>
@@ -156,7 +152,7 @@ export default function ChatPage() {
       {/* Chat container */}
       <main className="flex-1 overflow-hidden flex items-center">
         <div className="max-w-4xl mx-auto px-4 py-4 md:py-6 w-full">
-          <div className="bg-gradient-to-br from-slate-900/50 via-slate-900/40 to-slate-800/50 border border-slate-700/70 rounded-3xl h-[calc(100vh-200px)] md:h-[calc(100vh-180px)] flex flex-col backdrop-blur-sm shadow-2xl shadow-black/20">
+          <div className="glass-panel border border-slate-dark/50 rounded-3xl h-[calc(100vh-200px)] md:h-[calc(100vh-180px)] flex flex-col shadow-2xl">
             {/* Messages area */}
             <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-5">
               {messages.map((m) => (
@@ -171,7 +167,7 @@ export default function ChatPage() {
             {/* Input area */}
             <form
               onSubmit={onSend}
-              className="border-t border-slate-800/60 p-3 md:p-5 bg-slate-900/30 backdrop-blur-sm rounded-b-3xl"
+              className="border-t border-slate-dark/50 p-3 md:p-5 bg-navy-900/50 backdrop-blur-sm rounded-b-3xl"
             >
               <div className="flex items-end gap-3">
                 <div className="flex-1 relative">
@@ -187,7 +183,7 @@ export default function ChatPage() {
                     }}
                     placeholder={t.placeholder}
                     rows={1}
-                    className={`w-full bg-slate-900/60 border border-slate-700/60 rounded-2xl px-4 py-3 outline-none ${martianMono.className} text-sm md:text-base text-slate-200 placeholder:text-slate-500 focus:border-purple-500/60 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300 resize-none min-h-[48px] max-h-[120px]`}
+                    className="w-full bg-navy-800/60 border border-slate-dark/50 rounded-2xl px-4 py-3 outline-none font-mono text-sm md:text-base text-slate-light placeholder:text-slate-500 focus:border-electric/60 focus:ring-2 focus:ring-electric/20 transition-all duration-300 resize-none min-h-[48px] max-h-[120px]"
                     style={{
                       height: "auto",
                       overflowY: input.split("\n").length > 3 ? "auto" : "hidden",
@@ -201,19 +197,18 @@ export default function ChatPage() {
                 <button
                   type="submit"
                   disabled={!input.trim() || isTyping}
-                  className={`flex-shrink-0 inline-flex items-center gap-2 px-4 py-3 rounded-2xl font-medium transition-all duration-300 ${
-                    !input.trim() || isTyping
-                      ? "bg-slate-800/40 text-slate-600 cursor-not-allowed"
-                      : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 active:scale-95 shadow-lg shadow-blue-500/20 hover:shadow-purple-500/30"
-                  }`}
+                  className={`flex-shrink-0 inline-flex items-center gap-2 px-4 py-3 rounded-2xl font-medium transition-all duration-300 ${!input.trim() || isTyping
+                      ? "bg-navy-800 text-slate-600 cursor-not-allowed"
+                      : "bg-electric text-navy-900 hover:bg-electric/90 active:scale-95 shadow-lg shadow-electric/20"
+                    }`}
                 >
                   <Send size={18} />
-                  <span className={`${martianMono.className} text-sm hidden md:inline`}>
+                  <span className="font-mono text-sm hidden md:inline font-bold">
                     {t.send}
                   </span>
                 </button>
               </div>
-              <p className={`${martianMono.className} text-[10px] text-slate-500 mt-2 text-center`}>
+              <p className="font-mono text-[10px] text-slate-500 mt-2 text-center">
                 Beta • Press Enter to send, Shift+Enter for new line
               </p>
             </form>

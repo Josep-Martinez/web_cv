@@ -15,7 +15,7 @@ function GlobalLanguageSweepOverlay({ isTransitioning }) {
 
   // Caracteres para el efecto Matrix
   const matrixChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+-=[]{}|;:,.<>?";
-  
+
   // Generar columnas de código
   const columns = 40; // Número de columnas
   const columnData = Array.from({ length: columns }, (_, i) => ({
@@ -27,7 +27,7 @@ function GlobalLanguageSweepOverlay({ isTransitioning }) {
 
   // Generar caracteres aleatorios
   const generateRandomChars = (count) => {
-    return Array.from({ length: count }, () => 
+    return Array.from({ length: count }, () =>
       matrixChars.charAt(Math.floor(Math.random() * matrixChars.length))
     );
   };
@@ -35,15 +35,15 @@ function GlobalLanguageSweepOverlay({ isTransitioning }) {
   return (
     <div className="fixed inset-0 z-[99999] pointer-events-none overflow-hidden">
       {/* Fondo oscuro */}
-      <div 
-        className="absolute inset-0 bg-[#0f172a]"
+      <div
+        className="absolute inset-0 bg-navy-900"
         style={{
           animation: isTransitioning ? 'matrixFadeBase 600ms ease-in-out' : 'none'
         }}
       />
-      
+
       {/* Efecto de líneas de código cayendo */}
-      <div className="absolute inset-0 font-mono text-green-400">
+      <div className="absolute inset-0 font-mono text-electric">
         {columnData.map((column) => (
           <div
             key={column.id}
@@ -58,7 +58,7 @@ function GlobalLanguageSweepOverlay({ isTransitioning }) {
             {generateRandomChars(30).map((char, index) => (
               <div
                 key={`main-${index}`}
-                className="text-green-300 text-sm leading-tight opacity-90"
+                className="text-electric text-sm leading-tight opacity-90"
                 style={{
                   animation: isTransitioning ? `matrixChar 600ms ease-out ${index * 20}ms` : 'none'
                 }}
@@ -66,12 +66,12 @@ function GlobalLanguageSweepOverlay({ isTransitioning }) {
                 {char}
               </div>
             ))}
-            
+
             {/* Caracteres de cola (más opacos) */}
             {generateRandomChars(20).map((char, index) => (
               <div
                 key={`tail-${index}`}
-                className="text-green-600 text-xs leading-tight opacity-60"
+                className="text-blue-500 text-xs leading-tight opacity-60"
                 style={{
                   animation: isTransitioning ? `matrixCharFade 600ms ease-out ${index * 15 + 200}ms` : 'none'
                 }}
@@ -84,8 +84,8 @@ function GlobalLanguageSweepOverlay({ isTransitioning }) {
       </div>
 
       {/* Efecto de brillo en la parte superior */}
-      <div 
-        className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-green-400/20 to-transparent"
+      <div
+        className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-electric/20 to-transparent"
         style={{
           animation: isTransitioning ? 'matrixGlow 600ms ease-in-out 100ms' : 'none'
         }}
@@ -96,7 +96,7 @@ function GlobalLanguageSweepOverlay({ isTransitioning }) {
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-full h-px bg-green-400/50"
+            className="absolute w-full h-px bg-electric/50"
             style={{
               top: `${20 + i * 15}%`,
               animation: isTransitioning ? `matrixScanLine 600ms ease-in-out ${i * 100}ms` : 'none'
@@ -110,7 +110,7 @@ function GlobalLanguageSweepOverlay({ isTransitioning }) {
         {[...Array(15)].map((_, i) => (
           <div
             key={i}
-            className="absolute border border-green-400/30"
+            className="absolute border border-electric/30"
             style={{
               width: `${Math.random() * 20 + 10}px`,
               height: `${Math.random() * 20 + 10}px`,
@@ -239,12 +239,12 @@ export function LanguageTransitionProvider({ children }) {
   // Función para iniciar transición
   const startTransition = () => {
     setIsTransitioning(true);
-    
+
     // Cambiar contenido en el punto medio
     setTimeout(() => {
       setContentKey(prev => prev + 1);
     }, 300);
-    
+
     // Terminar transición
     setTimeout(() => {
       setIsTransitioning(false);
@@ -252,10 +252,10 @@ export function LanguageTransitionProvider({ children }) {
   };
 
   return (
-    <LanguageTransitionContext.Provider value={{ 
-      contentKey, 
-      isTransitioning, 
-      startTransition 
+    <LanguageTransitionContext.Provider value={{
+      contentKey,
+      isTransitioning,
+      startTransition
     }}>
       {children}
       <GlobalLanguageSweepOverlay isTransitioning={isTransitioning} />
@@ -266,7 +266,7 @@ export function LanguageTransitionProvider({ children }) {
 // Hook personalizado para páginas
 export function usePageTransition() {
   const { contentKey } = useLanguageTransition();
-  
+
   return {
     contentKey,
   };
