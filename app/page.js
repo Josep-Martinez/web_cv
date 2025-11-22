@@ -83,7 +83,7 @@ export default function Home() {
   useEffect(() => {
     setIsMounted(true);
     if (isMounted) {
-      setGlobalInterval(120);
+      setGlobalInterval(100);
       setTimeout(() => {
         setAnimationStarted(true);
       }, 100);

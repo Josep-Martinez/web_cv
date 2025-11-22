@@ -1,3 +1,20 @@
+/**
+ * Header Component
+ * 
+ * Responsive navigation header with "liquid glass" effect on scroll.
+ * Features:
+ * - Transforms into pill shape with glassmorphism when scrolled
+ * - Mobile hamburger menu with full-screen overlay
+ * - Auto-scroll to top on navigation
+ * - Language-aware navigation labels
+ * 
+ * HOW TO MODIFY:
+ * - Glass effect: Adjust bg-navy-900/30, backdrop-blur-xl, border-white/10
+ * - Scroll trigger: Change threshold in line 19 (currently 20px)
+ * - Add/remove pages: Modify navLinks array
+ * - Enable chat link: Set SHOW_CHAT_LINK to true
+ */
+
 // app/header.js
 "use client";
 import Link from "next/link";
@@ -5,7 +22,7 @@ import { usePathname } from "next/navigation";
 import { useLanguage } from "./LanguageContext";
 import { useState, useEffect } from "react";
 
-// 🔵 Toggle manual: cambia a true para mostrar el enlace "Chat" en el header
+// Toggle to show/hide chat link in navigation
 const SHOW_CHAT_LINK = false;
 
 export default function Header() {

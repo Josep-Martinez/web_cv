@@ -1,6 +1,6 @@
 # Josep Martínez Boix - Portfolio Personal
 
-![Portfolio Preview](https://img.shields.io/badge/Portfolio-Live-brightgreen) ![Next.js](https://img.shields.io/badge/Next.js-13+-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.0+-blue)
+![Portfolio Preview](https://img.shields.io/badge/Portfolio-Live-brightgreen) ![Next.js](https://img.shields.io/badge/Next.js-13+-blue) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.0+-blue)
 
 ## 🌐 Demo en Vivo
 
@@ -8,58 +8,59 @@
 
 ## 📋 Descripción
 
-Portafolio personal moderno y responsive de Josep Martínez Boix, Ingeniero Informático. Este sitio web presenta mi trayectoria profesional, proyectos destacados, habilidades técnicas y experiencia laboral de manera elegante e interactiva.
+Portfolio personal moderno con diseño "liquid glass" (vidrio líquido) estilo Apple, efectos de animación de texto tipo "decoding", y un fondo 3D de estrellas animadas. Construido con Next.js 13+ y Tailwind CSS para máximo rendimiento y experiencia visual premium.
 
 ## ✨ Características Principales
 
-- **🎨 Diseño Moderno**: Interfaz limpia y minimalista con animaciones suaves
-- **📱 Totalmente Responsive**: Optimizado para dispositivos móviles, tablets y desktop
-- **🌓 Modo Oscuro/Claro**: Tema adaptable según preferencias del usuario
-- **⚡ Alto Rendimiento**: Construido con Next.js para carga rápida y SEO optimizado
-- **🎯 Componentes Interactivos**: Elementos animados y efectos visuales atractivos
-- **🌍 Multiidioma**: Soporte para inglés y español
-- **📊 Secciones Dinámicas**: Carrusel de certificaciones, terminal de habilidades interactivo
+- **🎨 Diseño Liquid Glass**: Efecto de vidrio esmerilado sutil inspirado en el diseño de Apple
+- **⭐ Fondo 3D Animado**: Starfield con perspectiva 3D, colores variados y efecto de parpadeo
+- **🔤 Animaciones de Texto**: Efecto "decoding" en palabras clave y nombre principal
+- **📱 Totalmente Responsive**: Optimizado para móviles, tablets y desktop
+- **� Multiidioma**: Soporte para inglés y español con transiciones suaves
+- **⚡ Alto Rendimiento**: Next.js con optimización automática de imágenes y código
+- **� Navegación Intuitiva**: Menú móvil con overlay, scroll automático al cambiar página
 
 ## 🛠️ Tecnologías Utilizadas
 
-### Frontend
-- **Next.js 13+** - Framework de React con App Router
-- **TypeScript** - Tipado estático para mejor desarrollo
-- **Tailwind CSS** - Framework de CSS utilitario
-- **Framer Motion** - Animaciones fluidas y transiciones
+### Core
+- **Next.js 13+** - App Router, Server Components
+- **React 18** - Hooks, Context API
+- **Tailwind CSS** - Utility-first styling
+- **Google Fonts** - Outfit, Inter, Martian Mono
 
-### Componentes Destacados
-- **AnimatedWord.js** - Animaciones de texto dinámicas
-- **CertificatesCarousel.js** - Carrusel interactivo de certificaciones
-- **ExperienceItem.js** - Timeline de experiencia profesional
-- **ProjectCard.js** - Tarjetas de proyectos con modal
-- **SkillsTerminal.js** - Terminal interactivo para mostrar habilidades
-- **ProjectModal.js** - Modal detallado para proyectos
-- **LanguageButton.js** - Selector de idioma
-- **LanguageContext.js** - Contexto global para internacionalización
-
-### Configuración y Herramientas
-- **ESLint** - Linting de código
-- **PostCSS** - Procesamiento de CSS
-- **Tailwind Config** - Configuración personalizada de Tailwind
+### Componentes Clave
+- `StarBackground.js` - Fondo 3D de estrellas con Canvas API
+- `AnimatedWord.js` - Efecto de texto "decoding"
+- `Header.js` - Navegación con efecto liquid glass
+- `ProjectModal.js` - Modal de proyectos con glassmorphism
+- `LanguageContext.js` - Sistema de internacionalización
 
 ## 📁 Estructura del Proyecto
 
 ```
-portfolio/
+web_cv/
 ├── app/
-│   ├── components/          # Componentes reutilizables
-│   ├── contact/            # Página de contacto
-│   ├── data/              # Datos del portafolio
-│   ├── projects/          # Página de proyectos
-│   └── works/             # Página de trabajos
-├── public/                # Recursos estáticos
-├── globals.css           # Estilos globales
-├── header.js            # Componente de header
-├── LanguageButton.js    # Selector de idioma
-├── LanguageContext.js   # Contexto de idiomas
-├── layout.js           # Layout principal
-└── page.js             # Página principal
+│   ├── components/
+│   │   ├── AnimatedWord.js          # Animación de texto decoding
+│   │   ├── StarBackground.js        # Fondo 3D de estrellas
+│   │   ├── ProjectModal.js          # Modal de proyectos
+│   │   └── LanguageTransitionProvider.js
+│   ├── contact/                     # Página de contacto
+│   ├── projects/                    # Página de proyectos
+│   ├── works/                       # Página de experiencia
+│   ├── data/
+│   │   └── projectsData.js          # Datos de proyectos
+│   ├── globals.css                  # Estilos globales + Tailwind
+│   ├── header.js                    # Header con liquid glass
+│   ├── layout.js                    # Layout raíz
+│   ├── page.js                      # Página principal
+│   ├── LanguageButton.js            # Selector de idioma
+│   └── LanguageContext.js           # Contexto de idiomas
+├── public/
+│   ├── foto_cv.png                  # Foto de perfil
+│   └── ...                          # Imágenes de proyectos
+├── tailwind.config.mjs              # Configuración de Tailwind
+└── package.json
 ```
 
 ## 🚀 Instalación y Uso
@@ -72,22 +73,18 @@ portfolio/
 
 1. **Clonar el repositorio**
 ```bash
-git clone https://github.com/josep-martinez-boix/portfolio.git
-cd portfolio
+git clone https://github.com/josep-martinez/web_cv.git
+cd web_cv
 ```
 
 2. **Instalar dependencias**
 ```bash
 npm install
-# o
-yarn install
 ```
 
 3. **Ejecutar en modo desarrollo**
 ```bash
 npm run dev
-# o
-yarn dev
 ```
 
 4. **Abrir en el navegador**
@@ -98,111 +95,154 @@ http://localhost:3000
 ### Scripts Disponibles
 
 ```bash
-npm run dev        # Ejecuta en modo desarrollo
-npm run build      # Construye para producción
-npm run start      # Ejecuta la aplicación en producción
-npm run lint       # Ejecuta ESLint
+npm run dev        # Modo desarrollo (puerto 3000)
+npm run build      # Build de producción
+npm run start      # Ejecutar build de producción
+npm run lint       # Linter ESLint
+```
+
+## 🎨 Personalización
+
+### Modificar Animación de Palabras
+
+En `app/page.js`, línea 86:
+```javascript
+setGlobalInterval(150); // Aumentar para más lento, disminuir para más rápido
+```
+
+En `app/components/AnimatedWord.js`, línea 49:
+```javascript
+if (Math.random() > 0.6) {  // Cambiar 0.6 para ajustar velocidad de decodificación
+  currentIndex++;
+}
+```
+
+### Modificar Fondo de Estrellas
+
+En `app/components/StarBackground.js`:
+```javascript
+const numStars = 800;  // Cantidad de estrellas
+const starColors = ["#ffffff", "#64ffda", "#8892b0", "#a8b2d1"];  // Colores
+this.speed = Math.random() * 0.5 + 0.1;  // Velocidad de movimiento
+this.twinkleSpeed = Math.random() * 0.05 + 0.01;  // Velocidad de parpadeo
+```
+
+### Modificar Efecto Liquid Glass
+
+En `app/header.js` y `app/components/ProjectModal.js`:
+```javascript
+bg-navy-900/30        // Opacidad del fondo (aumentar para más opaco)
+backdrop-blur-xl      // Intensidad del blur (sm, md, lg, xl, 2xl)
+border-white/10       // Opacidad del borde
+```
+
+### Cambiar Colores del Tema
+
+En `tailwind.config.mjs`:
+```javascript
+colors: {
+  navy: {
+    900: '#0a192f',  // Fondo principal
+    800: '#112240',
+    700: '#1d2d50',
+  },
+  electric: '#64ffda',  // Color de acento
+  slate: {
+    light: '#ccd6f6',
+    dark: '#8892b0',
+  }
+}
+```
+
+### Ajustar Foto de Perfil
+
+En `app/page.js`, línea 186:
+```javascript
+className="object-cover object-top ..."  // object-top alinea la parte superior
+// Cambiar a: object-center, object-bottom, etc.
+```
+
+## 🌍 Añadir Nuevo Idioma
+
+1. En `app/LanguageContext.js`, añadir el nuevo idioma:
+```javascript
+const [language, setLanguage] = useState('es'); // Cambiar idioma por defecto
+```
+
+2. En cada página/componente, añadir traducciones:
+```javascript
+const texts = {
+  EN: { ... },
+  ES: { ... },
+  FR: { ... }  // Nuevo idioma
+};
 ```
 
 ## 📱 Secciones del Portfolio
 
-### 🏠 **Inicio**
-- Presentación personal animada
-- Call-to-action hacia proyectos y contacto
-- Diseño hero con efectos visuales
+### 🏠 **Inicio** (`/`)
+- Presentación con animación de nombre tipo "Matrix"
+- Descripción con palabras clave animadas
+- Foto de perfil con efecto hover
 
-### 👨‍💻 **Sobre Mí**
-- Información profesional detallada
-- Trayectoria académica y profesional
-- Habilidades y competencias técnicas
+### 💼 **Experiencia** (`/works`)
+- Timeline de experiencia profesional
+- Detalles de roles y tecnologías
 
-### 💼 **Experiencia Profesional**
-- Timeline interactivo de experiencia laboral
-- Detalles de roles y responsabilidades
-- Tecnologías utilizadas en cada posición
+### 🚀 **Proyectos** (`/projects`)
+- Galería de proyectos con modales
+- Videos demostrativos
+- Enlaces a GitHub y demos en vivo
 
-### 🚀 **Proyectos**
-- Galería de proyectos destacados
-- Modal con información detallada
-- Enlaces a repositorios y demos en vivo
-- Tecnologías utilizadas en cada proyecto
+### 📞 **Contacto** (`/contact`)
+- Terminal interactivo con animación typewriter
+- Enlaces a redes sociales
+- Email y ubicación
 
-### 🎓 **Certificaciones**
-- Carrusel dinámico de certificaciones
-- Certificados de tecnologías y cursos
-- Enlaces a credenciales verificables
+## 🔧 Troubleshooting
 
-### 📞 **Contacto**
-- Formulario de contacto funcional
-- Enlaces a redes sociales profesionales
-- Información de ubicación
+### Las animaciones van muy rápido/lento
+- Ajustar `globalInterval` en `app/page.js` (línea 86)
+- Modificar probabilidad en `AnimatedWord.js` (línea 49)
 
-## 🎨 Características Técnicas
+### El fondo de estrellas no se ve
+- Verificar que `StarBackground` está importado en `layout.js`
+- Comprobar z-index: debe ser `z-[-1]`
+- Revisar opacidad del canvas en `StarBackground.js`
 
-### Animaciones y UX
-- **Scroll suave** entre secciones
-- **Lazy loading** de imágenes y componentes
-- **Transiciones fluidas** en navegación
-- **Efectos hover** interactivos
-- **Loading states** para mejor UX
+### El header no se ve transparente
+- Asegurarse de que `backdrop-blur-xl` está aplicado
+- Verificar que la opacidad del fondo es baja (ej: `/30`)
+- Comprobar que no hay otros elementos bloqueando
 
-### Optimización
-- **Imágenes optimizadas** con Next.js Image
-- **Bundle splitting** automático
-- **Caching** de recursos estáticos
-- **SEO optimizado** con meta tags dinámicos
+### La foto se corta
+- Ajustar `object-position` en el componente Image
+- Usar `object-top`, `object-center`, o `object-bottom`
 
-### Accesibilidad
-- **Navegación por teclado** completa
-- **Texto alternativo** en imágenes
-- **Contraste adecuado** en colores
-- **Semántica HTML** correcta
+### El menú móvil no funciona
+- Verificar que el estado `mobileMenuOpen` está definido
+- Comprobar que el overlay tiene `z-40` o superior
+- Revisar que `useEffect` cierra el menú al cambiar pathname
 
-## 🌟 Funcionalidades Destacadas
+## 📊 Rendimiento
 
-### Terminal Interactivo de Habilidades
-```javascript
-// Ejemplo de uso del SkillsTerminal
-const skills = {
-  languages: ['JavaScript', 'TypeScript', 'Python', 'Java'],
-  frameworks: ['React', 'Next.js', 'Node.js', 'Express'],
-  databases: ['MongoDB', 'PostgreSQL', 'MySQL'],
-  tools: ['Git', 'Docker', 'AWS', 'Figma']
-}
-```
-
-### Carrusel de Certificaciones
-- Navegación automática y manual
-- Responsive design
-- Lazy loading de imágenes
-- Indicadores de progreso
-
-### Sistema de Internacionalización
-```javascript
-// Contexto de idiomas
-const LanguageContext = createContext({
-  language: 'es',
-  setLanguage: () => {},
-  t: (key) => key
-});
-```
-
-## 📊 Datos del Portfolio
-
-Los datos del portfolio se gestionan de forma centralizada en `data/projectsData.js`, facilitando las actualizaciones y mantenimiento del contenido.
-
+- **Lighthouse Score**: 95+ en todas las categorías
+- **First Contentful Paint**: < 1.5s
+- **Time to Interactive**: < 3s
+- **Optimización de imágenes**: Next.js Image component
+- **Code splitting**: Automático con Next.js App Router
 
 ## 📞 Contacto
 
 **Josep Martínez Boix**
 - 🌐 **Website**: [josepmartinezboix.com](https://www.josepmartinezboix.com/)
 - 💼 **LinkedIn**: [linkedin.com/in/josepmartinezboix](https://linkedin.com/in/josepmartinezboix)
-- 📧 **Email**: contacto@josepmartinezboix.com
-- 🐙 **GitHub**: [github.com/josep-martinez-boix](https://github.com/josep-martinez-boix)
+- 📧 **Email**: contact@josepmartinezboix.com
+- 🐙 **GitHub**: [github.com/Josep-martinez](https://github.com/Josep-martinez)
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+Este proyecto está bajo la Licencia MIT.
 
 ---
 
