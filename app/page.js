@@ -152,8 +152,8 @@ export default function Home() {
             clearInterval(interval);
           }
 
-          iterations += 1 / 3; // Slower decoding for smoother effect
-        }, 30);
+          iterations += 1 / 4; // Slower advancement: 1/4 character per frame
+        }, 70); // Slower interval: 50ms between frames
       }, delay);
     };
 
