@@ -60,7 +60,7 @@ const texts = {
           "Development in Microsoft Dynamics ERP and Power Platform, focused on research and business solutions.",
         skills:
           "Programming, Microsoft Dynamics ERP, Microsoft Power Automate, PowerApps, Dynamics NAV, R&D",
-        logo: "/laberit_logo.jpeg",
+        logo: "/laberit/laberit_logo.jpeg",
       },
       {
         title: "Driver",
