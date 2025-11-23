@@ -74,7 +74,7 @@ export default function Header() {
         <div
           className={`relative flex items-center justify-between px-6 transition-all duration-500 ${scrolled
             ? "w-[90%] md:w-[80%] max-w-5xl h-14 rounded-full bg-navy-900/30 backdrop-blur-xl border border-white/10 shadow-lg"
-            : "w-full max-w-7xl h-20 bg-transparent"
+            : "w-full max-w-7xl h-20 bg-transparent border border-transparent rounded-none"
             }`}
         >
 

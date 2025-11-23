@@ -12,7 +12,7 @@ const ExperienceItem = ({ experience, index, language }) => {
     : [];
 
   return (
-    <div className="relative mb-16 experience-item">
+    <div className="relative mb-16 experience-item select-none">
       <div
         className={`flex w-full flex-col md:flex-row ${isEven ? "md:justify-start" : "md:justify-end"
           }`}
@@ -31,17 +31,17 @@ const ExperienceItem = ({ experience, index, language }) => {
                 {/* Header con logo y título */}
                 <div className="flex items-center gap-4 mb-5">
                   <div className={isEven ? "order-2" : "order-1"}>
-                    <div className="relative w-16 h-16 bg-white rounded-xl overflow-hidden flex items-center justify-center shadow-lg group-hover:shadow-electric/50 transition-all duration-300 group-hover:scale-110">
+                    <div className="relative w-10 h-10 bg-white rounded-xl overflow-hidden flex items-center justify-center shadow-lg group-hover:shadow-electric/50 transition-all duration-300 group-hover:scale-110">
                       {experience.logo ? (
                         <Image
                           src={experience.logo}
                           alt={`${experience.company} logo`}
-                          width={64}
-                          height={64}
-                          className="object-contain p-2"
+                          width={40}
+                          height={40}
+                          className="object-contain p-1.5"
                         />
                       ) : (
-                        <Briefcase className="w-8 h-8 text-navy-900" />
+                        <Briefcase className="w-5 h-5 text-navy-900" />
                       )}
                     </div>
                   </div>
