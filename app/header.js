@@ -168,8 +168,10 @@ export default function Header() {
                 </Link>
               );
             })}
-            {eggUnlocked && <UfoLink />}
           </nav>
+
+          {/* UFO Link (Visible on both Mobile & Desktop) */}
+          {eggUnlocked && <UfoLink />}
 
           {/* Mobile Menu Button */}
           <button
