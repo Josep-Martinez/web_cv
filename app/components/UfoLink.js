@@ -38,6 +38,15 @@ const UfoLink = () => {
                     80% { transform: translate(10vw, 10vh) scale(1.1) rotate(10deg); }
                     100% { transform: translate(0, 0) scale(1) rotate(0deg); }
                 }
+                @media (max-width: 768px) {
+                    @keyframes ufoLap {
+                        0% { transform: translate(-50vw, 15vh) scale(0.5) rotate(15deg); }
+                        25% { transform: translate(10vw, 60vh) scale(0.7) rotate(-10deg); }
+                        50% { transform: translate(80vw, 30vh) scale(0.9) rotate(5deg); }
+                        75% { transform: translate(50vw, -10vh) scale(0.8) rotate(-15deg); }
+                        100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+                    }
+                }
             `}</style>
 
             {/* The Link (Initially hidden) */}
