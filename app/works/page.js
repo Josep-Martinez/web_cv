@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "../../app/LanguageContext";
-import AnimatedWord from "../components/AnimatedWord";
-import ExperienceItem from "../components/ExperienceItem";
-import SkillsTerminal from "../components/SkillsTerminal";
-import CertificatesCarousel from "../components/CertificatesCarousel";
-import EducationTerminal from "../components/EducationTerminal";
+import AnimatedWord from "../components/shared/AnimatedWord";
+import ExperienceItem from "../components/works/ExperienceItem";
+import SkillsTerminal from "../components/works/SkillsTerminal";
+import CertificatesCarousel from "../components/works/CertificatesCarousel";
+import EducationTerminal from "../components/works/EducationTerminal";
 
 /* ================================
    Traducciones

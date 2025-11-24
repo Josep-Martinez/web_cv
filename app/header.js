@@ -21,8 +21,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "./LanguageContext";
 import { useState, useEffect } from "react";
-import UfoLink from "./components/UfoLink";
-import SpaceRunnerGame from "./components/SpaceRunnerGame";
+import UfoLink from "./components/layout/UfoLink";
+import SpaceRunnerGame from "./components/space-runner/SpaceRunnerGame";
 
 // Toggle to show/hide chat link in navigation
 const SHOW_CHAT_LINK = false;

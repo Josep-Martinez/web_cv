@@ -1,3 +1,33 @@
+/**
+ * Galactic Defender - Space Shooter Game Component
+ * 
+ * A full-featured arcade space shooter built with HTML5 Canvas.
+ * 
+ * ARCHITECTURE:
+ * - Canvas-based rendering (60 FPS)
+ * - Custom physics engine
+ * - Particle system for visual effects
+ * - Enemy AI with difficulty scaling
+ * - Power-up system (Shield, Rapid Fire, Spread Shot)
+ * - Mana/Energy system with overheat mechanic
+ * 
+ * CONTROLS:
+ * - PC: WASD/Arrows for movement, Space to shoot
+ * - Mobile: Virtual joystick (left) + shoot button (right)
+ * 
+ * KEY FEATURES:
+ * - 8-directional aiming (PC) / 360° aiming (Mobile)
+ * - 3 enemy types: Fighter, Meteor, Tank
+ * - Gradual difficulty scaling based on score
+ * - Energy management (shooting costs mana, overheat prevents shooting)
+ * - Retro synthesized sound effects (Web Audio API)
+ * 
+ * GAME LOOP:
+ * 1. Update: Physics, AI, collisions, spawning
+ * 2. Render: Background → Entities → Particles → UI
+ * 3. Repeat at 60 FPS using requestAnimationFrame
+ */
+
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -13,14 +43,19 @@ const SpaceRunnerGame = ({ onClose, isPage = false }) => {
   const [mana, setMana] = useState(100);
   const [isOverheated, setIsOverheated] = useState(false);
 
-  // Game Constants
-  const PLAYER_SPEED = 5;
-  const BULLET_SPEED = 12;
-  const MANA_COST = 15;
-  const MANA_REGEN = 0.5;
-  const MANA_REGEN_OVERHEAT = 0.3; // Slower regen when overheated
-  const OVERHEAT_THRESHOLD = 25; // Mana must reach this to shoot again
-  const SPAWN_RATE_INITIAL = 100;
+  // ==================== GAME BALANCE CONSTANTS ====================
+  // These values control the feel and difficulty of the game
+
+  const PLAYER_SPEED = 5;           // Pixels per frame (movement speed)
+  const BULLET_SPEED = 12;          // Pixels per frame (projectile speed)
+
+  // MANA SYSTEM: Prevents spam-shooting, adds strategic depth
+  const MANA_COST = 15;             // Energy consumed per shot (100 max = ~6 shots)
+  const MANA_REGEN = 0.5;           // Energy recovered per frame (normal)
+  const MANA_REGEN_OVERHEAT = 0.3;  // Slower recovery when overheated (penalty)
+  const OVERHEAT_THRESHOLD = 25;    // Must reach 25% energy to shoot again after overheat
+
+  const SPAWN_RATE_INITIAL = 100;   // Frames between enemy spawns (decreases with score)
 
   // Audio Context
   const audioCtxRef = useRef(null);
@@ -93,29 +128,58 @@ const SpaceRunnerGame = ({ onClose, isPage = false }) => {
     }
   };
 
-  // Game State Refs
+  // ==================== GAME STATE ====================
+  // All game data stored in a ref to avoid re-renders during game loop
+  // This is updated 60 times per second, so we don't want React state updates
+
   const gameRef = useRef({
+    // PLAYER
     player: {
-      x: 100, y: 300, vx: 0, vy: 0, width: 40, height: 40,
-      hp: 3, maxHp: 3,
-      mana: 100, maxMana: 100, overheated: false,
-      angle: 0,
-      powerup: null, powerupTimer: 0,
-      shield: false
+      x: 100, y: 300,           // Position
+      vx: 0, vy: 0,             // Velocity
+      width: 40, height: 40,    // Hitbox
+      hp: 3, maxHp: 3,          // Health
+      mana: 100, maxMana: 100,  // Energy for shooting
+      overheated: false,        // Can't shoot until mana recovers
+      angle: 0,                 // Direction facing (radians)
+      powerup: null,            // Active powerup type (shield/rapid/spread)
+      powerupTimer: 0,          // Frames remaining
+      shield: false             // Invulnerability flag
     },
-    bullets: [],
-    enemies: [],
-    enemyBullets: [],
-    particles: [],
-    stars: [],
-    planets: [],
-    powerups: [],
-    frame: 0,
-    score: 0,
-    spawnRate: SPAWN_RATE_INITIAL,
+
+    // GAME ENTITIES (arrays of objects)
+    bullets: [],        // Player projectiles
+    enemies: [],        // Enemy ships and obstacles
+    enemyBullets: [],   // Enemy projectiles
+    particles: [],      // Visual effects (explosions, trails)
+    stars: [],          // Background parallax stars
+    planets: [],        // Background decorative planets
+    powerups: [],       // Collectible power-ups
+
+    // GAME LOGIC
+    frame: 0,           // Frame counter (used for timing)
+    score: 0,           // Current score
+    spawnRate: SPAWN_RATE_INITIAL,  // Enemy spawn frequency
     isGameOver: false,
-    keys: { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false, " ": false, w: false, a: false, s: false, d: false },
-    joystick: { active: false, originX: 0, originY: 0, currentX: 0, currentY: 0, angle: 0, force: 0 }
+
+    // INPUT STATE
+    keys: {
+      ArrowUp: false, ArrowDown: false,
+      ArrowLeft: false, ArrowRight: false,
+      " ": false,  // Spacebar for shooting
+      w: false, a: false, s: false, d: false
+    },
+
+    // MOBILE JOYSTICK STATE
+    joystick: {
+      active: false,    // Is user touching joystick?
+      originX: 0,       // Touch start position
+      originY: 0,
+      currentX: 0,      // Current touch position
+      currentY: 0,
+      angle: 0,         // Direction (radians)
+      force: 0          // Distance from origin (0-1)
+    }
   });
 
   // Load High Score
@@ -286,7 +350,10 @@ const SpaceRunnerGame = ({ onClose, isPage = false }) => {
     gameRef.current.keys[" "] = false;
   };
 
-  // Game Loop
+  // ==================== MAIN GAME LOOP ====================
+  // Runs at 60 FPS using requestAnimationFrame
+  // Only active when gameState === "playing" and device is landscape
+
   useEffect(() => {
     if (gameState !== "playing" || !isLandscape) return;
 
@@ -294,6 +361,7 @@ const SpaceRunnerGame = ({ onClose, isPage = false }) => {
     const ctx = canvas.getContext("2d");
     let animationFrameId;
 
+    // Ensure canvas fills the screen
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -303,23 +371,37 @@ const SpaceRunnerGame = ({ onClose, isPage = false }) => {
 
     const loop = () => {
       const game = gameRef.current;
-      game.frame++;
-      game.score += 0.02;
+      game.frame++;  // Increment frame counter (used for timing spawns, etc.)
+      game.score += 0.02;  // Gradual score increase over time
       setScore(Math.floor(game.score));
 
-      // --- UPDATE ---
+      // ========== UPDATE PHASE ==========
+      // 1. Mana System
+      // 2. Player Movement & Shooting
+      // 3. Enemy Spawning & AI
+      // 4. Collision Detection
+      // 5. Physics Updates
 
-      // Mana Logic (Overheat System)
+      // ========== 1. MANA SYSTEM (Overheat Mechanic) ==========
+      // This prevents spam-shooting and adds strategic depth
+      // - Normal: Mana regenerates at MANA_REGEN per frame
+      // - Overheated: Can't shoot, slower regen until reaching OVERHEAT_THRESHOLD
+
       if (game.player.overheated) {
-        // Recover slower when overheated
+        // Penalty: Slower recovery when overheated
         game.player.mana += MANA_REGEN_OVERHEAT;
+
+        // Check if we've recovered enough to shoot again
         if (game.player.mana >= OVERHEAT_THRESHOLD) {
-          game.player.overheated = false;
-          setIsOverheated(false);
+          game.player.overheated = false;  // Exit overheat state
+          setIsOverheated(false);          // Update UI
         }
       } else if (game.player.mana < game.player.maxMana) {
+        // Normal regeneration
         game.player.mana += MANA_REGEN;
       }
+
+      // Clamp to max and update UI
       game.player.mana = Math.min(game.player.maxMana, game.player.mana);
       setMana(Math.floor(game.player.mana));
 
@@ -333,45 +415,59 @@ const SpaceRunnerGame = ({ onClose, isPage = false }) => {
         }
       }
 
-      // Player Movement & Aiming
-      let dx = 0;
-      let dy = 0;
+      // ========== 2. PLAYER MOVEMENT & AIMING ==========
+      // Two control schemes: Joystick (mobile) or Keyboard (PC)
+
+      let dx = 0;  // Horizontal velocity
+      let dy = 0;  // Vertical velocity
 
       if (game.joystick.active) {
+        // MOBILE: Virtual joystick controls
+        // Convert polar coordinates (angle, force) to cartesian (dx, dy)
         dx = Math.cos(game.joystick.angle) * game.joystick.force * PLAYER_SPEED;
         dy = Math.sin(game.joystick.angle) * game.joystick.force * PLAYER_SPEED;
+
+        // Update ship rotation to face movement direction
         if (game.joystick.force > 0.1) {
           game.player.angle = game.joystick.angle;
         }
       } else {
+        // PC: Keyboard controls (WASD or Arrow keys)
         if (game.keys.ArrowUp || game.keys.w) dy -= PLAYER_SPEED;
         if (game.keys.ArrowDown || game.keys.s) dy += PLAYER_SPEED;
         if (game.keys.ArrowLeft || game.keys.a) dx -= PLAYER_SPEED;
         if (game.keys.ArrowRight || game.keys.d) dx += PLAYER_SPEED;
 
+        // 8-directional aiming: Ship faces movement direction
         if (dx !== 0 || dy !== 0) {
           game.player.angle = Math.atan2(dy, dx);
         }
       }
 
+      // Apply velocity
       game.player.vx = dx;
       game.player.vy = dy;
       game.player.x += game.player.vx;
       game.player.y += game.player.vy;
 
+      // Keep player within screen bounds
       game.player.x = Math.max(0, Math.min(canvas.width - game.player.width, game.player.x));
       game.player.y = Math.max(0, Math.min(canvas.height - game.player.height, game.player.y));
 
-      // Shooting
-      // Slower fire rate: 20 frames (was 15)
+      // ========== 3. SHOOTING SYSTEM ==========
+      // Fire rate: 20 frames (normal) or 8 frames (rapid fire power-up)
       const fireRate = game.player.powerup === "rapid" ? 8 : 20;
 
+      // Check if player is trying to shoot (Space or Mobile button)
       if (game.keys[" "] && game.frame % fireRate === 0) {
+        // Can only shoot if: (1) Not overheated AND (2) Have enough mana
         if (!game.player.overheated && game.player.mana >= MANA_COST) {
+          // Consume mana
           game.player.mana -= MANA_COST;
           setMana(Math.floor(game.player.mana));
           playSound("shoot");
 
+          // Helper function to spawn a bullet at an angle offset
           const spawnBullet = (angleOffset = 0) => {
             game.bullets.push({
               x: game.player.x + game.player.width / 2 + Math.cos(game.player.angle) * 20,
@@ -379,14 +475,17 @@ const SpaceRunnerGame = ({ onClose, isPage = false }) => {
               vx: Math.cos(game.player.angle + angleOffset) * BULLET_SPEED,
               vy: Math.sin(game.player.angle + angleOffset) * BULLET_SPEED,
               color: "#00f3ff",
-              life: 100
+              life: 100  // Bullet despawns after 100 frames
             });
           };
 
+          // Fire main bullet
           spawnBullet();
+
+          // Spread shot power-up: Fire 2 additional bullets at angles
           if (game.player.powerup === "spread") {
-            spawnBullet(0.2);
-            spawnBullet(-0.2);
+            spawnBullet(0.2);   // +11 degrees
+            spawnBullet(-0.2);  // -11 degrees
           }
 
           // Check for overheat
@@ -998,10 +1097,10 @@ const SpaceRunnerGame = ({ onClose, isPage = false }) => {
         </div>
       )}
 
-      {/* Mobile Shoot Button */}
+      {/* Mobile Shoot Button - Only visible on mobile devices */}
       {gameState === "playing" && (
         <button
-          className="absolute bottom-12 right-12 w-24 h-24 bg-red-500/30 rounded-full border-2 border-red-400/50 flex items-center justify-center active:bg-red-500/60 active:scale-95 transition-all z-50 touch-none backdrop-blur-sm shadow-[0_0_15px_rgba(239,68,68,0.4)]"
+          className="md:hidden absolute bottom-12 right-12 w-24 h-24 bg-red-500/30 rounded-full border-2 border-red-400/50 flex items-center justify-center active:bg-red-500/60 active:scale-95 transition-all z-50 touch-none backdrop-blur-sm shadow-[0_0_15px_rgba(239,68,68,0.4)]"
           onTouchStart={handleShootStart}
           onTouchEnd={handleShootEnd}
         >

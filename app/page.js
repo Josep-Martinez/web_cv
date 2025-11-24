@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useLanguage } from "../app/LanguageContext";
 import React, { useState, useEffect } from "react";
-import AnimatedWord from "./components/AnimatedWord";
+import AnimatedWord from "./components/shared/AnimatedWord";
 
 // Caracteres para el efecto del nombre y título
 const effectChars =

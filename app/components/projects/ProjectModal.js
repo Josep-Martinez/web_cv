@@ -1,9 +1,9 @@
 // ProjectModal.js - SOLUCIÓN DEFINITIVA CORREGIDA
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
-import { useLanguage } from '../LanguageContext';
-import { usePageTransition } from '../components/LanguageTransitionProvider';
-import { projectsData } from '../data/projectsData';
+import { useLanguage } from '../../LanguageContext';
+import { usePageTransition } from '../layout/LanguageTransitionProvider';
+import { projectsData } from '../../data/projectsData';
 
 const texts = {
   EN: {

@@ -1,10 +1,33 @@
+/**
+ * UfoLink Component - Animated UFO Easter Egg Link
+ * 
+ * PURPOSE:
+ * Creates a dramatic animated entrance for the "MISIÓN" link that appears
+ * when the Easter Egg is unlocked. The UFO flies around the screen before
+ * "dropping" the link to the game.
+ * 
+ * ANIMATION SEQUENCE:
+ * 1. LAP (0-6s): UFO flies in an organic path around the screen
+ * 2. HOVER (6-7s): UFO hovers above the final link position
+ * 3. DROP (7-8s): UFO "drops" the link and shrinks away
+ * 4. DONE (8s+): Link remains visible, UFO disappears
+ * 
+ * MOBILE OPTIMIZATION:
+ * Separate keyframe animation for screens < 768px to prevent
+ * the UFO from flying off-screen on smaller displays.
+ * 
+ * USAGE:
+ * Rendered conditionally in header.js when eggUnlocked === true
+ */
+
 // app/components/UfoLink.js
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Rocket } from "lucide-react";
 
 const UfoLink = () => {
-    const [animationStage, setAnimationStage] = useState("start"); // start, lap, hover, drop, done
+    // Animation state machine: start → lap → hover → drop → done
+    const [animationStage, setAnimationStage] = useState("start");
 
     useEffect(() => {
         // Sequence the animation

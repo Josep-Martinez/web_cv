@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import SpaceRunnerGame from "../components/SpaceRunnerGame";
+import SpaceRunnerGame from "../components/space-runner/SpaceRunnerGame";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 

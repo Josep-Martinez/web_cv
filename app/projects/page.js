@@ -1,9 +1,9 @@
 "use client";
 import { useLanguage } from "../../app/LanguageContext";
 import React, { useState, useEffect } from "react";
-import ProjectCard from "./../components/ProjectCard";
-import ProjectModal from "./../components/ProjectModal";
-import AnimatedWord from "./../components/AnimatedWord";
+import ProjectCard from "./../components/projects/ProjectCard";
+import ProjectModal from "./../components/projects/ProjectModal";
+import AnimatedWord from "./../components/shared/AnimatedWord";
 import { projectsData } from "./../data/projectsData";
 
 // Traducciones para la página principal

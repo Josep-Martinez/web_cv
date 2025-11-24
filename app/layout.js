@@ -4,8 +4,8 @@ import { Outfit, Inter, Martian_Mono } from "next/font/google";
 import Header from "../app/header";
 import { LanguageProvider } from "../app/LanguageContext";
 import LanguageButton from "../app/LanguageButton";
-import { LanguageTransitionProvider } from "../app/components/LanguageTransitionProvider";
-import StarBackground from "../app/components/StarBackground";
+import { LanguageTransitionProvider } from "../app/components/layout/LanguageTransitionProvider";
+import StarBackground from "../app/components/layout/StarBackground";
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
