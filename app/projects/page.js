@@ -48,7 +48,7 @@ export default function ProjectsPage() {
     setIsMounted(true);
 
     if (isMounted) {
-      setGlobalInterval(80);
+      setGlobalInterval(60);
       setTimeout(() => {
         setAnimationStarted(true);
       }, 100);

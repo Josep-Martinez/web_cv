@@ -207,7 +207,7 @@ export default function ExperiencePage() {
   // Arranque de animaciones
   useEffect(() => {
     if (!isMounted) return;
-    setGlobalInterval(80);
+    setGlobalInterval(60);
     const timeout = setTimeout(() => setAnimationStarted(true), 100);
     return () => clearTimeout(timeout);
   }, [isMounted]);

@@ -83,7 +83,7 @@ export default function Home() {
   useEffect(() => {
     setIsMounted(true);
     if (isMounted) {
-      setGlobalInterval(100);
+      setGlobalInterval(60);
       setTimeout(() => {
         setAnimationStarted(true);
       }, 100);
@@ -153,14 +153,14 @@ export default function Home() {
           }
 
           iterations += 1 / 4; // Slower advancement: 1/4 character per frame
-        }, 70); // Slower interval: 50ms between frames
+        }, 30); // Slower interval: 50ms between frames
       }, delay);
     };
 
     // Start animations sequentially
     animateText(targetName, setDisplayName, 0);
-    animateText(targetTitle, setDisplayTitle, 1000);
-    animateText(targetMaster, setDisplayMaster, 2000);
+    animateText(targetTitle, setDisplayTitle, 500);
+    animateText(targetMaster, setDisplayMaster, 1000);
 
   }, [language, isMounted]);
 
