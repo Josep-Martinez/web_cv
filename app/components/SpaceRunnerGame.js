@@ -245,7 +245,7 @@ const SpaceRunnerGame = ({ onClose, isPage = false }) => {
     gameRef.current.joystick.currentX = x;
     gameRef.current.joystick.currentY = y;
     gameRef.current.joystick.force = 0;
-    gameRef.current.keys[" "] = true;
+    // Auto-fire removed
   };
 
   const handleTouchMove = (e) => {
@@ -269,6 +269,20 @@ const SpaceRunnerGame = ({ onClose, isPage = false }) => {
   const handleTouchEnd = () => {
     gameRef.current.joystick.active = false;
     gameRef.current.joystick.force = 0;
+    // Auto-fire removed
+  };
+
+  // Mobile Shoot Button Handlers
+  const handleShootStart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    initAudio();
+    gameRef.current.keys[" "] = true;
+  };
+
+  const handleShootEnd = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     gameRef.current.keys[" "] = false;
   };
 
@@ -978,10 +992,21 @@ const SpaceRunnerGame = ({ onClose, isPage = false }) => {
               <p className="mb-2 text-electric">CONTROLES</p>
               <p>PC: WASD / Flechas para Moverse y Apuntar</p>
               <p>ESPACIO para Disparar (Requiere Energía)</p>
-              <p>Móvil: Joystick Virtual para Moverse y Apuntar</p>
+              <p>Móvil: Joystick (Izq) Mover/Apuntar - Botón (Der) Disparar</p>
             </div>
           </div>
         </div>
+      )}
+
+      {/* Mobile Shoot Button */}
+      {gameState === "playing" && (
+        <button
+          className="absolute bottom-12 right-12 w-24 h-24 bg-red-500/30 rounded-full border-2 border-red-400/50 flex items-center justify-center active:bg-red-500/60 active:scale-95 transition-all z-50 touch-none backdrop-blur-sm shadow-[0_0_15px_rgba(239,68,68,0.4)]"
+          onTouchStart={handleShootStart}
+          onTouchEnd={handleShootEnd}
+        >
+          <Crosshair size={40} className="text-white/80" />
+        </button>
       )}
 
       {/* Game Over Screen */}
