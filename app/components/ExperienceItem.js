@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { Calendar, MapPin, Award, Briefcase } from "lucide-react";
 
-const ExperienceItem = ({ experience, index, language }) => {
+const ExperienceItem = ({ experience, index, language, onClick }) => {
   const isEven = index % 2 === 0;
   const alignText = isEven ? "text-left" : "text-right";
 
@@ -12,7 +12,10 @@ const ExperienceItem = ({ experience, index, language }) => {
     : [];
 
   return (
-    <div className="relative mb-16 experience-item select-none">
+    <div
+      className={`relative mb-16 experience-item select-none ${onClick ? "cursor-pointer" : ""}`}
+      onClick={onClick}
+    >
       <div
         className={`flex w-full flex-col md:flex-row ${isEven ? "md:justify-start" : "md:justify-end"
           }`}

@@ -21,6 +21,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "./LanguageContext";
 import { useState, useEffect } from "react";
+import UfoLink from "./components/UfoLink";
+import SpaceRunnerGame from "./components/SpaceRunnerGame";
 
 // Toggle to show/hide chat link in navigation
 const SHOW_CHAT_LINK = false;
@@ -30,6 +32,62 @@ export default function Header() {
   const { language } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [eggUnlocked, setEggUnlocked] = useState(false);
+
+  useEffect(() => {
+    // Listen for unlock event
+    const handleUnlock = () => setEggUnlocked(true);
+    window.addEventListener("unlockSpaceRunner", handleUnlock);
+
+    // Reset if navigating away from game or works (logic: if unlocked, and we change path, check if we are going to game)
+    // Actually, user wants: "si cambias de pagina se vuelve a reiniciar".
+    // So if we are unlocked, and pathname changes to anything OTHER than /space-runner, we reset.
+    // But we also need to allow going FROM works TO space-runner.
+    // And FROM space-runner back to home (reset).
+
+    return () => window.removeEventListener("unlockSpaceRunner", handleUnlock);
+  }, []);
+
+  // Reset logic on pathname change
+  useEffect(() => {
+    if (eggUnlocked) {
+      if (pathname !== "/space-runner" && pathname !== "/works") {
+        // If we are not on the game page and not on the works page (where we unlocked it),
+        // wait... if we unlock on works, we are on works. Then we click link to go to /space-runner.
+        // So transition works -> space-runner should be allowed.
+        // Transition space-runner -> anywhere else should reset.
+        // Transition works -> anywhere else should reset.
+
+        // Actually, simpler: If we are NOT on /space-runner, and we move to another page that is NOT /space-runner, we reset?
+        // No, we need to see the link on /works to click it.
+        // So if we leave /works and go to /space-runner -> Keep unlocked.
+        // If we leave /works and go to /about -> Reset.
+        // If we leave /space-runner -> Reset.
+
+        // Let's try: If target is NOT /space-runner, reset.
+        // But we are on /works when we unlock.
+        // So if we are on /works, we see the link.
+        // If we click it, we go to /space-runner.
+        // If we click "About", we go to /about.
+
+        // So, if pathname is NOT /space-runner AND NOT /works... reset?
+        // But if we are on /space-runner, we want to play.
+        // If we go back to /works, should it still be there? User said "si cambias de pagina se vuelve a reiniciar".
+        // Maybe strictly: The link appears. If you navigate anywhere else (except the game), it's gone.
+        // If you go to the game, you are playing. If you leave the game, it's gone.
+      }
+
+      // Strict Reset:
+      // If we are navigating TO something that is NOT /space-runner, and we are NOT currently on /space-runner (waiting to go there? no pathname updates after nav).
+      // Let's just say: If we are not on /space-runner, and we are not on /works (where it spawned), reset.
+      // But wait, if I am on /works, unlock it, then go to /about, it should reset.
+      // If I am on /works, unlock it, then go to /space-runner, it should stay (or just not matter because we are on the game page).
+
+      if (pathname !== "/works" && pathname !== "/space-runner") {
+        setEggUnlocked(false);
+      }
+    }
+  }, [pathname, eggUnlocked]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -110,6 +168,7 @@ export default function Header() {
                 </Link>
               );
             })}
+            {eggUnlocked && <UfoLink />}
           </nav>
 
           {/* Mobile Menu Button */}

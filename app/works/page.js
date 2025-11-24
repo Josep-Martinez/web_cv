@@ -257,6 +257,30 @@ export default function ExperiencePage() {
               experience={exp}
               index={index}
               language={language}
+              onClick={() => {
+                // Check if it's the Referee experience (using title or company as identifier)
+                if (exp.title.includes("Referee") || exp.title.includes("Árbitro")) {
+                  // Use session storage or just local state for clicks to avoid persistence across reloads if desired, 
+                  // but user asked for "reset if you change page", so clicks can reset too or stay. 
+                  // Let's keep clicks in memory (React state) would be best but here we are in a map.
+                  // We'll use a simple window variable or sessionStorage for clicks to persist ONLY during this session/page view.
+                  // Actually, let's just use localStorage for clicks but NOT for the unlock state, 
+                  // or better, just a temp variable if we want it to be very strict.
+                  // User said: "hasta que clickes 5 veces... si cambias de pagina se vuelve a reiniciar".
+                  // So clicks should also reset. We can use a simple counter in the parent component, but we are inside a map.
+                  // Let's use sessionStorage for clicks, but clear it on mount.
+
+                  const currentClicks = parseInt(sessionStorage.getItem("refereeClicks") || "0") + 1;
+                  sessionStorage.setItem("refereeClicks", currentClicks.toString());
+
+                  if (currentClicks === 5) {
+                    // Dispatch event for Header to pick up
+                    window.dispatchEvent(new Event("unlockSpaceRunner"));
+                    // Reset clicks so it can be triggered again if needed (though header handles the state)
+                    sessionStorage.setItem("refereeClicks", "0");
+                  }
+                }
+              }}
             />
           ))}
         </div>
