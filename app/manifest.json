@@ -1,0 +1,24 @@
+{
+    "name": "Josep Martínez Boix Portfolio",
+    "short_name": "JMB Portfolio",
+    "description": "Portfolio of Josep Martínez Boix, Computer Engineer and Data Engineer",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a192f",
+    "theme_color": "#0a192f",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "sizes": "any",
+            "type": "image/x-icon"
+        }
+    ],
+    "categories": [
+        "portfolio",
+        "technology",
+        "engineering"
+    ],
+    "lang": "es",
+    "dir": "ltr"
+}

@@ -183,6 +183,7 @@ export default function Home() {
                 src="/foto_cv.png"
                 alt="Josep Martínez Boix"
                 fill
+                sizes="(max-width: 768px) 256px, 320px"
                 className="object-cover object-top transition-transform duration-500 group-hover:scale-110"
                 priority
               />
