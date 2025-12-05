@@ -63,7 +63,7 @@ export const projectsData = {
       ],
       status: "Live",
       liveUrl: null,
-      githubUrl: "https://github.com/Josep-Martinez/alzan",
+      githubUrl: "https://github.com/Josep-Martinez/alzan-old",
       videos: [
         {
           url: "/alzan/principal.mp4",
@@ -229,7 +229,7 @@ export const projectsData = {
       ],
       status: "En Producción",
       liveUrl: null,
-      githubUrl: "https://github.com/Josep-Martinez/alzan",
+      githubUrl: "https://github.com/Josep-Martinez/alzan-old",
       videos: [
         {
           url: "/alzan/principal.mp4",
